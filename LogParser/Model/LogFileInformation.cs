@@ -45,7 +45,7 @@ namespace LogParser.Model
             {
                 if (notesFromCarriageWithVariableFrequencyDrive != value)
                 {
-                    dataPeriod = value;
+                    notesFromCarriageWithVariableFrequencyDrive = value;
                     OnPropertyChanged("NotesFromCarriageWithVariableFrequencyDrive");
                 }
             }
@@ -59,7 +59,7 @@ namespace LogParser.Model
             {
                 if (notesFromCarriageWithSoftStartup != value)
                 {
-                    dataPeriod = value;
+                    notesFromCarriageWithSoftStartup = value;
                     OnPropertyChanged("NotesFromCarriageWithSoftStartup");
                 }
             }
@@ -73,7 +73,7 @@ namespace LogParser.Model
             {
                 if (numericData != value)
                 {
-                    dataPeriod = value;
+                    numericData = value;
                     OnPropertyChanged("NumericData");
                 }
             }
@@ -87,7 +87,7 @@ namespace LogParser.Model
             {
                 if (eventsData != value)
                 {
-                    dataPeriod = value;
+                    eventsData = value;
                     OnPropertyChanged("EventsData");
                 }
             }

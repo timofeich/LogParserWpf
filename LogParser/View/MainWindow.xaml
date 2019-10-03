@@ -27,19 +27,19 @@
 
                 <GroupBox Header="Источник Лог файла" Grid.Column="0" Background="White" TextBlock.FontSize="15" Margin="5">
                     <StackPanel Margin="5">
-                        <RadioButton Content="Вагон с частотно регулируемым приводом (ПЧ)" GroupName="LogFileType" Margin="0 10"/>
-                        <RadioButton Content="Вагон с устройством плавного пуска (УПП)" GroupName="LogFileType" Margin="0 10"/>
+                        <RadioButton Content="Вагон с частотно регулируемым приводом (ПЧ)" IsChecked="{Binding LogFileType.IsCarriageWithVariableFrequencyDrive}" GroupName="LogFileType" Margin="0 10"/>
+                        <RadioButton Content="Вагон с устройством плавного пуска (УПП)" IsChecked="{Binding LogFileType.IsCarriageWithSoftStartup}" GroupName="LogFileType" Margin="0 10"/>
                     </StackPanel>
                 </GroupBox>
 
                 <GroupBox Header="Содержание Лог файла" Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5">
                     <StackPanel Margin="5">
-                        <TextBlock Text = "="/>
-                        <TextBlock Text = "="/>
-                        <TextBlock Text = "="/>
-                        <TextBlock Text = "="/>
-                        <TextBlock Text = "="/>
-                        <TextBlock Text = "="/>
+                        <TextBlock Text = "{Binding LogFileInformation.FileName}"/>
+                        <TextBlock Text = "{Binding LogFileInformation.DataPeriod}"/>
+                        <TextBlock Text = "{Binding LogFileInformation.NotesFromCarriageWithVariableFrequencyDrive}"/>
+                        <TextBlock Text = "{Binding LogFileInformation.NotesFromCarriageWithSoftStartup}"/>
+                        <TextBlock Text = "{Binding LogFileInformation.NumericData}"/>
+                        <TextBlock Text = "{Binding LogFileInformation.EventsData}"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>

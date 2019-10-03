@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogParser"
         mc:Ignorable="d"
+        Background="LightGray"
         Title="LogParser" Height="450" Width="800">
     <Grid>
-        
+        <StackPanel>
+            <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
+                <MenuItem Header="Файл">
+                    <MenuItem Header="Открыть" />
+                    <MenuItem Header="Закрыть" />
+                    <MenuItem Header="Сохранить"/>
+                </MenuItem>
+                <MenuItem Header="Просмотр">
+                    <MenuItem Header="События/Таблица"/>
+                </MenuItem>
+            </Menu>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="Источник Лог файла" Grid.Column="0" Background="White" TextBlock.FontSize="15" Margin="5">
+                    <StackPanel Margin="5">
+                        <RadioButton Content="Вагон с частотно регулируемым приводом (ПЧ)" Margin="0 5"/>
+                        <RadioButton Content="Вагон с устройством плавного пуска (УПП)"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Содержание Лог файла" Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5">
+                    <StackPanel Margin="5">
+                        <TextBlock Text = ""/>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Window>

@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="Model\LogFileInformation.cs" />
     <Compile Include="Model\LogFileType.cs" />
+    <Compile Include="ViewModel\Command.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

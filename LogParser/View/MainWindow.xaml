@@ -11,12 +11,12 @@
         <StackPanel>
             <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
                 <MenuItem Header="Файл">
-                    <MenuItem Header="Открыть" />
-                    <MenuItem Header="Закрыть" />
-                    <MenuItem Header="Сохранить"/>
+                    <MenuItem Header="Открыть" Command = "{Binding OpenCommand}"/>
+                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}"/>
+                    <MenuItem Header="Сохранить" Command = "{Binding SaveCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Просмотр">
-                    <MenuItem Header="События/Таблица"/>
+                    <MenuItem Header="Таблица" Command="{Binding OpenTableCommand}"/>
                 </MenuItem>
             </Menu>
             <Grid>

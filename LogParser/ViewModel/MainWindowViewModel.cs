@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace LogParser.ViewModel
 {
@@ -12,7 +13,6 @@ namespace LogParser.ViewModel
     {
         public static LogFileInformation LogFileInformation { get; set; }
         public static LogFileType LogFileType { get; set; }
-
         public ICommand OpenCommand { get; set; }
         public ICommand CloseCommand { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -24,7 +24,6 @@ namespace LogParser.ViewModel
         {
             LogFileInformation = new LogFileInformation { };
             LogFileType = new LogFileType { };
-
             TestLogFileInformation();
             BindingCommandsToClickMethods();
 

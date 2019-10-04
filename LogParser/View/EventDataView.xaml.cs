@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using LogParser.ViewModel;
+using System.Windows;
 
 namespace LogParser.View
 {
@@ -10,6 +11,7 @@ namespace LogParser.View
         public EventDataView()
         {
             InitializeComponent();
+            DataContext = new EventDataViewModel();
         }
     }
 }

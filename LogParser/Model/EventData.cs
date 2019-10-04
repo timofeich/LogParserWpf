@@ -23,6 +23,34 @@ namespace LogParser.Model
             }
         }
 
+        private string textMessage;
+        public string TextMessage
+        {
+            get { return textMessage; }
+            set
+            {
+                if (textMessage != value)
+                {
+                    textMessage = value;
+                    OnPropertyChanged("TextMessage");
+                }
+            }
+        }
+
+        private string messageDate;
+        public string MessageDate
+        {
+            get { return messageDate; }
+            set
+            {
+                if (messageDate != value)
+                {
+                    messageDate = value;
+                    OnPropertyChanged("MessageDate");
+                }
+            }
+        }
+
         #region Implement INotifyPropertyChanged members
         public event PropertyChangedEventHandler PropertyChanged;
 

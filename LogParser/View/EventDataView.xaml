@@ -14,15 +14,15 @@
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Поиск "/>
-                <TextBox Grid.Column="1" Text="Введите данные для поиска"/>
+                <TextBox Grid.Column="1" Text="{Binding EventData.TextMessage}" />
                 <Button Grid.Column="2" Content="Найти" Margin="5 0"/>
             </Grid>
             
             <DataGrid Margin="0 10">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="№ Сообщения" Width="0.6*"/>
-                    <DataGridTextColumn Header="Текст сообщения" Width="3*"/>
-                    <DataGridTextColumn Header="Время и дата сообщения" Width="*"/>
+                    <DataGridTextColumn Header="№ Сообщения" Binding="{Binding EventData.MessageID}" Width="0.6*"/>
+                    <DataGridTextColumn Header="Текст сообщения" Binding="{Binding EventData.TextMessage}" Width="3*"/>
+                    <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding EventData.MessageData}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

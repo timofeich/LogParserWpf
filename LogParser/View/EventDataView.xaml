@@ -1,0 +1,30 @@
+﻿<Window x:Class="LogParser.View.EventDataView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Background="LightGray"
+        Title="Просмотр событий" Height="450" Width="800">
+    <Grid>
+        <StackPanel Margin="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="14*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Поиск "/>
+                <TextBox Grid.Column="1" Text="Введите данные для поиска"/>
+                <Button Grid.Column="2" Content="Найти" Margin="5 0"/>
+            </Grid>
+            
+            <DataGrid Margin="0 10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="№ Сообщения" Width="0.6*"/>
+                    <DataGridTextColumn Header="Текст сообщения" Width="3*"/>
+                    <DataGridTextColumn Header="Время и дата сообщения" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -18,16 +18,16 @@ namespace LogParser.Model
             }
         }
 
-        private string dataPeriod;
-        public string DataPeriod
+        private string datePeriod;
+        public string DatePeriod
         {
-            get { return dataPeriod; }
+            get { return datePeriod; }
             set
             {
-                if (dataPeriod != value)
+                if (datePeriod != value)
                 {
-                    dataPeriod = value;
-                    OnPropertyChanged("DataPeriod");
+                    datePeriod = value;
+                    OnPropertyChanged("DatePeriod");
                 }
             }
         }

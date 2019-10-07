@@ -35,7 +35,7 @@
                     <DataGridTextColumn Header="Loil, (mm)" Binding="{Binding Loil}" Width="*"/>
                     <DataGridTextColumn Header="Toil, (*C)" Binding="{Binding Toil}" Width="*"/>
                     <DataGridTextColumn Header="Poil, (MPa)" Binding="{Binding Poil}" Width="*"/>
-                    <DataGridTextColumn Header="Tthyr, (*C)" Binding="{Binding ThytistorTemperature}" Width="*"/>
+                    <DataGridTextColumn Header="Tthyr, (*C)" Binding="{Binding ThyristorTemperature}" Width="*"/>
 
                 </DataGrid.Columns>
             </DataGrid>

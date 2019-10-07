@@ -1,9 +1,56 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace LogParser.Model
 {
-    public class TableData : INotifyPropertyChanged
+    public class TableAndEventData : INotifyPropertyChanged
     {
+        private int messageID;
+        public int MessageID
+        {
+            get { return messageID; }
+            set
+            {
+                if (messageID != value)
+                {
+                    messageID = value;
+                    OnPropertyChanged("MessageID");
+                }
+            }
+        }
+
+        private string textMessage;
+        public string TextMessage
+        {
+            get { return textMessage; }
+            set
+            {
+                if (textMessage != value)
+                {
+                    textMessage = value;
+                    OnPropertyChanged("TextMessage");
+                }
+            }
+        }
+
+        private string messageDate;
+        public string MessageDate
+        {
+            get { return messageDate; }
+            set
+            {
+                if (messageDate != value)
+                {
+                    messageDate = value;
+                    OnPropertyChanged("MessageDate");
+                }
+            }
+        }
+
         private string timeOfRequest;
         public string TimeOfRequest
         {

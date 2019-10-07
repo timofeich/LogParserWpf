@@ -7,6 +7,7 @@ namespace LogParser.ViewModel
     {
         public string FileName { get; set; }
         public string[] Result;
+        public bool IsOpened;
 
         public LogFile() { }
 
@@ -21,6 +22,11 @@ namespace LogParser.ViewModel
                 FileName = openFileDialog.SafeFileName;
                 var content = File.ReadAllLines(openFileDialog.FileName);
                 ParseLogFile(content);
+                IsOpened = true;
+            }
+            else
+            {
+                IsOpened = false;
             }
         }
 

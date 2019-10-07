@@ -78,14 +78,17 @@ namespace LogParser.ViewModel
         private void OpenClick()
         {
             logFile.Open();
-            SetFileName(logFile.FileName);
-            //SetNumberOfEventsData(logFile.Result[7]);
-            LogFileType.IsFileOpened = true;
+            if (logFile.IsOpened)
+            {
+                SetFileName(logFile.FileName);
+                SetNumberOfEventsData(logFile.Result[7]);
+                LogFileType.IsFileOpened = true;
+            }
         }
 
         private void CloseClick()
         {
-
+            LogFileType.IsFileOpened = false;
         }
 
         private void SaveClick()
@@ -117,7 +120,7 @@ namespace LogParser.ViewModel
 
         private void OpenTableAndEventViewClick()
         {
-            var vm = new TableAndEventDataViewModel();
+            var vm = new TableAndEventDataViewModel(logFile.Result);
             var tableAndEventDataView = new TableAndEventDataView
             {
                 DataContext = vm

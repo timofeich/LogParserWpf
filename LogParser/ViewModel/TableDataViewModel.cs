@@ -32,7 +32,7 @@ namespace LogParser.ViewModel
             tableData.Loil = Convert.ToInt32(LogFileContent[10]);
             tableData.Toil = Convert.ToInt32(LogFileContent[11]);
             tableData.Poil = Convert.ToInt32(LogFileContent[12]);
-            tableData.ThytistorTemperature = Convert.ToInt32(LogFileContent[13]);   
+            tableData.ThyristorTemperature = Convert.ToInt32(LogFileContent[13]);   
 
             Tables.Add(tableData);
         }

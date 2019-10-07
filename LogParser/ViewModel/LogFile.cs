@@ -2,18 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace LogParser.ViewModel
 {
     public class LogFile
     {
         public string FileName { get; set; }
-        public string[] Result { get; set; }
+        public string[] Result;
 
-        public LogFile()
-        {
-
-        }
+        public LogFile() { }
 
         public void Open()
         {
@@ -31,7 +29,7 @@ namespace LogParser.ViewModel
 
         private void ParseLogFile(string[] content)
         {
-            foreach (var line in content)
+            foreach (string line in content)
             {
                 Result = line.Split(' ');
             }

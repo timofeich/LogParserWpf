@@ -9,42 +9,32 @@ using System.Threading.Tasks;
 
 namespace LogParser.ViewModel
 {
-    public class EventDataViewModel : INotifyPropertyChanged 
+    public class EventDataViewModel 
     {
         public event EventHandler OnRequestClose;
         string[] LogFileContent;
         public ObservableCollection<EventData> Events { get; set; }
 
-        public EventDataViewModel()
-        {
-            
-            
-        }
-
         public EventDataViewModel(string[] LogFileContent)
         {
-            Events = new ObservableCollection<EventData>
-            {
-                new EventData { MessageID = 0, TextMessage = "123", MessageDate = "Steven" },
-                new EventData { MessageID = 1, TextMessage = "321", MessageDate = "John"},
-            };
+            //Events = new ObservableCollection<EventData>
+            //{
+            //    new EventData { MessageID = 0, TextMessage = "123", MessageDate = "Steven" },
+            //    new EventData { MessageID = 1, TextMessage = "321", MessageDate = "John" },
+            //};
+
             this.LogFileContent = LogFileContent;
-            OutputEventData();
+
+            EventData event1 = new EventData();          
+            OutputEventData(event1);
         }
 
-        private void OutputEventData()
+        private void OutputEventData(EventData eventData)
         {
-
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            eventData.MessageID = 2;
+            eventData.TextMessage = LogFileContent[3];
+            eventData.MessageDate = LogFileContent[0];
+            Events.Add(eventData);
         }
     }
 }

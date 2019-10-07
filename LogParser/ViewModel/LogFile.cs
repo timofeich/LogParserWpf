@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace LogParser.ViewModel
@@ -7,15 +8,14 @@ namespace LogParser.ViewModel
     public class LogFile
     {
         public string FileName { get; set; }
-        public string Length { get; set; }
         public string[] Result { get; set; }
 
         public LogFile()
         {
-            Open();
+
         }
 
-        private void Open()
+        public void Open()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Бинарные файлы (*.bin)|*.bin|All files (*.*)|*.*";
@@ -31,13 +31,10 @@ namespace LogParser.ViewModel
 
         private void ParseLogFile(string[] content)
         {
-            Length = Convert.ToString(content.Length);
-
             foreach (var line in content)
             {
-                var spl = line.Split(' ');
-                Result = spl;
-            }            
+                Result = line.Split(' ');
+            }
         }
     }
 }

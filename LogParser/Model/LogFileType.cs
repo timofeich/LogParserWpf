@@ -37,6 +37,20 @@ namespace LogParser.Model
             }
         }
 
+        private bool isFileOpened;
+        public bool IsFileOpened
+        {
+            get { return isFileOpened; }
+            set
+            {
+                if(isFileOpened != value)
+                {
+                    isFileOpened = value;
+                    OnPropertyChanged("IsFileOpened");
+                }
+            }
+        }
+
         #region Implement INotifyPropertyChanged members
         public event PropertyChangedEventHandler PropertyChanged;
 

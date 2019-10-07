@@ -11,7 +11,6 @@ namespace LogParser.View
         public EventDataView()
         {
             InitializeComponent();
-            DataContext = new EventDataViewModel();
         }
     }
 }

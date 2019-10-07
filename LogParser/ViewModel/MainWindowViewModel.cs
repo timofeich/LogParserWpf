@@ -1,11 +1,7 @@
 ﻿using LogParser.Model;
 using LogParser.View;
-using Microsoft.Win32;
 using System;
-using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows.Input;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace LogParser.ViewModel
 {
@@ -13,6 +9,7 @@ namespace LogParser.ViewModel
     {
         public static LogFileInformation LogFileInformation { get; set; }
         public static LogFileType LogFileType { get; set; }
+        LogFile logFile = new LogFile();
         public ICommand OpenCommand { get; set; }
         public ICommand CloseCommand { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -22,22 +19,28 @@ namespace LogParser.ViewModel
 
         public MainWindowViewModel()
         {
-            LogFileInformation = new LogFileInformation { };
-            LogFileType = new LogFileType { };
-            TestLogFileInformation();
+            InitializeStartupData();
             BindingCommandsToClickMethods();
-
-            LogFileType.IsCarriageWithSoftStartup = true;
         }
 
-        public void TestLogFileInformation()
+        private void InitializeStartupData()
         {
-            //SetFileName("FileName");
-            //SetDatePeriod("2019.08.26 01:53:54", "2019.08.30 12:00:00");
-            //SetNotesFromCarriageWithVariableFrequencyDrive("3");
-            //SetNotesFromCarriageWithSoftStartup("4");
-            //SetNumberOfNumericData("5");
-            //SetNumberOfEventsData("6");
+            LogFileInformation = new LogFileInformation { };
+
+            LogFileType = new LogFileType {  };
+            LogFileType.IsCarriageWithSoftStartup = true;
+            LogFileType.IsFileOpened = false;                    
+        }
+
+        private void BindingCommandsToClickMethods()
+        {
+            OpenCommand = new Command(arg => OpenClick());
+            CloseCommand = new Command(arg => CloseClick());
+            SaveCommand = new Command(arg => SaveClick());
+
+            OpenTableViewCommand = new Command(arg => OpenTableViewClick());
+            OpenEventViewCommand = new Command(arg => OpenEventViewClick());
+            OpenTableAndEventViewCommand = new Command(arg => OpenTableAndEventViewClick());
         }
 
         private void SetFileName(string fileName)
@@ -72,28 +75,17 @@ namespace LogParser.ViewModel
             LogFileInformation.EventsData = "Из них с событиями:  " + numberOfEventsData;
         }
 
-        private void BindingCommandsToClickMethods()
-        {
-            OpenCommand = new Command(arg => OpenClick());
-            CloseCommand = new Command(arg => CloseClick());
-            SaveCommand = new Command(arg => SaveClick());
-
-            OpenTableViewCommand = new Command(arg => OpenTableViewClick());
-            OpenEventViewCommand = new Command(arg => OpenEventViewClick());
-            OpenTableAndEventViewCommand = new Command(arg => OpenTableAndEventViewClick());
-        }
-
         private void OpenClick()
         {
-            LogFile logFile = new LogFile();
+            logFile.Open();
             SetFileName(logFile.FileName);
-            SetNumberOfNumericData(logFile.Length);
             SetNumberOfEventsData(logFile.Result[7]);
+            LogFileType.IsFileOpened = true;
         }
 
         private void CloseClick()
         {
-            throw new NotImplementedException();
+
         }
 
         private void SaveClick()
@@ -104,17 +96,17 @@ namespace LogParser.ViewModel
         private void OpenTableViewClick()
         {
             var vm = new TableDataViewModel();
-            var tableDataView = new TableDataView
+            var connectSettingView = new TableDataView
             {
                 DataContext = vm
             };
-            vm.OnRequestClose += (s, e) => tableDataView.Close();
-            tableDataView.ShowDialog();
+            vm.OnRequestClose += (s, e) => connectSettingView.Close();
+            connectSettingView.ShowDialog();
         }
 
         private void OpenEventViewClick()
         {
-            var vm = new EventDataViewModel();
+            var vm = new EventDataViewModel(logFile.Result);
             var eventDataView = new EventDataView
             {
                 DataContext = vm

@@ -12,13 +12,13 @@
             <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
                 <MenuItem Header="Файл">
                     <MenuItem Header="Открыть" Command = "{Binding OpenCommand}"/>
-                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}"/>
-                    <MenuItem Header="Сохранить" Command = "{Binding SaveCommand}"/>
+                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding LogFileType.IsFileOpened}"/>
+                    <MenuItem Header="Сохранить" Command = "{Binding SaveCommand}" IsEnabled="{Binding LogFileType.IsFileOpened}"/>
                 </MenuItem>
                 <MenuItem Header="Просмотр">
-                    <MenuItem Header = "Таблица" Command="{Binding OpenTableViewCommand}"/>
-                    <MenuItem Header = "События" Command="{Binding OpenEventViewCommand}"/>
-                    <MenuItem Header = "Таблица + События" Command="{Binding OpenTableAndEventViewCommand }" />
+                    <MenuItem Header = "Таблица" Command="{Binding OpenTableViewCommand}" IsEnabled="{Binding LogFileType.IsFileOpened}"/>
+                    <MenuItem Header = "События" Command="{Binding OpenEventViewCommand}" IsEnabled="{Binding LogFileType.IsFileOpened}"/>
+                    <MenuItem Header = "Таблица + События" Command="{Binding OpenTableAndEventViewCommand }" IsEnabled="{Binding LogFileType.IsFileOpened}" />
                 </MenuItem>
             </Menu>
             <Grid>

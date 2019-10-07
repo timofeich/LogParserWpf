@@ -1,11 +1,6 @@
 ﻿using LogParser.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LogParser.ViewModel
 {
@@ -17,11 +12,11 @@ namespace LogParser.ViewModel
 
         public EventDataViewModel(string[] LogFileContent)
         {
-            //Events = new ObservableCollection<EventData>
-            //{
-            //    new EventData { MessageID = 0, TextMessage = "123", MessageDate = "Steven" },
-            //    new EventData { MessageID = 1, TextMessage = "321", MessageDate = "John" },
-            //};
+            Events = new ObservableCollection<EventData>
+            {
+                new EventData { MessageID = 0, TextMessage = "123", MessageDate = "Steven" },
+                new EventData { MessageID = 1, TextMessage = "321", MessageDate = "John" },
+            };
 
             this.LogFileContent = LogFileContent;
 

@@ -1,10 +1,6 @@
 ﻿using LogParser.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LogParser.ViewModel
 {
@@ -14,26 +10,31 @@ namespace LogParser.ViewModel
         string[] LogFileContent;
         public ObservableCollection<TableData> Tables { get; set; }
 
-        public EventDataViewModel(string[] LogFileContent)
+        public TableDataViewModel(string[] LogFileContent)
         {
-            Tables = new ObservableCollection<EventData>
-            {
-                new EventData { MessageID = 0, TextMessage = "123", MessageDate = "Steven" },
-                new EventData { MessageID = 1, TextMessage = "321", MessageDate = "John" },
-            };
+            Tables = new ObservableCollection<TableData>{ };
 
             this.LogFileContent = LogFileContent;
 
-            EventData event1 = new EventData();
-            OutputEventData(event1);
+            TableData table1 = new TableData();
+            OutputEventData(table1);
         }
 
-        private void OutputEventData(EventData eventData)
+        private void OutputEventData(TableData tableData)
         {
-            eventData.MessageID = 2;
-            eventData.TextMessage = LogFileContent[3];
-            eventData.MessageDate = LogFileContent[0];
-            Tables.Add(eventData);
+            tableData.TimeOfRequest = LogFileContent[0];
+            tableData.VoltageA = Convert.ToInt32(LogFileContent[4]);
+            tableData.VoltageB = Convert.ToInt32(LogFileContent[5]);
+            tableData.VoltageC = Convert.ToInt32(LogFileContent[6]);
+            tableData.AmperageA = Convert.ToInt32(LogFileContent[7]);
+            tableData.AmperageB = Convert.ToInt32(LogFileContent[8]);
+            tableData.AmperageC = Convert.ToInt32(LogFileContent[9]);
+            tableData.Loil = Convert.ToInt32(LogFileContent[10]);
+            tableData.Toil = Convert.ToInt32(LogFileContent[11]);
+            tableData.Poil = Convert.ToInt32(LogFileContent[12]);
+            tableData.ThytistorTemperature = Convert.ToInt32(LogFileContent[13]);   
+
+            Tables.Add(tableData);
         }
     }
 }

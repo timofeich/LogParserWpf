@@ -95,7 +95,7 @@ namespace LogParser.ViewModel
 
         private void OpenTableViewClick()
         {
-            var vm = new TableDataViewModel();
+            var vm = new TableDataViewModel(logFile.Result);
             var connectSettingView = new TableDataView
             {
                 DataContext = vm

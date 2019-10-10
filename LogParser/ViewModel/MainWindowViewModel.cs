@@ -81,7 +81,7 @@ namespace LogParser.ViewModel
             if (logFile.IsOpened)
             {
                 SetFileName(logFile.FileName);
-                SetNumberOfEventsData(logFile.Result[7]);
+                //SetNumberOfEventsData(logFile.Result[7]);
                 LogFileType.IsFileOpened = true;
             }
         }

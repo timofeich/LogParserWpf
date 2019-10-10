@@ -20,7 +20,7 @@ namespace LogParser.ViewModel
             if (openFileDialog.ShowDialog() == true)
             {
                 FileName = openFileDialog.SafeFileName;
-                var content = File.ReadAllLines(openFileDialog.FileName);
+                var content = File.ReadAllBytes(openFileDialog.FileName);
                 ParseLogFile(content);
                 IsOpened = true;
             }
@@ -30,11 +30,12 @@ namespace LogParser.ViewModel
             }
         }
 
-        private void ParseLogFile(string[] content)
+        private void ParseLogFile(byte[] content)
         {
-            foreach (string line in content)
+            for(int i = 0; i < content.Length; i += 511)
             {
-                Result = line.Split(' ');
+                //разбираю файл по 512 байтовым частям
+
             }
         }
     }

@@ -22,7 +22,6 @@
             <DataGrid ItemsSource="{Binding Tables}" IsReadOnly="True" AutoGenerateColumns="False" Margin="0 10 5 10">
                 <DataGrid.Columns>
 
-
                     <DataGridTextColumn Header="DateTime" Binding="{Binding TimeOfRequest}" Width="2*"/>
                     <DataGridTextColumn Header="Ua, (V)" Binding="{Binding VoltageA}" Width="*"/>
                     <DataGridTextColumn Header="Ub, (V)" Binding="{Binding VoltageB}" Width="*"/>

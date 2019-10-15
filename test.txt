@@ -1,0 +1,264 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+namespace TestParser
+{
+    class Program
+    {
+        public static DateTime UnixTimeStampToDateTime(int unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime dtDateTime = new DateTime(1980, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToUniversalTime();
+            return dtDateTime;
+        }
+
+        public static int ConvertBytesArrayToIntValue(byte[] byteArray)
+        {
+            return BitConverter.ToInt32(byteArray, 0);
+        }
+
+        public static int ConvertBytesArrayToInt16Value(byte[] byteArray)
+        {
+            return BitConverter.ToInt16(byteArray, 0);
+        }
+
+        public static List<int> ConvertFromByteListToIntList(byte[] byteArray)
+        {
+            List<int> resultData = new List<int>();
+            for(int i = 0; i < byteArray.Length; i++)
+            {
+
+                byte[] data = new byte[] { };
+                if (i < byteArray.Length - 3)
+                {
+                    data.SetValue(byteArray, i);
+                    data.SetValue(byteArray, i + 1);
+
+                    resultData.Add(ConvertBytesArrayToInt16Value(data));
+                    i++;
+                }
+                else
+                {
+                    data.SetValue(byteArray, i);
+                    resultData.Add(ConvertBytesArrayToInt16Value(data));
+                }
+            }
+            return resultData;
+        }
+
+        public static List<int> ConvertLogData(byte[] logData)
+        {
+            List<int> result = new List<int>(); 
+            for (int i = 2; i < logData.Length; i++)
+            {
+                if (i < logData.Length - 4)
+                {
+                    byte[] oneData = new byte[] { Convert.ToByte(logData.ElementAt(i)), Convert.ToByte(logData.ElementAt(i + 1)) };
+
+                    result.Add(ConvertBytesArrayToInt16Value(oneData));
+                    i++;
+                }
+                else
+                {
+                    result.Add(Convert.ToInt16(logData.ElementAt(i)));
+                }
+            }
+
+            return result;
+        }
+
+        public static void ParseLogFileByBytesNew()
+        {
+            List<byte[]> listOfRequests = new List<byte[]>();
+
+
+            using (BinaryReader b = new BinaryReader(File.Open("LOG011", FileMode.Open)))
+            {
+                byte[][] DataMatrix = new byte[][] { };
+
+                for (int i = 0; i < b.BaseStream.Length; i += 512)
+                {
+                    
+                    b.BaseStream.Seek(i, SeekOrigin.Begin);
+                    if (b.PeekChar() == 'L')
+                    {
+                        listOfRequests.Add(b.ReadBytes(512));
+                    }
+                }
+
+                foreach(byte[] request in listOfRequests)
+                {
+                    ParseRequest(request);
+                }
+
+            }
+        }
+
+        private static void ParseRequest(byte[] request)
+        {
+            //byte[] requestTitle = { request[0], request[1], request[2], request[3] };
+
+            byte[] dateOfFirstRequest = { request[4], request[5], request[6], request[7] };
+            byte[] dateOfFirstMessage = { request[8], request[9], request[10], request[11] };
+            byte[] dateOfLastMessage = { request[12], request[13], request[14], request[15] };
+
+            byte[] dataIdentifier = { 88, 49 };
+            byte eventIdentifier = 65;
+
+            int date1 = ConvertBytesArrayToIntValue(dateOfFirstRequest);
+            int date2 = ConvertBytesArrayToIntValue(dateOfFirstMessage);
+            int date3 = ConvertBytesArrayToIntValue(dateOfLastMessage);
+
+            Console.WriteLine(UnixTimeStampToDateTime(date1) + "    " + UnixTimeStampToDateTime(date2) + "   "
+                            + UnixTimeStampToDateTime(date3));
+
+            if (request[19] == 88 && request[20] == 49)
+            {
+                byte[] Ua = { request[21], request[22] };
+                byte[] Ub = { request[23], request[24] };
+                byte[] Uc = { request[25], request[26] };
+
+                byte[] Ia = { request[27], request[28] };
+                byte[] Ib = { request[29], request[30] };
+                byte[] Ic = { request[31], request[32] };
+
+                byte[] Loil = { request[33], request[34] };
+                byte[] Toil = { request[35], request[36] };
+
+                byte Poil = request[37];
+                byte Temperature = request[38];
+
+                Console.WriteLine(ConvertBytesArrayToInt16Value(Ua) + "  " + ConvertBytesArrayToInt16Value(Ub) + "   "
+                    + ConvertBytesArrayToInt16Value(Uc) + "   " + ConvertBytesArrayToInt16Value(Ia) + "   " +
+                    ConvertBytesArrayToInt16Value(Ib) + "   " + ConvertBytesArrayToInt16Value(Ic) + "    " +
+                    ConvertBytesArrayToInt16Value(Loil) + "   " + ConvertBytesArrayToInt16Value(Toil) + "   " +
+                    Poil + "  " + Temperature);
+            }
+            else if(request[17] == eventIdentifier)
+            {
+                string eventData = null;
+                for(int i = 18; i < 82; i++)
+                {
+                    eventData += (char)request[i]; 
+                }
+
+                Console.WriteLine(eventData);
+            }
+            else 
+            {
+                Console.WriteLine("Unknown request");
+            }
+
+
+            #region ExampleOfOutputtingInfo
+            //if (titleOfDataInRequest.SequenceEqual(titleOfData))
+            //{
+            //    byte[] Ua = { result[i + 21], result[i + 22] };
+            //    byte[] Ub = { result[i + 23], result[i + 24] };
+            //    byte[] Uc = { result[i + 25], result[i + 26] };
+
+            //    byte[] Ia = { result[i + 27], result[i + 28] };
+            //    byte[] Ib = { result[i + 29], result[i + 30] };
+            //    byte[] Ic = { result[i + 31], result[i + 32] };
+
+            //    byte[] Loil = { result[i + 33], result[i + 34] };
+            //    byte[] Toil = { result[i + 35], result[i + 36] };
+
+            //    byte Poil = result[i + 37];
+            //    byte Temperature = result[i + 38];
+
+            //    Console.WriteLine(ConvertBytesArrayToInt16Value(Ua) + "  " + ConvertBytesArrayToInt16Value(Ub) + "   "
+            //        + ConvertBytesArrayToInt16Value(Uc) + "   " + ConvertBytesArrayToInt16Value(Ia) + "   " +
+            //        ConvertBytesArrayToInt16Value(Ib) + "   " + ConvertBytesArrayToInt16Value(Ic) + "    " +
+            //        ConvertBytesArrayToInt16Value(Loil) + "   " + ConvertBytesArrayToInt16Value(Toil) + "   " +
+            //        Poil + "  " + Temperature);
+
+            //    Console.WriteLine();
+            //}
+            #endregion
+        }
+
+        public static void parseLogFileByString()
+        {
+            byte[] AllBytesFromFile = File.ReadAllBytes("LOG011");
+
+            char[] AllCharFromFile = Encoding.Default.GetChars(AllBytesFromFile);
+            string ResultString = null;
+
+            string[] data = new string[] { };
+
+            List<string> requestList = new List<string>();
+            List<string> dataList = new List<string>();
+            List<string> eventList = new List<string>();
+
+            List<char> CheckingList = new List<char>();
+
+            //Regex regexForRequest = new Regex(@"L011(.{{508}})", RegexOptions.Compiled);
+            Regex regexForData = new Regex(@"X1(.{18})", RegexOptions.Compiled);
+            //Regex regexForEvent = new Regex(@"A(.{65})A", RegexOptions.Compiled);
+
+            foreach (char symbol in AllCharFromFile)
+            {
+                ResultString += symbol;
+            }
+
+            var matchesForData = regexForData.Matches(ResultString);
+
+            for (int j = 0; j < matchesForData.Count; j++)
+            {
+                dataList.Add(matchesForData[j].Value);
+                Console.WriteLine(ConvertLogData(Encoding.Unicode.GetBytes(dataList[j]))[0]);
+            }
+
+            Console.ReadLine();
+
+            //for (int i = 0; i < request.Length; i++)
+            //{
+
+            //    //data = request[i].Split(new string[] { "X1" }, StringSplitOptions.RemoveEmptyEntries);
+            //    var matchesForData = regexForData.Matches(request[i].Normalize());
+            //    var matchesForEvent = regexForEvent.Matches(request[i]);
+                
+            //    for (int j = 0; j < matchesForData.Count; j++)
+            //    {
+            //        dataList.Add(matchesForData[j].Value);
+
+            //        Console.WriteLine(ConvertLogData(Encoding.Unicode.GetBytes(dataList[j]))[0]);
+            //    }
+
+            //    for (int j = 0; j < matchesForEvent.Count; j++)
+            //    {
+            //        eventList.Add(matchesForEvent[j].Value);
+            //    }
+            //}
+
+            //ConvertLogData(dataList);
+
+            //Console.WriteLine("Количество запросов: " + request.Length);//2959 - correct
+            //Console.WriteLine("Записей от вагона с устройством плавного пуска: " + (dataList.Count + eventList.Count    ));//38592
+            //Console.WriteLine("Из них с числовыми данными: " + dataList.Count);//34402
+            //Console.WriteLine("Из них с событиями: " + eventList.Count);//4190
+
+            //Console.ReadLine();
+        }
+
+        public static void parseLogFileByRegex()
+        {
+            // Regex regexForEvent = new Regex(@"A.{65}A");
+            // Regex regexForDataInEvent = new Regex(@"\d{2}:\d{2}:\d{2} \d{2}/\d{2}/\d{2} \w");
+        }
+
+        static void Main(string[] args)
+        {
+            ParseLogFileByBytesNew();
+            Console.ReadLine();
+            //parseLogFileByString();
+        }
+    }
+}

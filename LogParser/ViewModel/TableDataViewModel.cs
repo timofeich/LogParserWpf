@@ -12,7 +12,11 @@ namespace LogParser.ViewModel
 
         public TableDataViewModel(string[] LogFileContent)
         {
-            Tables = new ObservableCollection<TableData>{ };
+            Tables = new ObservableCollection<TableData>
+            {
+                new TableData { AmperageA = 0, AmperageB = 0, AmperageC = 0 },
+                new TableData { AmperageA = 1, AmperageB = 1, AmperageC = 1 },
+            };
 
             this.LogFileContent = LogFileContent;
 
@@ -22,19 +26,19 @@ namespace LogParser.ViewModel
 
         private void OutputEventData(TableData tableData)
         {
-            tableData.TimeOfRequest = LogFileContent[0];
-            tableData.VoltageA = Convert.ToInt32(LogFileContent[4]);
-            tableData.VoltageB = Convert.ToInt32(LogFileContent[5]);
-            tableData.VoltageC = Convert.ToInt32(LogFileContent[6]);
-            tableData.AmperageA = Convert.ToInt32(LogFileContent[7]);
-            tableData.AmperageB = Convert.ToInt32(LogFileContent[8]);
-            tableData.AmperageC = Convert.ToInt32(LogFileContent[9]);
-            tableData.Loil = Convert.ToInt32(LogFileContent[10]);
-            tableData.Toil = Convert.ToInt32(LogFileContent[11]);
-            tableData.Poil = Convert.ToInt32(LogFileContent[12]);
-            tableData.ThyristorTemperature = Convert.ToInt32(LogFileContent[13]);   
+            //tableData.TimeOfRequest = LogFileContent[0];
+            //tableData.VoltageA = Convert.ToInt32(LogFileContent[4]);
+            //tableData.VoltageB = Convert.ToInt32(LogFileContent[5]);
+            //tableData.VoltageC = Convert.ToInt32(LogFileContent[6]);
+            //tableData.AmperageA = Convert.ToInt32(LogFileContent[7]);
+            //tableData.AmperageB = Convert.ToInt32(LogFileContent[8]);
+            //tableData.AmperageC = Convert.ToInt32(LogFileContent[9]);
+            //tableData.Loil = Convert.ToInt32(LogFileContent[10]);
+            //tableData.Toil = Convert.ToInt32(LogFileContent[11]);
+            //tableData.Poil = Convert.ToInt32(LogFileContent[12]);
+            //tableData.ThyristorTemperature = Convert.ToInt32(LogFileContent[13]);   
 
-            Tables.Add(tableData);
+            //Tables.Add(tableData);
         }
     }
 }

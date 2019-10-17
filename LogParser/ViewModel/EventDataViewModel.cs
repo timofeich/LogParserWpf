@@ -20,8 +20,8 @@ namespace LogParser.ViewModel
 
             this.LogFileContent = LogFileContent;
 
-            EventData event1 = new EventData();          
-            OutputEventData(event1);
+            //EventData event1 = new EventData();          
+            //OutputEventData(event1);
         }
 
         private void OutputEventData(EventData eventData)

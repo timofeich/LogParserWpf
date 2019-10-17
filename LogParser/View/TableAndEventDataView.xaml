@@ -21,23 +21,112 @@
 
             <DataGrid ItemsSource="{Binding TableAndEventDatas}" IsReadOnly="True" AutoGenerateColumns="False" Margin="0 10">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="№" Binding="{Binding MessageID}" Width="*"/>
-                    <DataGridTextColumn Header="Текст сообщения" Binding="{Binding TextMessage}" Width="3*"/>
-                    <DataGridTextColumn Header="Время/дата сообщения" Binding="{Binding MessageDate}" Width="2*"/>
+                    
+                    <DataGridTextColumn Header="№" Binding="{Binding MessageID}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Номер сообщения" />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
 
-                    <DataGridTextColumn Header="DateTime" Binding="{Binding TimeOfRequest}" Width="*"/>
-                    <DataGridTextColumn Header="Ua, (V)" Binding="{Binding VoltageA}" Width="*"/>
-                    <DataGridTextColumn Header="Ub, (V)" Binding="{Binding VoltageB}" Width="*"/>
-                    <DataGridTextColumn Header="Uc, (V)" Binding="{Binding VoltageC}" Width="*"/>
+                    <DataGridTextColumn Header="Текст сообщения" Binding="{Binding TextMessage}" Width="3*">
+                    </DataGridTextColumn>
 
-                    <DataGridTextColumn Header="Ia, (A)" Binding="{Binding AmperageA}" Width="*"/>
-                    <DataGridTextColumn Header="Ib, (A)" Binding="{Binding AmperageB}" Width="*"/>
-                    <DataGridTextColumn Header="Ic, (A)" Binding="{Binding AmperageC}" Width="*"/>
+                    <DataGridTextColumn Header="Время/дата сообщения" Binding="{Binding MessageDate}" Width="2*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Время и дата записи с событием" />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
 
-                    <DataGridTextColumn Header="Loil, (mm)" Binding="{Binding Loil}" Width="*"/>
-                    <DataGridTextColumn Header="Toil, (*C)" Binding="{Binding Toil}" Width="*"/>
-                    <DataGridTextColumn Header="Poil, (MPa)" Binding="{Binding Poil}" Width="*"/>
-                    <DataGridTextColumn Header="Tthyr, (*C)" Binding="{Binding ThyristorTemperature}" Width="*"/>
+                    <DataGridTextColumn Header="DateTime" Binding="{Binding TimeOfRequest}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Время и дата записи с данными" />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Ua, (V)" Binding="{Binding VoltageA}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Напряжение фазы А. Значение в вольтах." />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Ub, (V)" Binding="{Binding VoltageB}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Напряжение фазы B. Значение в вольтах." />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Uc, (V)" Binding="{Binding VoltageC}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Напряжение фазы C. Значение в вольтах." />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Ia, (A)" Binding="{Binding AmperageA}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Ток фазы А. Значение в Амперах." />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Ib, (A)" Binding="{Binding AmperageB}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Ток фазы B. Значение в Амперах." />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Ic, (A)" Binding="{Binding AmperageC}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Ток фазы С. Значение в Амперах." />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Loil, (mm)" Binding="{Binding Loil}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Уровень масла в баке. Значение в миллиметрах от днища." />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Toil, (*C)" Binding="{Binding Toil}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Температура масла в баке. Значение в градусах Цельсия." />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Poil, (MPa)" Binding="{Binding Poil}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Давление масла в гидросистеме при торможении. Значение в МегаПаскалях." />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Tthyr, (*C)" Binding="{Binding ThyristorTemperature}" Width="*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Температура тиристоров. Значение в градусах Цельсия." />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
 
                 </DataGrid.Columns>
             </DataGrid>

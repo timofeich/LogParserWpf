@@ -20,7 +20,15 @@
 
             <DataGrid ItemsSource="{Binding Events}" AutoGenerateColumns="False" IsReadOnly="True" Margin="0 10">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="№" Binding="{Binding MessageID}" Width="0.6*"/>
+                    
+                    <DataGridTextColumn Header="№" Binding="{Binding MessageID}" Width="0.6*">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="Номер сообщения" />
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    
                     <DataGridTextColumn Header="Текст сообщения" Binding="{Binding TextMessage}" Width="3*"/>
                     <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding MessageDate}" Width="*"/>
                 </DataGrid.Columns>

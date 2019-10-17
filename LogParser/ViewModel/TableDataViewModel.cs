@@ -1,5 +1,6 @@
 ﻿using LogParser.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace LogParser.ViewModel
@@ -7,25 +8,24 @@ namespace LogParser.ViewModel
     public class TableDataViewModel
     {
         public event EventHandler OnRequestClose;
-        string[] LogFileContent;
+        List<int> LogFileContent;
         public ObservableCollection<TableData> Tables { get; set; }
 
-        public TableDataViewModel(string[] LogFileContent)
+        public TableDataViewModel(List<int> LogFileContent)
         {
-            Tables = new ObservableCollection<TableData>
-            {
-                new TableData { AmperageA = 0, AmperageB = 0, AmperageC = 0 },
-                new TableData { AmperageA = 1, AmperageB = 1, AmperageC = 1 },
-            };
-
             this.LogFileContent = LogFileContent;
 
-            TableData table1 = new TableData();
-            OutputEventData(table1);
+            OutputEventData();
         }
 
-        private void OutputEventData(TableData tableData)
+        private void OutputEventData()
         {
+            Tables = new ObservableCollection<TableData>();
+            for (int i = 0; i < LogFileContent.Count; i++)
+            {
+                Tables.Add(new TableData() { VoltageA = LogFileContent[i]});
+            }
+
             //tableData.TimeOfRequest = LogFileContent[0];
             //tableData.VoltageA = Convert.ToInt32(LogFileContent[4]);
             //tableData.VoltageB = Convert.ToInt32(LogFileContent[5]);

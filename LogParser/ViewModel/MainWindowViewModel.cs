@@ -9,6 +9,7 @@ namespace LogParser.ViewModel
     {
         public static LogFileInformation LogFileInformation { get; set; }
         public static LogFileType LogFileType { get; set; }
+
         LogFile logFile = new LogFile();
         public ICommand OpenCommand { get; set; }
         public ICommand CloseCommand { get; set; }
@@ -48,7 +49,7 @@ namespace LogParser.ViewModel
             LogFileInformation.FileName = "Имя файла:  " + fileName;
         }
 
-        private void SetDatePeriod(string startDate, string finishDate)
+        private void SetDatePeriod(DateTime startDate, DateTime finishDate)
         {
             LogFileInformation.DatePeriod = "Период:  с " + startDate + " по " + finishDate;
         }
@@ -81,7 +82,15 @@ namespace LogParser.ViewModel
             if (logFile.IsOpened)
             {
                 SetFileName(logFile.FileName);
-                //SetNumberOfEventsData(logFile.Result[7]);
+
+                SetDatePeriod(logFile.StartDate, logFile.FinishDate);
+
+                SetNotesFromCarriageWithVariableFrequencyDrive(logFile.NumberOfRecordsFromCarriageWithVariableFrequencyDrive);
+                SetNotesFromCarriageWithSoftStartup(logFile.NumberOfRecordsFromCarriageWithSoftStartup);
+
+                SetNumberOfNumericData(logFile.NumberOfRecordsWithNumericData);
+                SetNumberOfEventsData(logFile.NumberOfRecordsWithEventsData);
+
                 LogFileType.IsFileOpened = true;
             }
         }
@@ -98,7 +107,7 @@ namespace LogParser.ViewModel
 
         private void OpenTableViewClick()
         {
-            var vm = new TableDataViewModel(logFile.Result);
+            var vm = new TableDataViewModel(logFile.ListOfVoltageA);
             var connectSettingView = new TableDataView
             {
                 DataContext = vm

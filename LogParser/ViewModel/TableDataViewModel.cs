@@ -9,22 +9,40 @@ namespace LogParser.ViewModel
     {
         public event EventHandler OnRequestClose;
 
-        public List<int> LogFileContent;
-        public List<TableData> Tables { get; set; }
+        public List<List<int>> AllLogFileData;
 
-        public TableDataViewModel(List<int> LogFileContent)
+        public ObservableCollection<TableData> Tables { get; set; }
+
+        public TableDataViewModel(List<List<int>> AllLogFileData)
         {
-            this.LogFileContent = LogFileContent;
+            this.AllLogFileData = AllLogFileData;
             OutputEventData();
         }
 
         private void OutputEventData()
         {
-            Tables = new List<TableData>();
-            for (int i = 0; i < LogFileContent.Count; i++)
+            Tables = new ObservableCollection<TableData>();
+
+            for (int j = 0; j < AllLogFileData[0].Count; j++)
             {
-                Tables.Add(new TableData() { VoltageA = LogFileContent[i] });
+                Tables.Add(new TableData()
+                {
+                    VoltageA = AllLogFileData[0][j],
+                    VoltageB = AllLogFileData[1][j],
+                    VoltageC = AllLogFileData[2][j],
+
+                    AmperageA = AllLogFileData[3][j],
+                    AmperageB = AllLogFileData[4][j],
+                    AmperageC = AllLogFileData[5][j],
+
+                    Loil = AllLogFileData[6][j],
+                    Toil = AllLogFileData[7][j],
+                    Poil = AllLogFileData[8][j],
+
+                    ThyristorTemperature = AllLogFileData[9][j],
+                });
             }
+
         }
     }
 }

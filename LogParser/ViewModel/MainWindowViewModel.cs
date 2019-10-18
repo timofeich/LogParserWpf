@@ -111,7 +111,7 @@ namespace LogParser.ViewModel
 
         private void OpenTableViewClick()
         {
-            var vm = new TableDataViewModel(logFile.ListOfVoltageA);
+            var vm = new TableDataViewModel(logFile.AllDataFromLogFile);
             var connectSettingView = new TableDataView
             {
                 DataContext = vm

@@ -16,9 +16,26 @@ namespace LogParser.ViewModel
         public string NumberOfRecordsFromCarriageWithSoftStartup { get; set; }
         public string NumberOfRecordsWithNumericData { get; set; }
         public string NumberOfRecordsWithEventsData { get; set; }
-        public List<int> ListOfVoltageA = new List<int>(); 
-        public List<int> ListOfVoltageB { get; set; }
-        public List<int> ListOfVoltageC { get; set; }
+
+        public List<List<int>> AllDataFromLogFile = new List<List<int>>();
+
+        private List<DateTime> DateOfFileCreationList = new List<DateTime>();
+        private List<DateTime> DateOfFirstMessageInRequestList = new List<DateTime>();
+        private List<DateTime> DateOfLastMessageInRequestList = new List<DateTime>();
+
+        private List<int> VoltageAList = new List<int>();
+        private List<int> VoltageBList = new List<int>();
+        private List<int> VoltageCList = new List<int>();
+
+        private List<int> AmperageAList = new List<int>();
+        private List<int> AmperageBList = new List<int>();
+        private List<int> AmperageCList = new List<int>();
+
+        private List<int> LoilList = new List<int>();
+        private List<int> ToilList = new List<int>();
+        private List<int> PoilList = new List<int>();
+
+        private List<int> TemperatureList = new List<int>();
 
         private int EventCounter = 0;
         private int NumericDataCounter = 0;
@@ -68,11 +85,26 @@ namespace LogParser.ViewModel
                 {
                     ParseRequest(request);
                 }
+
+                AllDataFromLogFile.Add(VoltageAList);
+                AllDataFromLogFile.Add(VoltageBList);
+                AllDataFromLogFile.Add(VoltageCList);
+
+                AllDataFromLogFile.Add(AmperageAList);
+                AllDataFromLogFile.Add(AmperageBList);
+                AllDataFromLogFile.Add(AmperageCList);
+
+                AllDataFromLogFile.Add(LoilList);
+                AllDataFromLogFile.Add(ToilList);
+                AllDataFromLogFile.Add(PoilList);
+
+                AllDataFromLogFile.Add(TemperatureList);
             }
         }
 
         private void ParseRequest(byte[] request)
         {
+
             //byte[] requestTitle = { request[0], request[1], request[2], request[3] };
 
             byte[] dateOfFirstRequest = { request[4], request[5], request[6], request[7] };
@@ -94,9 +126,9 @@ namespace LogParser.ViewModel
                 byte[] VoltageB = { request[23], request[24] };
                 byte[] VoltageC = { request[25], request[26] };
 
-                byte[] Ia = { request[27], request[28] };
-                byte[] Ib = { request[29], request[30] };
-                byte[] Ic = { request[31], request[32] };
+                byte[] AmperageA = { request[27], request[28] };
+                byte[] AmperageB = { request[29], request[30] };
+                byte[] AmperageC = { request[31], request[32] };
 
                 byte[] Loil = { request[33], request[34] };
                 byte[] Toil = { request[35], request[36] };
@@ -105,16 +137,32 @@ namespace LogParser.ViewModel
                 byte Temperature = request[38];
 
                 int currentVoltageA = ConvertBytesArrayToInt16Value(VoltageA);
+                int currentVoltageB = ConvertBytesArrayToInt16Value(VoltageB);
+                int currentVoltageC = ConvertBytesArrayToInt16Value(VoltageC);
 
-                ListOfVoltageA.Add(currentVoltageA);
-                //ListOfVoltageB.Add(ConvertBytesArrayToInt16Value(VoltageB));
-                //ListOfVoltageC.Add(ConvertBytesArrayToInt16Value(VoltageC));
+                int currentAmperageA = ConvertBytesArrayToInt16Value(AmperageA);
+                int currentAmperageB = ConvertBytesArrayToInt16Value(AmperageB);
+                int currentAmperageC = ConvertBytesArrayToInt16Value(AmperageC);
 
-                //Console.WriteLine(ConvertBytesArrayToInt16Value(Ua) + "  " + ConvertBytesArrayToInt16Value(Ub) + "   "
-                //    + ConvertBytesArrayToInt16Value(Uc) + "   " + ConvertBytesArrayToInt16Value(Ia) + "   " +
-                //    ConvertBytesArrayToInt16Value(Ib) + "   " + ConvertBytesArrayToInt16Value(Ic) + "    " +
-                //    ConvertBytesArrayToInt16Value(Loil) + "   " + ConvertBytesArrayToInt16Value(Toil) + "   " +
-                //    Poil + "  " + Temperature);
+                int currentLoil = ConvertBytesArrayToInt16Value(Loil);
+                int currentToil = ConvertBytesArrayToInt16Value(Toil);
+
+                int currentPoil = Convert.ToInt32(Poil);
+                int currentTemperature = Convert.ToInt32(Temperature);
+
+                VoltageAList.Add(currentVoltageA);
+                VoltageBList.Add(currentVoltageB);
+                VoltageCList.Add(currentVoltageC);
+
+                AmperageAList.Add(currentAmperageA);
+                AmperageBList.Add(currentAmperageB);
+                AmperageCList.Add(currentAmperageC);
+
+                LoilList.Add(currentLoil);
+                ToilList.Add(currentToil);
+
+                PoilList.Add(currentPoil);
+                TemperatureList.Add(currentTemperature);
             }
             else if (request[17] == eventIdentifier)
             {

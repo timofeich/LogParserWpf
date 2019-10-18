@@ -1,6 +1,8 @@
 ﻿using LogParser.Model;
 using LogParser.View;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace LogParser.ViewModel
@@ -28,9 +30,11 @@ namespace LogParser.ViewModel
         {
             LogFileInformation = new LogFileInformation { };
 
-            LogFileType = new LogFileType {  };
+            LogFileType = new LogFileType { };
+
+
             LogFileType.IsCarriageWithSoftStartup = true;
-            LogFileType.IsFileOpened = false;                    
+            LogFileType.IsFileOpened = false;
         }
 
         private void BindingCommandsToClickMethods()

@@ -8,7 +8,6 @@ namespace LogParser.View
     /// </summary>
     public partial class TableDataView : Window
     {
-        private TableDataViewModel _viewModel;
         public TableDataView()
         {
             InitializeComponent();

@@ -16,10 +16,10 @@ namespace LogParser.ViewModel
         public TableDataViewModel(List<List<int>> AllLogFileData)
         {
             this.AllLogFileData = AllLogFileData;
-            OutputEventData();
+            OutputTableData();
         }
 
-        private void OutputEventData()
+        private void OutputTableData()
         {
             Tables = new ObservableCollection<TableData>();
 

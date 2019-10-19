@@ -46,6 +46,20 @@ namespace LogParser.Model
             }
         }
 
+        private string eventStatus;
+        public string EventStatus
+        {
+            get { return eventStatus; }
+            set
+            {
+                if (eventStatus != value)
+                {
+                    eventStatus = value;
+                    OnPropertyChanged("EventStatus");
+                }
+            }
+        }
+
         #region Implement INotifyPropertyChanged members
         public event PropertyChangedEventHandler PropertyChanged;
 

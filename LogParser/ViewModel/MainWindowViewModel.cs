@@ -122,7 +122,7 @@ namespace LogParser.ViewModel
 
         private void OpenEventViewClick()
         {
-            var vm = new EventDataViewModel(logFile.Result);
+            var vm = new EventDataViewModel(logFile.AllEventsFromLogFile);
             var eventDataView = new EventDataView
             {
                 DataContext = vm

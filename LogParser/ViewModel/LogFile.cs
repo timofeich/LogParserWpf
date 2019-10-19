@@ -18,6 +18,7 @@ namespace LogParser.ViewModel
         public string NumberOfRecordsWithEventsData { get; set; }
 
         public List<List<int>> AllDataFromLogFile = new List<List<int>>();
+        public List<List<string>> AllEventsFromLogFile = new List<List<string>>();
 
         private List<DateTime> DateOfFileCreationList = new List<DateTime>();
         private List<DateTime> DateOfFirstMessageInRequestList = new List<DateTime>();
@@ -37,6 +38,9 @@ namespace LogParser.ViewModel
 
         private List<int> TemperatureList = new List<int>();
 
+        private List<string> EventMessageList = new List<string>();
+        private List<string> EventStatusList = new List<string>();
+ 
         private int EventCounter = 0;
         private int NumericDataCounter = 0;
 
@@ -86,6 +90,9 @@ namespace LogParser.ViewModel
                     ParseRequest(request);
                 }
 
+                //AllDataFromLogFile.Add(DateOfFirstMessageInRequestList);
+                //AllDataFromLogFile.Add(DateOfLastMessageInRequestList);
+
                 AllDataFromLogFile.Add(VoltageAList);
                 AllDataFromLogFile.Add(VoltageBList);
                 AllDataFromLogFile.Add(VoltageCList);
@@ -99,6 +106,9 @@ namespace LogParser.ViewModel
                 AllDataFromLogFile.Add(PoilList);
 
                 AllDataFromLogFile.Add(TemperatureList);
+
+                AllEventsFromLogFile.Add(EventMessageList);
+                AllEventsFromLogFile.Add(EventStatusList);
             }
         }
 
@@ -150,6 +160,9 @@ namespace LogParser.ViewModel
                 int currentPoil = Convert.ToInt32(Poil);
                 int currentTemperature = Convert.ToInt32(Temperature);
 
+                //DateOfFirstMessageInRequestList.Add(UnixTimeStampToDateTime(date2));
+                //DateOfLastMessageInRequestList.Add(UnixTimeStampToDateTime(date3));
+
                 VoltageAList.Add(currentVoltageA);
                 VoltageBList.Add(currentVoltageB);
                 VoltageCList.Add(currentVoltageC);
@@ -167,7 +180,7 @@ namespace LogParser.ViewModel
             else if (request[17] == eventIdentifier)
             {
                 string infoAboutEvent = Encoding.Default.GetString(request, 19, 64);
-                ParseEventDataFromLogFile(infoAboutEvent);
+                ParseEventDataFromLogFile(infoAboutEvent);                
             }
             else
             {
@@ -196,16 +209,17 @@ namespace LogParser.ViewModel
         public void ParseEventDataFromLogFile(string eventData)
         {
             Regex dateInEventData = new Regex(@"\d\d:\d\d:\d\d (\d\d)/(\d\d)/(\d\d)");
-            Regex statusInEventData = new Regex(@".{40}");
-            Regex messageInEventData = new Regex(@"A|P");
+            Regex messageInEventData = new Regex(@".{40}");
+            Regex statusInEventData = new Regex(@"A|P");
 
-            Match eventDataMatch = dateInEventData.Match(eventData);
+            Match eventDateMatch = dateInEventData.Match(eventData);
             Match statusDataMatch = statusInEventData.Match(eventData);
             Match messageDataMatch = messageInEventData.Match(eventData);
 
-            if (eventDataMatch.Success)
+            if (eventDateMatch.Success)
             {
-                //Console.WriteLine("Message: " + statusDataMatch + " Date: " + eventDataMatch + " Status: " + messageDataMatch);
+                EventMessageList.Add(Convert.ToString(messageDataMatch));
+                EventStatusList.Add(Convert.ToString(statusDataMatch)); 
             }
             else
             {

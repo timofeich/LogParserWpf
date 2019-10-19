@@ -1,5 +1,6 @@
 ﻿using LogParser.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace LogParser.ViewModel
@@ -7,29 +8,28 @@ namespace LogParser.ViewModel
     public class EventDataViewModel 
     {
         public event EventHandler OnRequestClose;
-        string[] LogFileContent;
+        List<List<string>> AllEventDataInLogFile;
         public ObservableCollection<EventData> Events { get; set; }
 
-        public EventDataViewModel(string[] LogFileContent)
+        public EventDataViewModel(List<List<string>> AllEventDataInLogFile)
         {
-            Events = new ObservableCollection<EventData>
-            {
-                new EventData { MessageID = 0, TextMessage = "123", MessageDate = "Steven" },
-                new EventData { MessageID = 1, TextMessage = "321", MessageDate = "John" },
-            };
-
-            this.LogFileContent = LogFileContent;
-
-            //EventData event1 = new EventData();          
-            //OutputEventData(event1);
+            this.AllEventDataInLogFile = AllEventDataInLogFile;
+            OutputEventData();
         }
 
-        private void OutputEventData(EventData eventData)
+        private void OutputEventData()
         {
-            eventData.MessageID = 2;
-            eventData.TextMessage = LogFileContent[3];
-            eventData.MessageDate = LogFileContent[0];
-            Events.Add(eventData);
+            Events = new ObservableCollection<EventData>();
+
+            for (int j = 0; j < AllEventDataInLogFile[0].Count; j++)
+            {
+                Events.Add(new EventData()
+                {
+                    MessageID = j,
+                    TextMessage = AllEventDataInLogFile[0][j],
+                    EventStatus = AllEventDataInLogFile[1][j]
+                });
+            }
         }
     }
 }

@@ -12,7 +12,6 @@ namespace LogParser.ViewModel
         public string FileName { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }
-        public string NumberOfRecordsFromCarriageWithVariableFrequencyDrive { get; set; }
         public string NumberOfRecordsFromCarriageWithSoftStartup { get; set; }
         public string NumberOfRecordsWithNumericData { get; set; }
         public string NumberOfRecordsWithEventsData { get; set; }
@@ -92,6 +91,13 @@ namespace LogParser.ViewModel
 
                 //AllDataFromLogFile.Add(DateOfFirstMessageInRequestList);
                 //AllDataFromLogFile.Add(DateOfLastMessageInRequestList);
+                StartDate = DateOfFirstMessageInRequestList[0];
+                FinishDate = DateOfLastMessageInRequestList[DateOfLastMessageInRequestList.Count - 1];
+
+                NumberOfRecordsWithNumericData = Convert.ToString(VoltageAList.Count);
+                NumberOfRecordsWithEventsData = Convert.ToString(EventMessageList.Count);
+
+                NumberOfRecordsFromCarriageWithSoftStartup = Convert.ToString(VoltageAList.Count + EventMessageList.Count);
 
                 AllDataFromLogFile.Add(VoltageAList);
                 AllDataFromLogFile.Add(VoltageBList);
@@ -160,8 +166,8 @@ namespace LogParser.ViewModel
                 int currentPoil = Convert.ToInt32(Poil);
                 int currentTemperature = Convert.ToInt32(Temperature);
 
-                //DateOfFirstMessageInRequestList.Add(UnixTimeStampToDateTime(date2));
-                //DateOfLastMessageInRequestList.Add(UnixTimeStampToDateTime(date3));
+                DateOfFirstMessageInRequestList.Add(UnixTimeStampToDateTime(date2));
+                DateOfLastMessageInRequestList.Add(UnixTimeStampToDateTime(date3));
 
                 VoltageAList.Add(currentVoltageA);
                 VoltageBList.Add(currentVoltageB);

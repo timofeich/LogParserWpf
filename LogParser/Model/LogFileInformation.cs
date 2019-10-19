@@ -32,20 +32,6 @@ namespace LogParser.Model
             }
         }
 
-        private string notesFromCarriageWithVariableFrequencyDrive;
-        public string NotesFromCarriageWithVariableFrequencyDrive
-        {
-            get { return notesFromCarriageWithVariableFrequencyDrive; }
-            set
-            {
-                if (notesFromCarriageWithVariableFrequencyDrive != value)
-                {
-                    notesFromCarriageWithVariableFrequencyDrive = value;
-                    OnPropertyChanged("NotesFromCarriageWithVariableFrequencyDrive");
-                }
-            }
-        }
-
         private string notesFromCarriageWithSoftStartup;
         public string NotesFromCarriageWithSoftStartup
         {

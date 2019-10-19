@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LogParser"
         mc:Ignorable="d"
         Background="LightGray" WindowStartupLocation="CenterScreen"
-        Title="LogParser" Height="233.459" Width="552">
+        Title="LogParser" Height="215.459" Width="552">
     <Grid>
         <StackPanel>
             <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
@@ -27,7 +27,6 @@
                     <StackPanel Margin="5">
                         <TextBlock Text = "{Binding LogFileInformation.FileName}"/>
                         <TextBlock Text = "{Binding LogFileInformation.DatePeriod}"/>
-                        <TextBlock Text = "{Binding LogFileInformation.NotesFromCarriageWithVariableFrequencyDrive}"/>
                         <TextBlock Text = "{Binding LogFileInformation.NotesFromCarriageWithSoftStartup}"/>
                         <TextBlock Text = "{Binding LogFileInformation.NumericData}"/>
                         <TextBlock Text = "{Binding LogFileInformation.EventsData}"/>

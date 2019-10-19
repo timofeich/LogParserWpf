@@ -48,12 +48,6 @@ namespace LogParser.ViewModel
             LogFileInformation.DatePeriod = "Период:  с " + startDate + " по " + finishDate;
         }
 
-        private void SetNotesFromCarriageWithVariableFrequencyDrive(string notesCount)
-        {
-            LogFileInformation.NotesFromCarriageWithVariableFrequencyDrive = "Записей от вагона с частотно регулируемым " +
-                "приводом (ПЧ):  " + notesCount;
-        }
-
         private void SetNotesFromCarriageWithSoftStartup(string notesCount)
         {
             LogFileInformation.NotesFromCarriageWithSoftStartup = "Записей от вагона с устройством плавного " +
@@ -79,7 +73,6 @@ namespace LogParser.ViewModel
 
                 SetDatePeriod(logFile.StartDate, logFile.FinishDate);
 
-                SetNotesFromCarriageWithVariableFrequencyDrive(logFile.NumberOfRecordsFromCarriageWithVariableFrequencyDrive);
                 SetNotesFromCarriageWithSoftStartup(logFile.NumberOfRecordsFromCarriageWithSoftStartup);
 
                 SetNumberOfNumericData(logFile.NumberOfRecordsWithNumericData);

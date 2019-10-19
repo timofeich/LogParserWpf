@@ -1,8 +1,6 @@
 ﻿using LogParser.Model;
 using LogParser.View;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace LogParser.ViewModel
@@ -10,12 +8,10 @@ namespace LogParser.ViewModel
     class MainWindowViewModel
     {
         public static LogFileInformation LogFileInformation { get; set; }
-        public static LogFileType LogFileType { get; set; }
 
         LogFile logFile = new LogFile();
         public ICommand OpenCommand { get; set; }
         public ICommand CloseCommand { get; set; }
-        public ICommand SaveCommand { get; set; }
         public ICommand OpenTableViewCommand { get; set; }
         public ICommand OpenEventViewCommand { get; set; }
         public ICommand OpenTableAndEventViewCommand { get; set; }
@@ -29,19 +25,13 @@ namespace LogParser.ViewModel
         private void InitializeStartupData()
         {
             LogFileInformation = new LogFileInformation { };
-
-            LogFileType = new LogFileType { };
-
-
-            LogFileType.IsCarriageWithSoftStartup = true;
-            LogFileType.IsFileOpened = false;
+            LogFileInformation.IsFileOpened = false;
         }
 
         private void BindingCommandsToClickMethods()
         {
             OpenCommand = new Command(arg => OpenClick());
             CloseCommand = new Command(arg => CloseClick());
-            SaveCommand = new Command(arg => SaveClick());
 
             OpenTableViewCommand = new Command(arg => OpenTableViewClick());
             OpenEventViewCommand = new Command(arg => OpenEventViewClick());
@@ -95,18 +85,13 @@ namespace LogParser.ViewModel
                 SetNumberOfNumericData(logFile.NumberOfRecordsWithNumericData);
                 SetNumberOfEventsData(logFile.NumberOfRecordsWithEventsData);
 
-                LogFileType.IsFileOpened = true;
+                LogFileInformation.IsFileOpened = true;
             }
         }
 
         private void CloseClick()
         {
-            LogFileType.IsFileOpened = false;
-        }
-
-        private void SaveClick()
-        {
-            throw new NotImplementedException();
+            LogFileInformation.IsFileOpened = false;
         }
 
         private void OpenTableViewClick()
@@ -133,7 +118,7 @@ namespace LogParser.ViewModel
 
         private void OpenTableAndEventViewClick()
         {
-            var vm = new TableAndEventDataViewModel(logFile.Result);
+            var vm = new TableAndEventDataViewModel();
             var tableAndEventDataView = new TableAndEventDataView
             {
                 DataContext = vm

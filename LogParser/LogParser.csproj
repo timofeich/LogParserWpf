@@ -56,7 +56,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\EventData.cs" />
-    <Compile Include="Model\TableAndEventData.cs" />
     <Compile Include="Model\TableData.cs" />
     <Compile Include="ViewModel\EventDataViewModel.cs" />
     <Compile Include="ViewModel\LogFile.cs" />
@@ -81,7 +80,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\LogFileInformation.cs" />
-    <Compile Include="Model\LogFileType.cs" />
     <Compile Include="ViewModel\Command.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\EventDataView.xaml.cs">

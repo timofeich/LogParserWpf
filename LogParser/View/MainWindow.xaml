@@ -6,33 +6,22 @@
         xmlns:local="clr-namespace:LogParser"
         mc:Ignorable="d"
         Background="LightGray" WindowStartupLocation="CenterScreen"
-        Title="LogParser" Height="233.459" Width="900">
+        Title="LogParser" Height="233.459" Width="552">
     <Grid>
         <StackPanel>
             <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
                 <MenuItem Header="Файл">
                     <MenuItem Header="Открыть" Command = "{Binding OpenCommand}"/>
-                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding LogFileType.IsFileOpened}"/>
-                    <MenuItem Header="Сохранить" Command = "{Binding SaveCommand}" IsEnabled="{Binding LogFileType.IsFileOpened}"/>
+                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
+                    <MenuItem Header="Сохранить" Command = "{Binding SaveCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
                 </MenuItem>
                 <MenuItem Header="Просмотр">
-                    <MenuItem Header = "Таблица" Command="{Binding OpenTableViewCommand}" IsEnabled="{Binding LogFileType.IsFileOpened}"/>
-                    <MenuItem Header = "События" Command="{Binding OpenEventViewCommand}" IsEnabled="{Binding LogFileType.IsFileOpened}"/>
-                    <MenuItem Header = "Таблица + События" Command="{Binding OpenTableAndEventViewCommand}" IsEnabled="{Binding LogFileType.IsFileOpened}" />
+                    <MenuItem Header = "Таблица" Command="{Binding OpenTableViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
+                    <MenuItem Header = "События" Command="{Binding OpenEventViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
+                    <MenuItem Header = "Таблица + События" Command="{Binding OpenTableAndEventViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}" />
                 </MenuItem>
             </Menu>
             <Grid >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="1.3*"/>
-                </Grid.ColumnDefinitions>
-
-                <GroupBox Header="Источник Лог файла"  Grid.Column="0" Background="White" TextBlock.FontSize="15" Margin="5">
-                    <StackPanel Margin="5">
-                        <RadioButton Content="Вагон с частотно регулируемым приводом (ПЧ)" IsChecked="{Binding LogFileType.IsCarriageWithVariableFrequencyDrive}" GroupName="LogFileType" Margin="0 10"/>
-                        <RadioButton Content="Вагон с устройством плавного пуска (УПП)" IsChecked="{Binding LogFileType.IsCarriageWithSoftStartup}" GroupName="LogFileType" Margin="0 10"/>
-                    </StackPanel>
-                </GroupBox>
 
                 <GroupBox Header="Содержание Лог файла"  Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5">
                     <StackPanel Margin="5">

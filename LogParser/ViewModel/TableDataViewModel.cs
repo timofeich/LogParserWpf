@@ -1,5 +1,6 @@
 ﻿using LogParser.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -27,19 +28,21 @@ namespace LogParser.ViewModel
             {
                 Tables.Add(new TableData()
                 {
-                    VoltageA = AllLogFileData[0][j],
-                    VoltageB = AllLogFileData[1][j],
-                    VoltageC = AllLogFileData[2][j],
+                    TimeOfRequest = Convert.ToString(LogFile.UnixTimeStampToDateTime(AllLogFileData[0][j])),
 
-                    AmperageA = AllLogFileData[3][j],
-                    AmperageB = AllLogFileData[4][j],
-                    AmperageC = AllLogFileData[5][j],
+                    VoltageA = AllLogFileData[1][j],
+                    VoltageB = AllLogFileData[2][j],
+                    VoltageC = AllLogFileData[3][j],
 
-                    Loil = AllLogFileData[6][j],
-                    Toil = AllLogFileData[7][j],
-                    Poil = AllLogFileData[8][j],
+                    AmperageA = AllLogFileData[4][j],
+                    AmperageB = AllLogFileData[5][j],
+                    AmperageC = AllLogFileData[6][j],
 
-                    ThyristorTemperature = AllLogFileData[9][j],
+                    Loil = AllLogFileData[7][j],
+                    Toil = AllLogFileData[8][j],
+                    Poil = AllLogFileData[9][j],
+
+                    ThyristorTemperature = AllLogFileData[10][j],
                 });
             }
 

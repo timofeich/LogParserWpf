@@ -1,5 +1,6 @@
 ﻿using LogParser.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -27,7 +28,8 @@ namespace LogParser.ViewModel
                 {
                     MessageID = j,
                     TextMessage = AllEventDataInLogFile[0][j],
-                    EventStatus = AllEventDataInLogFile[1][j]
+                    EventStatus = AllEventDataInLogFile[1][j],
+                    MessageDate = AllEventDataInLogFile[2][j]
                 });
             }
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -20,8 +21,8 @@ namespace LogParser.ViewModel
         public List<List<string>> AllEventsFromLogFile = new List<List<string>>();
 
         private List<DateTime> DateOfFileCreationList = new List<DateTime>();
-        private List<DateTime> DateOfFirstMessageInRequestList = new List<DateTime>();
-        private List<DateTime> DateOfLastMessageInRequestList = new List<DateTime>();
+        private List<int> DateOfFirstMessageInRequestList = new List<int>();
+        private List<int> DateOfLastMessageInRequestList = new List<int>();
 
         private List<int> VoltageAList = new List<int>();
         private List<int> VoltageBList = new List<int>();
@@ -39,9 +40,7 @@ namespace LogParser.ViewModel
 
         private List<string> EventMessageList = new List<string>();
         private List<string> EventStatusList = new List<string>();
- 
-        private int EventCounter = 0;
-        private int NumericDataCounter = 0;
+        private List<string> EventDataList = new List<string>();
 
         public string[] Result;
         public bool IsOpened;
@@ -89,15 +88,15 @@ namespace LogParser.ViewModel
                     ParseRequest(request);
                 }
 
-                //AllDataFromLogFile.Add(DateOfFirstMessageInRequestList);
-                //AllDataFromLogFile.Add(DateOfLastMessageInRequestList);
-                StartDate = DateOfFirstMessageInRequestList[0];
-                FinishDate = DateOfLastMessageInRequestList[DateOfLastMessageInRequestList.Count - 1];
+                StartDate = UnixTimeStampToDateTime(DateOfFirstMessageInRequestList[0]);
+                FinishDate = UnixTimeStampToDateTime(DateOfLastMessageInRequestList[DateOfLastMessageInRequestList.Count - 1]);
 
                 NumberOfRecordsWithNumericData = Convert.ToString(VoltageAList.Count);
                 NumberOfRecordsWithEventsData = Convert.ToString(EventMessageList.Count);
 
                 NumberOfRecordsFromCarriageWithSoftStartup = Convert.ToString(VoltageAList.Count + EventMessageList.Count);
+
+                AllDataFromLogFile.Add(DateOfFirstMessageInRequestList);
 
                 AllDataFromLogFile.Add(VoltageAList);
                 AllDataFromLogFile.Add(VoltageBList);
@@ -115,12 +114,12 @@ namespace LogParser.ViewModel
 
                 AllEventsFromLogFile.Add(EventMessageList);
                 AllEventsFromLogFile.Add(EventStatusList);
+                AllEventsFromLogFile.Add(EventDataList);
             }
         }
 
         private void ParseRequest(byte[] request)
         {
-
             //byte[] requestTitle = { request[0], request[1], request[2], request[3] };
 
             byte[] dateOfFirstRequest = { request[4], request[5], request[6], request[7] };
@@ -132,9 +131,6 @@ namespace LogParser.ViewModel
             int date1 = ConvertBytesArrayToIntValue(dateOfFirstRequest);
             int date2 = ConvertBytesArrayToIntValue(dateOfFirstMessage);
             int date3 = ConvertBytesArrayToIntValue(dateOfLastMessage);
-
-            //Console.WriteLine(UnixTimeStampToDateTime(date1) + "    " + UnixTimeStampToDateTime(date2) + "   "
-            //                + UnixTimeStampToDateTime(date3));
 
             if (request[19] == 88 && request[20] == 49)
             {
@@ -166,8 +162,8 @@ namespace LogParser.ViewModel
                 int currentPoil = Convert.ToInt32(Poil);
                 int currentTemperature = Convert.ToInt32(Temperature);
 
-                DateOfFirstMessageInRequestList.Add(UnixTimeStampToDateTime(date2));
-                DateOfLastMessageInRequestList.Add(UnixTimeStampToDateTime(date3));
+                DateOfFirstMessageInRequestList.Add(date2);
+                DateOfLastMessageInRequestList.Add(date3);
 
                 VoltageAList.Add(currentVoltageA);
                 VoltageBList.Add(currentVoltageB);
@@ -194,10 +190,10 @@ namespace LogParser.ViewModel
             }
         }
 
-        public DateTime UnixTimeStampToDateTime(int unixTimeStamp)
+        public static DateTime UnixTimeStampToDateTime(int unixTimeStamp)
         {
             // Unix timestamp is seconds past epoch
-            DateTime dtDateTime = new DateTime(1980, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            DateTime dtDateTime = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToUniversalTime();
             return dtDateTime;
         }
@@ -225,7 +221,8 @@ namespace LogParser.ViewModel
             if (eventDateMatch.Success)
             {
                 EventMessageList.Add(Convert.ToString(messageDataMatch));
-                EventStatusList.Add(Convert.ToString(statusDataMatch)); 
+                EventStatusList.Add(Convert.ToString(statusDataMatch));
+                EventDataList.Add(Convert.ToString(eventDateMatch));
             }
             else
             {

@@ -15,7 +15,7 @@
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Поиск "/>
-                <TextBox Grid.Column="1" Text="Введите данные для поиска"/>
+                <TextBox Grid.Column="1" Text=""/>
                 <Button Grid.Column="2" Content="Найти" Margin="5 0"/>
             </Grid>
 

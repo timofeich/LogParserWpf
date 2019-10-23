@@ -3,31 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpftoolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
+        xmlns:filter="clr-namespace:DataGridFilterLibrary;assembly=DataGridFilterLibrary"
         xmlns:local="clr-namespace:LogParser"
         mc:Ignorable="d"
         Background="LightGray" WindowStartupLocation="CenterScreen"
-        Title="LogParser" Height="215.459" Width="552">
+        Title="LogParser" Height="206.459" Width="678">
     <Grid>
         <StackPanel>
             <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
                 <MenuItem Header="Файл">
                     <MenuItem Header="Открыть" Command = "{Binding OpenCommand}"/>
-                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
-                    <MenuItem Header="Сохранить" Command = "{Binding SaveCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
+                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding IsFileOpened}"/>
+                    <MenuItem Header="Сохранить" Command = "{Binding SaveCommand}" IsEnabled="{Binding IsFileOpened}"/>
                 </MenuItem>
                 <MenuItem Header="Просмотр">
-                    <MenuItem Header = "Данные" Command="{Binding OpenTableViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
+                    <MenuItem Header = "Данные" Command="{Binding OpenTableViewCommand}" IsEnabled="{Binding IsFileOpened}"/>
                 </MenuItem>
             </Menu>
             <Grid >
 
                 <GroupBox Header="Содержание Лог файла"  Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5">
                     <StackPanel Margin="5">
-                        <TextBlock Text = "{Binding LogFileInformation.FileName}"/>
-                        <TextBlock Text = "{Binding LogFileInformation.DatePeriod}"/>
-                        <TextBlock Text = "{Binding LogFileInformation.NotesFromCarriageWithSoftStartup}"/>
-                        <TextBlock Text = "{Binding LogFileInformation.NumericData}"/>
-                        <TextBlock Text = "{Binding LogFileInformation.EventsData}"/>
+                        <TextBlock Text = "{Binding FileName}"/>
+                        <TextBlock Text = "{Binding DatePeriod}"/>
+                        <TextBlock Text = "{Binding NotesFromCarriageWithSoftStartup}"/>
+                        <TextBlock Text = "{Binding NumericData}"/>
+                        <TextBlock Text = "{Binding EventsData}"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>

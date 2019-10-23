@@ -1,6 +1,7 @@
 ﻿using LogParser.ViewModel;
 using System;
 using System.Windows;
+using System.Windows.Data;
 
 namespace LogParser.View
 {
@@ -13,6 +14,7 @@ namespace LogParser.View
         {
             InitializeComponent();
         }
+        
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {

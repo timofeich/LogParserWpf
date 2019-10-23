@@ -25,7 +25,7 @@
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
                         
                                 AutoGenerateColumns="False" IsReadOnly="True"
-                                ItemsSource="{Binding Path=Tables}" x:Name="Grid1" Grid.Row="0">
+                                ItemsSource="{Binding Path=TableDataList}" x:Name="Grid1" Grid.Row="0">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="DateTime" Binding="{Binding TimeOfRequest}" Width="2*">
@@ -146,13 +146,13 @@
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
                         
                                 AutoGenerateColumns="False" IsReadOnly="True"
-                                ItemsSource="{Binding Path=Events}" x:Name="Grid2" Grid.Row="0">
+                                ItemsSource="{Binding Path = EventDataList}" x:Name="Grid2" Grid.Row="0">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding MessageID}" Width="0.2*"/>
-                            <DataGridTextColumn Header="Текст сообщения" Binding="{Binding TextMessage}" Width="3*"/>
-                            <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding MessageDate}" Width="*"/>
-                            <DataGridTextColumn Header="Status" Binding="{Binding EventStatus}" Width="0.3*"/>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Path = ID}" Width="0.2*"/>
+                            <DataGridTextColumn Header="Текст сообщения" Binding="{Binding Path = Message}" Width="3*"/>
+                            <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding Path = Date, StringFormat=dd.MM.yyyy HH:mm:ss}" Width="*"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Path = Status}" Width="0.3*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Orientation="Horizontal" Grid.Row="1">

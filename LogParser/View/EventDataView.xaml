@@ -14,11 +14,11 @@
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Поиск "/>
-                <TextBox Grid.Column="1" Text="" />
+                <TextBox Grid.Column="1" Text="вв" />
                 <Button Grid.Column="2" Content="Найти" Margin="5 0"/>
             </Grid>
 
-            <DataGrid ItemsSource="{Binding Events}" AutoGenerateColumns="False" IsReadOnly="True" Margin="0 10" Height="371">
+            <DataGrid ItemsSource="{Binding Events}" AutoGenerateColumns="False" IsReadOnly="True" Margin="0 10" Height="361">
                 <DataGrid.Columns>
                     
                     <DataGridTextColumn Header="№" Binding="{Binding MessageID}" Width="0.6*">

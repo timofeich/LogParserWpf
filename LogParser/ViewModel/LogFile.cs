@@ -229,7 +229,5 @@ namespace LogParser.ViewModel
                 //Console.WriteLine("Don't find any values");
             }
         }    
-
-
     }
 }

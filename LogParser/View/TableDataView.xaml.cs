@@ -1,4 +1,5 @@
 ﻿using LogParser.ViewModel;
+using System;
 using System.Windows;
 
 namespace LogParser.View
@@ -11,6 +12,16 @@ namespace LogParser.View
         public TableDataView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            double newSize;
+
+            if (double.TryParse(txtFontSize.Text, out newSize))
+            {
+                FontSize = newSize;
+            }
         }
     }
 }

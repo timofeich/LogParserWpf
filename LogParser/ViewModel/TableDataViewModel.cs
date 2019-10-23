@@ -12,12 +12,17 @@ namespace LogParser.ViewModel
 
         public List<List<int>> AllLogFileData;
 
+        public List<List<string>> AllEventDataInLogFile;
+        public ObservableCollection<EventData> Events { get; set; }
         public ObservableCollection<TableData> Tables { get; set; }
 
-        public TableDataViewModel(List<List<int>> AllLogFileData)
+        public TableDataViewModel(List<List<int>> AllLogFileData, List<List<string>> AllEventDataInLogFile)
         {
             this.AllLogFileData = AllLogFileData;
+            this.AllEventDataInLogFile = AllEventDataInLogFile;
+
             OutputTableData();
+            OutputEventData();
         }
 
         private void OutputTableData()
@@ -45,7 +50,22 @@ namespace LogParser.ViewModel
                     ThyristorTemperature = AllLogFileData[10][j],
                 });
             }
+        }
 
+        private void OutputEventData()
+        {
+            Events = new ObservableCollection<EventData>();
+
+            for (int j = 0; j < AllEventDataInLogFile[0].Count; j++)
+            {
+                Events.Add(new EventData()
+                {
+                    MessageID = j,
+                    TextMessage = AllEventDataInLogFile[0][j],
+                    EventStatus = AllEventDataInLogFile[1][j],
+                    MessageDate = AllEventDataInLogFile[2][j]
+                });
+            }
         }
     }
 }

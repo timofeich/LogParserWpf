@@ -13,8 +13,6 @@ namespace LogParser.ViewModel
         public ICommand OpenCommand { get; set; }
         public ICommand CloseCommand { get; set; }
         public ICommand OpenTableViewCommand { get; set; }
-        public ICommand OpenEventViewCommand { get; set; }
-        public ICommand OpenTableAndEventViewCommand { get; set; }
 
         public MainWindowViewModel()
         {
@@ -34,8 +32,6 @@ namespace LogParser.ViewModel
             CloseCommand = new Command(arg => CloseClick());
 
             OpenTableViewCommand = new Command(arg => OpenTableViewClick());
-            OpenEventViewCommand = new Command(arg => OpenEventViewClick());
-            OpenTableAndEventViewCommand = new Command(arg => OpenTableAndEventViewClick());
         }
 
         private void SetFileName(string fileName)
@@ -89,35 +85,13 @@ namespace LogParser.ViewModel
 
         private void OpenTableViewClick()
         {
-            var vm = new TableDataViewModel(logFile.AllDataFromLogFile);
+            var vm = new TableDataViewModel(logFile.AllDataFromLogFile, logFile.AllEventsFromLogFile);
             var connectSettingView = new TableDataView
             {
                 DataContext = vm
             };
             vm.OnRequestClose += (s, e) => connectSettingView.Close();
             connectSettingView.ShowDialog();
-        }
-
-        private void OpenEventViewClick()
-        {
-            var vm = new EventDataViewModel(logFile.AllEventsFromLogFile);
-            var eventDataView = new EventDataView
-            {
-                DataContext = vm
-            };
-            vm.OnRequestClose += (s, e) => eventDataView.Close();
-            eventDataView.ShowDialog();
-        }
-
-        private void OpenTableAndEventViewClick()
-        {
-            var vm = new TableAndEventDataViewModel();
-            var tableAndEventDataView = new TableAndEventDataView
-            {
-                DataContext = vm
-            };
-            vm.OnRequestClose += (s, e) => tableAndEventDataView.Close();
-            tableAndEventDataView.ShowDialog();
         }
     }
 }

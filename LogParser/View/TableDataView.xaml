@@ -25,7 +25,7 @@
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
                         
                                 AutoGenerateColumns="False" IsReadOnly="True"
-                                ItemsSource="{Binding Path=Tables}" Grid.Row="0">
+                                ItemsSource="{Binding Path=Tables}" x:Name="Grid1" Grid.Row="0">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="DateTime" Binding="{Binding TimeOfRequest}" Width="2*">
@@ -122,7 +122,7 @@
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
 
                         <Label Margin="0,1,0,0">Всего отображено строк:</Label>
-                        <Label Margin="0,1,0,0" Content="{Binding ElementName=myGrid1, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
+                        <Label Margin="0,1,0,0" Content="{Binding ElementName=Grid1, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
 
                         <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
                         <TextBox Text="{Binding FontSize, Mode=OneTime, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" x:Name="txtFontSize" Margin="2,5,0,2"/>
@@ -132,11 +132,72 @@
             </TabItem>
             
             <TabItem Header="Таблица значений">
-                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid   filter:DataGridExtensions.UseBackgroundWorkerForFiltering="True"
+                                filter:DataGridExtensions.IsClearButtonVisible="False"
+                        
+                                ColumnHeaderStyle="{StaticResource {ComponentResourceKey 
+		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
+		                                ResourceId=DataGridHeaderFilterControlStyle}}"
+                        
+                                AutoGenerateColumns="False" IsReadOnly="True"
+                                ItemsSource="{Binding Path=Events}" x:Name="Grid2" Grid.Row="0">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding MessageID}" Width="0.2*"/>
+                            <DataGridTextColumn Header="Текст сообщения" Binding="{Binding TextMessage}" Width="3*"/>
+                            <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding MessageDate}" Width="*"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding EventStatus}" Width="0.3*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+
+                        <Label Margin="0,1,0,0">Всего отображено строк:</Label>
+                        <Label Margin="0,1,0,0" Content="{Binding ElementName=Grid2, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
+
+                        <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
+                        <TextBox Text="{Binding FontSize, Mode=OneTime, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>
+                        <Button Margin="2,2,0,0" Click="Button_Click_1" Height="26" VerticalAlignment="Top">Задать новый размер шрифта</Button>
+                    </StackPanel>
+                </Grid>
             </TabItem>
 
             <TabItem Header="Таблица данных и значений">
-                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid   filter:DataGridExtensions.UseBackgroundWorkerForFiltering="True"
+                                filter:DataGridExtensions.IsClearButtonVisible="False"
+                        
+                                ColumnHeaderStyle="{StaticResource {ComponentResourceKey 
+		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
+		                                ResourceId=DataGridHeaderFilterControlStyle}}"
+                        
+                                AutoGenerateColumns="False" IsReadOnly="True"
+                                 x:Name="Grid3" Grid.Row="0">
+
+                        <DataGrid.Columns>
+                            
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+
+                        <Label Margin="0,1,0,0">Всего отображено строк:</Label>
+                        <Label Margin="0,1,0,0" Content="{Binding ElementName=Grid2, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
+
+                        <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
+                        <TextBox Text="{Binding FontSize, Mode=OneTime, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>
+                        <Button Margin="2,2,0,0" Click="Button_Click_1" Height="26" VerticalAlignment="Top">Задать новый размер шрифта</Button>
+                    </StackPanel>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>

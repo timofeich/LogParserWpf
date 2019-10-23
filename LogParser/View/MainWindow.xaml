@@ -16,9 +16,7 @@
                     <MenuItem Header="Сохранить" Command = "{Binding SaveCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
                 </MenuItem>
                 <MenuItem Header="Просмотр">
-                    <MenuItem Header = "Таблица" Command="{Binding OpenTableViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
-                    <MenuItem Header = "События" Command="{Binding OpenEventViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
-                    <MenuItem Header = "Таблица + События" Command="{Binding OpenTableAndEventViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}" />
+                    <MenuItem Header = "Данные" Command="{Binding OpenTableViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
                 </MenuItem>
             </Menu>
             <Grid >

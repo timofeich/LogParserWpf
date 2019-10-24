@@ -6,6 +6,7 @@ namespace LogParser.Model
 {
     public class TableData
     {
+        public int ID { get; set; }
         public DateTime Date { get; set; }
         public int VoltageA { get; set; }
         public int VoltageB { get; set; }

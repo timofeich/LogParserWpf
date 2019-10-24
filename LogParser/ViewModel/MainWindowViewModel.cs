@@ -25,8 +25,14 @@ namespace LogParser.ViewModel
         private string eventsData;
         private bool isFileOpened;
 
+        public static int eventCounter = 0;
+        public static int tableDataCounter = 0;
+
         List<EventData> listEvent = new List<EventData>();
-        List<TableData> listTable= new List<TableData>();
+        List<TableData> listTable = new List<TableData>();
+
+        public static List<DateTime> TableDataDate { get; set; }
+        public static DateTime DateOfMessageInRequest { get; set; }
 
         public string[] Result;
 
@@ -167,12 +173,13 @@ namespace LogParser.ViewModel
         {
             SetFileName(FileName);
 
-            //SetDatePeriod(StartDate, FinishDate);
+            SetDatePeriod(tableDataList[0], tableDataList[tableDataList.Count - 1], eventDataList[0], eventDataList[eventDataList.Count - 1]);
 
-            //SetNotesFromCarriageWithSoftStartup(NumberOfRecordsFromCarriageWithSoftStartup);
+            SetNotesFromCarriageWithSoftStartup(tableDataCounter + eventCounter);
 
-            //SetNumberOfNumericData(NumberOfRecordsWithNumericData);
-            //SetNumberOfEventsData(NumberOfRecordsWithEventsData);
+            SetNumberOfNumericData(tableDataCounter);
+
+            SetNumberOfEventsData(eventCounter);
         }
 
         private void SetFileName(string fileName)
@@ -180,23 +187,26 @@ namespace LogParser.ViewModel
             FileName = "Имя файла:  " + fileName;
         }
 
-        private void SetDatePeriod(DateTime startDate, DateTime finishDate)
+        private void SetDatePeriod(TableData startDate, TableData finishDate, EventData startEventData, EventData finishEventData)
         {
-            DatePeriod = "Период:  с " + startDate + " по " + finishDate;
+            DateTime absoluteStartDate = startDate.Date > startEventData.Date ? startEventData.Date : startDate.Date;
+            DateTime absoluteFinishDate = finishDate.Date < finishEventData.Date ? finishEventData.Date : finishDate.Date;
+
+            DatePeriod = "Период:  с " + absoluteStartDate   + " по " + absoluteFinishDate;
         }
 
-        private void SetNotesFromCarriageWithSoftStartup(string notesCount)
+        private void SetNotesFromCarriageWithSoftStartup(int notesCount)
         {
             NotesFromCarriageWithSoftStartup = "Записей от вагона с устройством плавного " +
                 "пуска (УПП):  " + notesCount;
         }
 
-        private void SetNumberOfNumericData(string numberOfNumericData)
+        private void SetNumberOfNumericData(int numberOfNumericData)
         {
             NumericData = "Из них с числовыми данными:  " + numberOfNumericData;
         }
 
-        private void SetNumberOfEventsData(string numberOfEventsData)
+        private void SetNumberOfEventsData(int numberOfEventsData)
         {
             EventsData = "Из них с событиями:  " + numberOfEventsData;
         }
@@ -262,26 +272,38 @@ namespace LogParser.ViewModel
             int date2 = ConvertBytesArrayToIntValue(dateOfFirstMessage);
             int date3 = ConvertBytesArrayToIntValue(dateOfLastMessage);
 
-            SetDateOfMessageSending(UnixTimeStampToDateTime(date2), UnixTimeStampToDateTime(date3));
+            TableDataDate = SetDateOfMessageSending(UnixTimeStampToDateTime(date2), UnixTimeStampToDateTime(date3));
 
-            if (request[19] == 88 && request[20] == 49)
+            int CountOfMessagesInRequest = 0;
+
+            for (int i = 19; i < request.Length; )
             {
-                TableData tbl = new TableData();
-                ParseTableDataFromLogFile(tbl, request);
-                listTable.Add(tbl);
-            }
-            else if (request[17] == eventIdentifier)
-            {
-                string infoAboutEvent = Encoding.Default.GetString(request, 19, 64);
-                
-                EventData emp = new EventData();
-                ParseEventDataFromLogFile(emp, infoAboutEvent);
-                listEvent.Add(emp);
-            }
-            else
-            {
-                //Console.WriteLine("Unknown request");
-            }
+
+
+                if (request[i] == 88)
+                {
+                    DateOfMessageInRequest = TableDataDate[CountOfMessagesInRequest];
+                    CountOfMessagesInRequest++;
+
+                    TableData tbl = new TableData();
+                    ParseTableDataFromLogFile(tbl, request, i);
+                    listTable.Add(tbl);
+                    i += 23;
+                }
+                else if (request[i - 2] == eventIdentifier)
+                {
+                    string infoAboutEvent = Encoding.Default.GetString(request, i, 64);
+
+                    EventData emp = new EventData();
+                    ParseEventDataFromLogFile(emp, infoAboutEvent);
+                    listEvent.Add(emp);
+                    i += 67;
+                }
+                else
+                {
+                    i = request.Length;
+                }
+            }          
         }
 
         private List<DateTime> SetDateOfMessageSending(DateTime dateOfFirstMessage, DateTime dateOfLastMessage)
@@ -317,21 +339,21 @@ namespace LogParser.ViewModel
         }
         #endregion
 
-        public void ParseTableDataFromLogFile(TableData e, byte[] request)
+        public void ParseTableDataFromLogFile(TableData e, byte[] request, int i)
         {
-            byte[] VoltageA = { request[21], request[22] };
-            byte[] VoltageB = { request[23], request[24] };
-            byte[] VoltageC = { request[25], request[26] };
+            byte[] VoltageA = { request[i + 2], request[i + 3] };
+            byte[] VoltageB = { request[i + 4], request[i + 5] };
+            byte[] VoltageC = { request[i + 6], request[i + 7] };
 
-            byte[] AmperageA = { request[27], request[28] };
-            byte[] AmperageB = { request[29], request[30] };
-            byte[] AmperageC = { request[31], request[32] };
+            byte[] AmperageA = { request[i + 8], request[i + 9] };
+            byte[] AmperageB = { request[i + 10], request[i + 11] };
+            byte[] AmperageC = { request[i + 12], request[i + 13] };
 
-            byte[] Loil = { request[33], request[34] };
-            byte[] Toil = { request[35], request[36] };
+            byte[] Loil = { request[i + 14], request[i + 15] };
+            byte[] Toil = { request[i + 16], request[i + 17] };
 
-            byte Poil = request[37];
-            byte Temperature = request[38];
+            byte Poil = request[i + 18];
+            byte Temperature = request[i + 19];
 
             int currentVoltageA = ConvertBytesArrayToInt16Value(VoltageA);
             int currentVoltageB = ConvertBytesArrayToInt16Value(VoltageB);
@@ -347,6 +369,13 @@ namespace LogParser.ViewModel
             int currentPoil = Convert.ToInt32(Poil);
             int currentTemperature = Convert.ToInt32(Temperature);
 
+            tableDataCounter++;
+
+            
+            e.ID = tableDataCounter;
+
+            e.Date = DateOfMessageInRequest;
+
             e.VoltageA = currentVoltageA;
             e.VoltageB = currentVoltageB;
             e.VoltageC = currentVoltageC;
@@ -360,6 +389,7 @@ namespace LogParser.ViewModel
 
             e.Poil = currentPoil;
             e.ThyristorTemperature = currentTemperature;
+
         }
 
         public void ParseEventDataFromLogFile(EventData e, string eventData)
@@ -374,12 +404,20 @@ namespace LogParser.ViewModel
 
             if (eventDateMatch.Success)
             {
-                e.Message = Convert.ToString(messageDataMatch);
-
                 string dateTime = Convert.ToString(eventDateMatch);
+                eventCounter++;
 
+                e.ID = eventCounter;
+                e.Message = Convert.ToString(messageDataMatch);
                 e.Date = DateTime.Parse(dateTime);
-                e.Status = Convert.ToString(statusDataMatch);
+                if (Convert.ToString(statusDataMatch) == "")
+                {
+                    e.Status = "C";
+                }
+                else 
+                {
+                    e.Status = Convert.ToString(statusDataMatch);
+                }
             }
             else
             {

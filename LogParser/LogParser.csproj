@@ -59,6 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\EventData.cs" />
+    <Compile Include="Model\EventJoinedWithTableData.cs" />
     <Compile Include="Model\TableData.cs" />
     <Compile Include="ViewModel\TableDataViewModel.cs" />
     <Compile Include="View\TableDataView.xaml.cs">

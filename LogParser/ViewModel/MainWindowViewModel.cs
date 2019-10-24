@@ -15,6 +15,7 @@ namespace LogParser.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        private ObservableCollection<EventJoinedWithTableData> eventJoinedWithTableDataList;
         private ObservableCollection<TableData> tableDataList;
         private ObservableCollection<EventData> eventDataList;
 
@@ -30,6 +31,8 @@ namespace LogParser.ViewModel
 
         List<EventData> listEvent = new List<EventData>();
         List<TableData> listTable = new List<TableData>();
+        List<EventJoinedWithTableData> listJoin = new List<EventJoinedWithTableData>();
+
 
         public static List<DateTime> TableDataDate { get; set; }
         public static DateTime DateOfMessageInRequest { get; set; }
@@ -44,6 +47,8 @@ namespace LogParser.ViewModel
         {
             tableDataList = new ObservableCollection<TableData>();
             eventDataList = new ObservableCollection<EventData>();
+            eventJoinedWithTableDataList = new ObservableCollection<EventJoinedWithTableData>();
+
             IsFileOpened = false;
             BindingCommandsToClickMethods();
         }
@@ -72,6 +77,19 @@ namespace LogParser.ViewModel
             {
                 eventDataList = value;
                 NotifyPropertyChanged("EventDataList");
+            }
+        }
+
+        public ObservableCollection<EventJoinedWithTableData> EventJoinedWithTableDataList
+        {
+            get
+            {
+                return eventJoinedWithTableDataList;
+            }
+            set
+            {
+                eventJoinedWithTableDataList = value;
+                NotifyPropertyChanged("EventJoinedWithTableDataList");
             }
         }
 
@@ -164,8 +182,21 @@ namespace LogParser.ViewModel
             if (IsFileOpened)
             {
                 SetInfoAboutLogFile();
+                JoinEventAndTable();
                 IsFileOpened = true;
             }
+        }
+
+        private void JoinEventAndTable()
+        { 
+            EventJoinedWithTableData eventJoined = new EventJoinedWithTableData();
+
+            eventJoined.ID = 220;
+
+            listJoin.Add(eventJoined);
+
+            EventJoinedWithTableDataList = new ObservableCollection<EventJoinedWithTableData>(listJoin);
+            //eventJoinedWithTableData.TableDatas = TableDataList;
         }
 
         #region Create class SetInfoAboutLogFile

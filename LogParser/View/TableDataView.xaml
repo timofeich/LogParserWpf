@@ -7,7 +7,7 @@
         xmlns:filter="clr-namespace:DataGridFilterLibrary;assembly=DataGridFilterLibrary"
         xmlns:local="clr-namespace:LogParser.View"
         mc:Ignorable="d" Background="LightGray"
-        Title="Просмотр таблицы" Height="450" Width="878.333">
+        Title="Просмотр таблицы" Height="450" Width="938.333">
     <DockPanel>
         <TabControl Margin="5">
             <TabItem Header="Таблица данных">
@@ -183,113 +183,21 @@
                                 ColumnHeaderStyle="{StaticResource {ComponentResourceKey 
 		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
-                        
+                                
+                                ItemsSource="{Binding Path=EventJoinedWithTableDataList}"
                                 AutoGenerateColumns="False" IsReadOnly="True"
                                  x:Name="Grid3" Grid.Row="0">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.8*">
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Текст сообщения" Binding="{Binding Path = Message}" Width="3*"/>
-                            <DataGridTextColumn Header="Status" Binding="{Binding Path = Status}" Width="0.3*"/>
-                            <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding Path = Date, StringFormat=dd.MM.yyyy HH:mm:ss}" Width="*"/>
-                            
-                            <DataGridTextColumn Header="DateTime" Binding="{Binding Date, StringFormat=dd.MM.yyyy HH:mm:ss}" Width="2*">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Время и дата записи с данными" />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Ua, (V)" Binding="{Binding VoltageA}" Width="*">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Напряжение фазы А. Значение в Вольтах." />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn filter:DataGridColumnExtensions.IsBetweenFilterControl="True" 
-                                                Header="Ub, (V)" Binding="{Binding VoltageB}" Width="*">
-
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Напряжение фазы B. Значение в Вольтах." />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Uc, (V)" Binding="{Binding VoltageC}" Width="*">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Напряжение фазы C. Значение в Вольтах." />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Ia, (A)" Binding="{Binding AmperageA}" Width="*">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Ток фазы A. Значение в Амперах." />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Ib, (A)" Binding="{Binding AmperageB}" Width="*">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Ток фазы B. Значение в Амперах." />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Ic, (A)" Binding="{Binding AmperageC}" Width="*">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Ток фазы C. Значение в Амперах." />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Loil, (mm)" Binding="{Binding Loil}" Width="*">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Уровень масла в баке. Значение в миллиметрах от днища." />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Toil, (*C)" Binding="{Binding Toil}" Width="*">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Температура масла в баке. Значение в градусах Цельсия." />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Poil, (MPa)" Binding="{Binding Poil}" Width="*">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Давление масла в гидросистеме при торможении. Значение в МегаПаскалях." />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Tthyr, (*C)" Binding="{Binding ThyristorTemperature}" Width="*">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="Температура тиристоров. Значение в градусах Цельсия." />
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="ФИО" Width="150" Binding="{Binding ID}"/>
                         </DataGrid.Columns>
+                        
                     </DataGrid>
+                    
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
 
                         <Label Margin="0,1,0,0">Всего отображено строк:</Label>
-                        <Label Margin="0,1,0,0" Content="{Binding ElementName=Grid2, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
+                        <Label Margin="0,1,0,0" Content="{Binding ElementName=Grid3, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
 
                         <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
                         <TextBox Text="{Binding FontSize, Mode=OneTime, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>

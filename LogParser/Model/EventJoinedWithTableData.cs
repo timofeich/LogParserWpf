@@ -9,7 +9,8 @@ namespace LogParser.Model
 {
     public class EventJoinedWithTableData
     {
-        public ObservableCollection<TableData> TableDatas { get; set; }
-        public ObservableCollection<EventData> EventDatas { get; set; }
+        public int ID { get; set; }
+        //public ObservableCollection<TableData> TableDatas { get; set; }
+        //public ObservableCollection<EventData> EventDatas { get; set; }
     }
 }

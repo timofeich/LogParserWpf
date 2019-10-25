@@ -24,7 +24,7 @@
 		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
                         
-                                AutoGenerateColumns="False" IsReadOnly="True"
+                                AutoGenerateColumns="False" IsReadOnly="False"
                                 ItemsSource="{Binding Path=TableDataList}" x:Name="Grid1" Grid.Row="0">
 
                         <DataGrid.Columns>
@@ -148,7 +148,7 @@
 		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
                         
-                                AutoGenerateColumns="False" IsReadOnly="True"
+                                AutoGenerateColumns="False" IsReadOnly="False"
                                 ItemsSource="{Binding Path = EventDataList}" x:Name="Grid2" Grid.Row="0">
 
                         <DataGrid.Columns>
@@ -184,9 +184,9 @@
 		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
                                 
-                                ItemsSource="{Binding Path=EventJoinedWithTableDataList}"
+                                ItemsSource="{Binding Path=JoinEventAndTableList}"
                                 AutoGenerateColumns="False" IsReadOnly="True"
-                                 x:Name="Grid3" Grid.Row="0">
+                                 x:Name="Grid3" Grid.Row="0" Margin="-4,0,4,0">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ФИО" Width="150" Binding="{Binding ID}"/>

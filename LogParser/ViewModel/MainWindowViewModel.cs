@@ -33,7 +33,6 @@ namespace LogParser.ViewModel
         List<TableData> listTable = new List<TableData>();
         List<EventJoinedWithTableData> listJoin = new List<EventJoinedWithTableData>();
 
-
         public static List<DateTime> TableDataDate { get; set; }
         public static DateTime DateOfMessageInRequest { get; set; }
 
@@ -309,12 +308,19 @@ namespace LogParser.ViewModel
 
             for (int i = 19; i < request.Length; )
             {
-
-
                 if (request[i] == 88)
                 {
-                    DateOfMessageInRequest = TableDataDate[CountOfMessagesInRequest];
-                    CountOfMessagesInRequest++;
+                    if (TableDataDate.Count > CountOfMessagesInRequest)
+                    {
+                        DateOfMessageInRequest = TableDataDate[CountOfMessagesInRequest];
+                        CountOfMessagesInRequest++;
+                    }
+                    else
+                    {
+                        DateOfMessageInRequest = TableDataDate[CountOfMessagesInRequest - 1].AddTicks(100);
+                        CountOfMessagesInRequest++;
+                    }
+
 
                     TableData tbl = new TableData();
                     ParseTableDataFromLogFile(tbl, request, i);
@@ -458,7 +464,7 @@ namespace LogParser.ViewModel
 
         private void OpenTableViewClick()
         {
-            var vm = new TableDataViewModel(EventDataList, TableDataList);
+            var vm = new TableDataViewModel(EventDataList, TableDataList, EventJoinedWithTableDataList);
             var connectSettingView = new TableDataView
             {
                 DataContext = vm

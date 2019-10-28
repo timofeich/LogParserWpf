@@ -186,8 +186,6 @@ namespace LogParser.ViewModel
             }
         }
 
-
-
         private void JoinEventAndTable()
         {         
 
@@ -225,8 +223,6 @@ namespace LogParser.ViewModel
 
                 test = new ObservableCollection<TableData>();
             }
-
-
 
             EventJoinedWithTableDataList = new ObservableCollection<EventJoinedWithTableData>(listJoin);
             //eventJoinedWithTableData.TableDatas = TableDataList;

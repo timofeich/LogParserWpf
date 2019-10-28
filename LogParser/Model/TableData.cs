@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace LogParser.Model
 {
@@ -19,5 +20,17 @@ namespace LogParser.Model
         public int Poil { get; set; }
         public int ThyristorTemperature { get; set; }
 
+        public Brush AmperageBrush
+        {
+            get
+            {
+                if (AmperageA >= 270 || AmperageB >= 270 || AmperageC >= 270)
+                {
+                    return Brushes.Orange;
+                }
+
+                return null;
+            }
+        }
     }
 }

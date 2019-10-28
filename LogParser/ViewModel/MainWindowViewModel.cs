@@ -190,7 +190,22 @@ namespace LogParser.ViewModel
         { 
             EventJoinedWithTableData eventJoined = new EventJoinedWithTableData();
 
-            eventJoined.ID = 220;
+            eventJoined.ID = eventDataList[0].ID;
+            eventJoined.Date = eventDataList[0].Date;
+            eventJoined.Message = eventDataList[0].Message;
+            eventJoined.Status = eventDataList[0].Status;
+
+
+
+            ObservableCollection<TableData> test = new ObservableCollection<TableData>();
+
+            for(int i = 0; i < 3; i++)
+            {
+                test.Add(tableDataList[i]);
+            }
+
+
+            eventJoined.TableDatas = test;
 
             listJoin.Add(eventJoined);
 

@@ -189,7 +189,209 @@
                                  x:Name="Grid3" Grid.Row="0" Margin="-4,0,4,0">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ФИО" Width="150" Binding="{Binding ID}"/>
+                            <DataGridTextColumn Header="ID" Width="0.4*" Binding="{Binding ID}"/>
+                            <DataGridTextColumn Header="Дата события" Width="1.5*" Binding="{Binding Date, StringFormat=dd.MM.yyyy HH:mm:ss}"/>
+                            <DataGridTextColumn Header="Сообщение" Width="2*" Binding="{Binding Message}"/>
+                            <DataGridTextColumn Header="Status" Width="0.8*" Binding="{Binding Status}"/>
+
+                            <DataGridTemplateColumn Header="Дата данных" Width="1.5*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+
+                                                <DataGridTextColumn Header="DateTime" Binding="{Binding Date, StringFormat=dd.MM.yyyy HH:mm:ss}" Width="2*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Время и дата записи с данными" />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Ua, (V)" Width="0.8*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Ua, (V)" Binding="{Binding VoltageA}" Width="*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Напряжение фазы А. Значение в Вольтах." />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Ub, (V)" Width="0.8*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding VoltageB}" Width="*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Напряжение фазы B. Значение в Вольтах." />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Uc, (V)" Width="0.8*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding VoltageC}" Width="*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Напряжение фазы C. Значение в Вольтах." />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Ia, (A)" Width="0.8*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding AmperageA}" Width="*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Ток фазы A. Значение в Амперах." />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Ib, (A)" Width="0.8*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding AmperageB}" Width="*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Ток фазы B. Значение в Амперах." />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Ic, (A)" Width="0.8*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding AmperageC}" Width="*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Ток фазы C. Значение в Амперах." />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Loil, (mm)" Width="0.8*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding Loil}" Width="*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Уровень масла в баке. Значение в миллиметрах от днища." />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Toil, (*C)" Width="0.8*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding Toil}" Width="*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Температура масла в баке. Значение в градусах Цельсия." />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Poil, (MPa)" Width="0.8*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding Poil}" Width="*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Давление масла в гидросистеме при торможении. Значение в МегаПаскалях." />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Tthyr, (*C)" Width="0.8*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding ThyristorTemperature}" Width="*">
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="Температура тиристоров. Значение в градусах Цельсия." />
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                         
                     </DataGrid>

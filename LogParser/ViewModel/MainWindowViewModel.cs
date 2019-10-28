@@ -186,28 +186,47 @@ namespace LogParser.ViewModel
             }
         }
 
+
+
         private void JoinEventAndTable()
-        { 
-            EventJoinedWithTableData eventJoined = new EventJoinedWithTableData();
-
-            eventJoined.ID = eventDataList[0].ID;
-            eventJoined.Date = eventDataList[0].Date;
-            eventJoined.Message = eventDataList[0].Message;
-            eventJoined.Status = eventDataList[0].Status;
-
-
+        {         
 
             ObservableCollection<TableData> test = new ObservableCollection<TableData>();
 
-            for(int i = 0; i < 3; i++)
+            foreach (EventData eventDataItem in eventDataList)
             {
-                test.Add(tableDataList[i]);
+                EventJoinedWithTableData eventJoined = new EventJoinedWithTableData
+                {
+                    ID = eventDataItem.ID,
+                    Date = eventDataItem.Date,
+                    Message = eventDataItem.Message,
+                    Status = eventDataItem.Status
+                };
+
+                int i = 0;
+
+               foreach(TableData tableDataItem in tableDataList)
+                {
+                    if(tableDataItem.Date.AddSeconds(-5) >= eventJoined.Date)
+                    {  
+                        test.Add(tableDataItem);
+
+                        i++;
+
+                        if(i == 10)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                eventJoined.TableDatas = test;
+                listJoin.Add(eventJoined);
+
+                test = new ObservableCollection<TableData>();
             }
 
 
-            eventJoined.TableDatas = test;
-
-            listJoin.Add(eventJoined);
 
             EventJoinedWithTableDataList = new ObservableCollection<EventJoinedWithTableData>(listJoin);
             //eventJoinedWithTableData.TableDatas = TableDataList;

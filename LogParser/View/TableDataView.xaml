@@ -179,7 +179,11 @@
 
                     <DataGrid   filter:DataGridExtensions.UseBackgroundWorkerForFiltering="True"
                                 filter:DataGridExtensions.IsClearButtonVisible="False"
-                        
+                                                      
+                                VirtualizingPanel.CacheLength="2" VirtualizingPanel.CacheLengthUnit="Page"
+                                ScrollViewer.IsDeferredScrollingEnabled="True"
+                                VirtualizingPanel.ScrollUnit="Pixel"
+                                
                                 ColumnHeaderStyle="{StaticResource {ComponentResourceKey 
 		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
@@ -197,7 +201,7 @@
                             <DataGridTemplateColumn Header="Дата данных" Width="1.5*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}"  AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
 
                                                 <DataGridTextColumn Header="DateTime" Binding="{Binding Date, StringFormat=dd.MM.yyyy HH:mm:ss}" Width="2*">
@@ -216,7 +220,7 @@
                             <DataGridTemplateColumn Header="Ua, (V)" Width="0.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Ua, (V)" Binding="{Binding VoltageA}" Width="*">
                                                     <DataGridTextColumn.CellStyle>
@@ -234,7 +238,7 @@
                             <DataGridTemplateColumn Header="Ub, (V)" Width="0.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding VoltageB}" Width="*">
                                                     <DataGridTextColumn.CellStyle>
@@ -252,7 +256,7 @@
                             <DataGridTemplateColumn Header="Uc, (V)" Width="0.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding VoltageC}" Width="*">
                                                     <DataGridTextColumn.CellStyle>
@@ -270,7 +274,7 @@
                             <DataGridTemplateColumn Header="Ia, (A)" Width="0.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding AmperageA}" Width="*">
                                                     <DataGridTextColumn.CellStyle>
@@ -288,7 +292,7 @@
                             <DataGridTemplateColumn Header="Ib, (A)" Width="0.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding AmperageB}" Width="*">
                                                     <DataGridTextColumn.CellStyle>
@@ -306,7 +310,7 @@
                             <DataGridTemplateColumn Header="Ic, (A)" Width="0.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding AmperageC}" Width="*">
                                                     <DataGridTextColumn.CellStyle>
@@ -324,7 +328,7 @@
                             <DataGridTemplateColumn Header="Loil, (mm)" Width="0.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding Loil}" Width="*">
                                                     <DataGridTextColumn.CellStyle>
@@ -342,7 +346,7 @@
                             <DataGridTemplateColumn Header="Toil, (*C)" Width="0.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding Toil}" Width="*">
                                                     <DataGridTextColumn.CellStyle>
@@ -360,7 +364,7 @@
                             <DataGridTemplateColumn Header="Poil, (MPa)" Width="0.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding Poil}" Width="*">
                                                     <DataGridTextColumn.CellStyle>
@@ -378,7 +382,7 @@
                             <DataGridTemplateColumn Header="Tthyr, (*C)" Width="0.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DataGrid ItemsSource="{Binding TableDatas}" Margin="-2" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
+                                        <DataGrid ItemsSource="{Binding TableDatas}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding ThyristorTemperature}" Width="*">
                                                     <DataGridTextColumn.CellStyle>

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -25,9 +24,12 @@ namespace LogParser.ViewModel
         private string numericData;
         private string eventsData;
         private bool isFileOpened;
+        public double dataParsedPersent;
 
         public static int eventCounter = 0;
         public static int tableDataCounter = 0;
+
+        public int CountOfRequests = 0;
 
         List<EventData> listEvent = new List<EventData>();
         List<TableData> listTable = new List<TableData>();
@@ -203,18 +205,15 @@ namespace LogParser.ViewModel
 
                 int i = 0;
 
-               foreach(TableData tableDataItem in tableDataList)
+                foreach (TableData tableDataItem in tableDataList)
                 {
-                    if(tableDataItem.Date.AddSeconds(-5) >= eventJoined.Date)
+                    if(tableDataItem.Date >= eventJoined.Date.AddSeconds(-5))
                     {  
                         test.Add(tableDataItem);
 
                         i++;
 
-                        if(i == 10)
-                        {
-                            break;
-                        }
+                        if(i == 10) break;
                     }
                 }
 
@@ -320,8 +319,6 @@ namespace LogParser.ViewModel
 
         private void ParseRequest(byte[] request)
         {
-            //byte[] requestTitle = { request[0], request[1], request[2], request[3] };
-
             byte[] dateOfFirstRequest = { request[4], request[5], request[6], request[7] };
             byte[] dateOfFirstMessage = { request[8], request[9], request[10], request[11] };
             byte[] dateOfLastMessage = { request[12], request[13], request[14], request[15] };
@@ -338,7 +335,7 @@ namespace LogParser.ViewModel
 
             for (int i = 19; i < request.Length; )
             {
-                if (request[i] == 88)
+                if (request[i] == 88 && request[i + 1] == 49)
                 {
                     if (TableDataDate.Count > CountOfMessagesInRequest)
                     {
@@ -387,11 +384,11 @@ namespace LogParser.ViewModel
         }
 
         #region ConvertClass
-        public static DateTime UnixTimeStampToDateTime(int unixTimeStamp)
+        public DateTime UnixTimeStampToDateTime(int unixTimeStamp)
         {
             // Unix timestamp is seconds past epoch
-            DateTime dtDateTime = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToUniversalTime();
+            DateTime dtDateTime = new DateTime(1980, 1, 1, 0, 0, 0);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp);
             return dtDateTime;
         }
 
@@ -437,8 +434,7 @@ namespace LogParser.ViewModel
             int currentTemperature = Convert.ToInt32(Temperature);
 
             tableDataCounter++;
-
-            
+           
             e.ID = tableDataCounter;
 
             e.Date = DateOfMessageInRequest;
@@ -504,8 +500,8 @@ namespace LogParser.ViewModel
         }
 
         private void CloseClick()
-        {
-            IsFileOpened = false;
+        {        
+           IsFileOpened = false;
         }
 
         #region INotifyPropertyChanged Members

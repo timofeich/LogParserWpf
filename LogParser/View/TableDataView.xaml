@@ -32,7 +32,7 @@
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.8*">
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Header="DateTime" Binding="{Binding Date, StringFormat=dd.MM.yyyy HH:mm:ss}" Width="2*">
+                            <DataGridTextColumn Header="DateTime" Binding="{Binding Date}" Width="2*">
                                 <DataGridTextColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Setter Property="ToolTip" Value="Время и дата записи с данными" />
@@ -159,6 +159,7 @@
 
                     <DataGrid   filter:DataGridExtensions.UseBackgroundWorkerForFiltering="True"
                                 filter:DataGridExtensions.IsClearButtonVisible="False"
+
                         
                                 ColumnHeaderStyle="{StaticResource {ComponentResourceKey 
 		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
@@ -170,7 +171,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Path = ID}" Width="0.4*"/>
                             <DataGridTextColumn Header="Текст сообщения" Binding="{Binding Path = Message}" Width="3*"/>
-                            <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding Path = Date, StringFormat=dd.MM.yyyy HH:mm:ss}" Width="*"/>
+                            <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding Path = Date}" Width="*"/>
                             <DataGridTextColumn Header="Status" Binding="{Binding Path = Status}" Width="0.3*"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -206,7 +207,7 @@
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Width="0.4*" Binding="{Binding ID}"/>
-                            <DataGridTextColumn Header="Дата события" Width="1.5*" Binding="{Binding Date, StringFormat=dd.MM.yyyy HH:mm:ss}"/>
+                            <DataGridTextColumn Header="Дата события" Width="1.5*" Binding="{Binding Date}"/>
                             <DataGridTextColumn Header="Сообщение" Width="2*" Binding="{Binding Message}"/>
                             <DataGridTextColumn Header="Status" Width="0.5*" Binding="{Binding Status}"/>
 
@@ -216,7 +217,7 @@
                                         <DataGrid ItemsSource="{Binding TableDatas}"  AutoGenerateColumns="False"  CanUserAddRows="False">
                                             <DataGrid.Columns>
 
-                                                <DataGridTextColumn Header="DateTime" Binding="{Binding Date, StringFormat=dd.MM.yyyy HH:mm:ss}" Width="2*">
+                                                <DataGridTextColumn Header="DateTime" Binding="{Binding Date}" Width="2*">
                                                     <DataGridTextColumn.CellStyle>
                                                         <Style TargetType="DataGridCell">
                                                             <Setter Property="ToolTip" Value="Время и дата записи с данными" />

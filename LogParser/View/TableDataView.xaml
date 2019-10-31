@@ -26,7 +26,8 @@
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
                         
                                 AutoGenerateColumns="False" IsReadOnly="False"
-                                ItemsSource="{Binding Path=TableDataList}" x:Name="Grid1" Grid.Row="0">
+                                ItemsSource="{Binding Path=TableDataList}" x:Name="DataGridWithTableData" 
+                                Grid.Row="0" MouseDoubleClick="SelectJoinedEventDateByTableDate">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.8*">
@@ -141,7 +142,7 @@
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
 
                         <Label Margin="0,1,0,0">Всего отображено строк:</Label>
-                        <Label Margin="0,1,0,0" Content="{Binding ElementName=Grid1, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
+                        <Label Margin="0,1,0,0" Content="{Binding ElementName=DataGridWithTableData, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
 
                         <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
                         <TextBox Text="{Binding FontSize, Mode=OneTime, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" x:Name="txtFontSize" Margin="2,5,0,2"/>
@@ -166,7 +167,8 @@
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
                         
                                 AutoGenerateColumns="False" IsReadOnly="False"
-                                ItemsSource="{Binding Path = EventDataList}" x:Name="Grid2" Grid.Row="0">
+                                ItemsSource="{Binding Path = EventDataList}" x:Name="DataGridWithEventData" 
+                                MouseDoubleClick="SelectJoinedEventDateByEventDate" Grid.Row="0">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Path = ID}" Width="0.4*"/>
@@ -178,7 +180,7 @@
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
 
                         <Label Margin="0,1,0,0">Всего отображено строк:</Label>
-                        <Label Margin="0,1,0,0" Content="{Binding ElementName=Grid2, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
+                        <Label Margin="0,1,0,0" Content="{Binding ElementName=DataGridWithEventData, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
 
                         <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
                         <TextBox Text="{Binding FontSize, Mode=OneTime, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>
@@ -187,7 +189,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Таблица данных и событий">
+            <TabItem Header="Таблица данных и событий" x:Name="TabItem3">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -203,7 +205,7 @@
                                 
                                 ItemsSource="{Binding Path=JoinEventAndTableList}"
                                 AutoGenerateColumns="False" IsReadOnly="True"
-                                 x:Name="Grid3" Grid.Row="0" Margin="-4,0,4,0">
+                                 x:Name="JoinedEventData" Grid.Row="0" Margin="-4,0,4,0">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Width="0.4*" Binding="{Binding ID}"/>
@@ -335,7 +337,7 @@
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
 
                         <Label Margin="0,1,0,0">Всего отображено строк:</Label>
-                        <Label Margin="0,1,0,0" Content="{Binding ElementName=Grid3, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
+                        <Label Margin="0,1,0,0" Content="{Binding ElementName=JoinedEventData, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
 
                         <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
                         <TextBox Text="{Binding FontSize, Mode=OneTime, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>

@@ -51,6 +51,7 @@ namespace LogParser.ViewModel
             eventJoinedWithTableDataList = new ObservableCollection<EventJoinedWithTableData>();
 
             IsFileOpened = false;
+
             BindingCommandsToClickMethods();
         }
 
@@ -174,6 +175,11 @@ namespace LogParser.ViewModel
             CloseCommand = new Command(arg => CloseClick());
 
             OpenTableViewCommand = new Command(arg => OpenTableViewClick());
+        }
+
+        private void SaveClick()
+        {
+
         }
 
         private void OpenClick()

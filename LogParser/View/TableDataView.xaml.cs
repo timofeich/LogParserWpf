@@ -7,6 +7,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using Microsoft.Office.Interop;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace LogParser.View
 {
@@ -18,6 +24,7 @@ namespace LogParser.View
         private EventJoinedWithTableData result { get; set; }
 
         private DateTime dateOfEvent { get; set; }
+
         public TableDataView()
         {
             InitializeComponent();
@@ -84,5 +91,41 @@ namespace LogParser.View
             JoinedEventData.SelectedItem = JoinedEventData.Items[result.ID - 1];
         }
 
+        private void EventButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExportToExcel(DataGridWithEventData);
+        }
+
+        private void TableButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExportToExcel(DataGridWithTableData);
+        }
+
+        private void ExportToExcel(DataGrid datagrid)
+        {
+            datagrid.SelectAllCells();
+            datagrid.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+            ApplicationCommands.Copy.Execute(null, datagrid);
+            datagrid.UnselectAllCells();
+
+            string Clipboardresult = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Файл Excel (*.csv)|*.csv|Excel 2007-2019(*.xlsx)|*.xlsx|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 3;
+
+            if(saveFileDialog.ShowDialog() == true)
+            {
+                StreamWriter swObj = new StreamWriter(saveFileDialog.FileName);
+                swObj.WriteLine(Clipboardresult);
+                swObj.Close();
+
+                Process.Start(saveFileDialog.FileName);
+            }
+            else
+            {
+                MessageBox.Show("Ошибка в открытии диалога");
+            }
+        }
     }
 }

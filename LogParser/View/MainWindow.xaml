@@ -25,8 +25,8 @@
                         <TextBlock Text = "{Binding FileName}"/>
                         <TextBlock Text = "{Binding DatePeriod}"/>
                         <TextBlock Text = "{Binding NotesFromCarriageWithSoftStartup}"/>
-                        <TextBlock Text = "{Binding NumericData}"/>
-                        <TextBlock Text = "{Binding EventsData}"/>
+                        <TextBlock Text = "{Binding NumericDataCount}"/>
+                        <TextBlock Text = "{Binding EventsDataCount}"/>
                     </StackPanel>
                 </GroupBox>
 

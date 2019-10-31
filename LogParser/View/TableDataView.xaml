@@ -27,7 +27,7 @@
                         
                                 AutoGenerateColumns="False" IsReadOnly="False"
                                 ItemsSource="{Binding Path=TableDataList}" x:Name="DataGridWithTableData" 
-                                Grid.Row="0" MouseDoubleClick="SelectJoinedEventDateByTableDate">
+                                Grid.Row="0" >
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.8*">
@@ -37,6 +37,7 @@
                                 <DataGridTextColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Setter Property="ToolTip" Value="Время и дата записи с данными" />
+                                        <EventSetter Event="MouseDoubleClick" Handler="SelectJoinedEventDateByTableDate" />
                                     </Style>
                                 </DataGridTextColumn.CellStyle>
                             </DataGridTextColumn>
@@ -168,13 +169,18 @@
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
                         
                                 AutoGenerateColumns="False" IsReadOnly="False"
-                                ItemsSource="{Binding Path = EventDataList}" x:Name="DataGridWithEventData" 
-                                MouseDoubleClick="SelectJoinedEventDateByEventDate" Grid.Row="0">
+                                ItemsSource="{Binding Path = EventDataList}" x:Name="DataGridWithEventData" Grid.Row="0">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Path = ID}" Width="0.4*"/>
                             <DataGridTextColumn Header="Текст сообщения" Binding="{Binding Path = Message}" Width="3*"/>
-                            <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding Path = Date}" Width="*"/>
+                            <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding Path = Date}" Width="*">
+                            <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <EventSetter Event="MouseDoubleClick" Handler="SelectJoinedEventDateByEventDate" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
                             <DataGridTextColumn Header="Status" Binding="{Binding Path = Status}" Width="0.3*"/>
                         </DataGrid.Columns>
                     </DataGrid>

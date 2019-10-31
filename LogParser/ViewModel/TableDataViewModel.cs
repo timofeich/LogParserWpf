@@ -1,7 +1,5 @@
 ﻿using LogParser.Model;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace LogParser.ViewModel
@@ -9,7 +7,6 @@ namespace LogParser.ViewModel
     public class TableDataViewModel
     {
         public event EventHandler OnRequestClose;
-
         public ObservableCollection<EventData> EventDataList { get; set; }
         public ObservableCollection<TableData> TableDataList { get; set; }
         public ObservableCollection<EventJoinedWithTableData> JoinEventAndTableList { get; set; }

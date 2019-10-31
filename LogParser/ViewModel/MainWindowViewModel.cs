@@ -14,22 +14,8 @@ namespace LogParser.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<EventJoinedWithTableData> eventJoinedWithTableDataList;
-        private ObservableCollection<TableData> tableDataList;
-        private ObservableCollection<EventData> eventDataList;
-
-        private string fileName;
-        private string datePeriod;
-        private string notesFromCarriageWithSoftStartup;
-        private string numericData;
-        private string eventsData;
-        private bool isFileOpened;
-        public double dataParsedPersent;
-
         public static int eventCounter = 0;
         public static int tableDataCounter = 0;
-
-        public int CountOfRequests = 0;
 
         List<EventData> listEvent = new List<EventData>();
         List<TableData> listTable = new List<TableData>();
@@ -37,8 +23,6 @@ namespace LogParser.ViewModel
 
         public static List<DateTime> TableDataDate { get; set; }
         public static DateTime DateOfMessageInRequest { get; set; }
-
-        public string[] Result;
 
         public ICommand OpenCommand { get; set; }
         public ICommand CloseCommand { get; set; }
@@ -56,6 +40,7 @@ namespace LogParser.ViewModel
         }
 
         #region Properties
+        private ObservableCollection<TableData> tableDataList;
         public ObservableCollection<TableData> TableDataList
         {
             get
@@ -69,6 +54,7 @@ namespace LogParser.ViewModel
             }
         }
 
+        private ObservableCollection<EventData> eventDataList;
         public ObservableCollection<EventData> EventDataList
         {
             get
@@ -82,6 +68,7 @@ namespace LogParser.ViewModel
             }
         }
 
+        private ObservableCollection<EventJoinedWithTableData> eventJoinedWithTableDataList;
         public ObservableCollection<EventJoinedWithTableData> EventJoinedWithTableDataList
         {
             get
@@ -95,6 +82,7 @@ namespace LogParser.ViewModel
             }
         }
 
+        private string fileName;
         public string FileName
         {
             get { return fileName; }
@@ -102,11 +90,13 @@ namespace LogParser.ViewModel
             {
                 if (fileName != value)
                 {
-                    fileName = value;
+                    fileName ="Имя файла:  " + value;
                     NotifyPropertyChanged("FileName");
                 }
             }
         }
+
+        private string datePeriod;
         public string DatePeriod
         {
             get { return datePeriod; }
@@ -119,6 +109,8 @@ namespace LogParser.ViewModel
                 }
             }
         }
+
+        private string notesFromCarriageWithSoftStartup;
         public string NotesFromCarriageWithSoftStartup
         {
             get { return notesFromCarriageWithSoftStartup; }
@@ -126,35 +118,42 @@ namespace LogParser.ViewModel
             {
                 if (notesFromCarriageWithSoftStartup != value)
                 {
-                    notesFromCarriageWithSoftStartup = value;
+                    notesFromCarriageWithSoftStartup = "Записей от вагона с устройством плавного " +
+                        "пуска (УПП):  " + value;
                     NotifyPropertyChanged("NotesFromCarriageWithSoftStartup");
                 }
             }
         }
-        public string NumericData
+
+        private string numericDataCount;
+        public string NumericDataCount
         {
-            get { return numericData; }
+            get { return numericDataCount; }
             set
             {
-                if (numericData != value)
+                if (numericDataCount != value)
                 {
-                    numericData = value;
-                    NotifyPropertyChanged("NumericData");
+                    numericDataCount = "Из них с числовыми данными:  " + value;
+                    NotifyPropertyChanged("NumericDataCount");
                 }
             }
         }
-        public string EventsData
+
+        private string eventsDataCount;
+        public string EventsDataCount
         {
-            get { return eventsData; }
+            get { return eventsDataCount; }
             set
             {
-                if (eventsData != value)
+                if (eventsDataCount != value)
                 {
-                    eventsData = value;
-                    NotifyPropertyChanged("EventsData");
+                    eventsDataCount = "Из них с событиями:  " + value;
+                    NotifyPropertyChanged("EventsDataCount");
                 }
             }
         }
+
+        private bool isFileOpened;
         public bool IsFileOpened
         {
             get { return isFileOpened; }
@@ -177,11 +176,6 @@ namespace LogParser.ViewModel
             OpenTableViewCommand = new Command(arg => OpenTableViewClick());
         }
 
-        private void SaveClick()
-        {
-
-        }
-
         private void OpenClick()
         {
             OpenFile();
@@ -196,7 +190,6 @@ namespace LogParser.ViewModel
 
         private void JoinEventAndTable()
         {         
-
             ObservableCollection<TableData> test = new ObservableCollection<TableData>();
 
             foreach (EventData eventDataItem in eventDataList)
@@ -233,23 +226,13 @@ namespace LogParser.ViewModel
             //eventJoinedWithTableData.TableDatas = TableDataList;
         }
 
-        #region Create class SetInfoAboutLogFile
         private void SetInfoAboutLogFile()
         {
-            SetFileName(FileName);
+            NotesFromCarriageWithSoftStartup = Convert.ToString(tableDataCounter + eventCounter);
+            NumericDataCount = Convert.ToString(tableDataCounter);
+            EventsDataCount = Convert.ToString(eventCounter);
 
             SetDatePeriod(tableDataList[0], tableDataList[tableDataList.Count - 1], eventDataList[0], eventDataList[eventDataList.Count - 1]);
-
-            SetNotesFromCarriageWithSoftStartup(tableDataCounter + eventCounter);
-
-            SetNumberOfNumericData(tableDataCounter);
-
-            SetNumberOfEventsData(eventCounter);
-        }
-
-        private void SetFileName(string fileName)
-        {
-            FileName = "Имя файла:  " + fileName;
         }
 
         private void SetDatePeriod(TableData startDate, TableData finishDate, EventData startEventData, EventData finishEventData)
@@ -259,23 +242,6 @@ namespace LogParser.ViewModel
 
             DatePeriod = "Период:  с " + absoluteStartDate   + " по " + absoluteFinishDate;
         }
-
-        private void SetNotesFromCarriageWithSoftStartup(int notesCount)
-        {
-            NotesFromCarriageWithSoftStartup = "Записей от вагона с устройством плавного " +
-                "пуска (УПП):  " + notesCount;
-        }
-
-        private void SetNumberOfNumericData(int numberOfNumericData)
-        {
-            NumericData = "Из них с числовыми данными:  " + numberOfNumericData;
-        }
-
-        private void SetNumberOfEventsData(int numberOfEventsData)
-        {
-            EventsData = "Из них с событиями:  " + numberOfEventsData;
-        }
-        #endregion
 
         public void OpenFile()
         {
@@ -302,8 +268,6 @@ namespace LogParser.ViewModel
 
             using (BinaryReader b = new BinaryReader(File.Open(fileName, FileMode.Open)))
             {
-                byte[][] DataMatrix = new byte[][] { };
-
                 for (int i = 0; i < b.BaseStream.Length; i += 512)
                 {
                     b.BaseStream.Seek(i, SeekOrigin.Begin);
@@ -325,15 +289,13 @@ namespace LogParser.ViewModel
 
         private void ParseRequest(byte[] request)
         {
-            byte[] dateOfFirstRequest = { request[4], request[5], request[6], request[7] };
             byte[] dateOfFirstMessage = { request[8], request[9], request[10], request[11] };
             byte[] dateOfLastMessage = { request[12], request[13], request[14], request[15] };
 
             byte eventIdentifier = 65;
 
-            int date1 = ConvertBytesArrayToIntValue(dateOfFirstRequest);
-            int date2 = ConvertBytesArrayToIntValue(dateOfFirstMessage);
-            int date3 = ConvertBytesArrayToIntValue(dateOfLastMessage);
+            int date2 = BitConverter.ToInt32(dateOfFirstMessage, 0);
+            int date3 = BitConverter.ToInt32(dateOfLastMessage, 0);
 
             TableDataDate = SetDateOfMessageSending(UnixTimeStampToDateTime(date2), UnixTimeStampToDateTime(date3));
 
@@ -353,7 +315,6 @@ namespace LogParser.ViewModel
                         DateOfMessageInRequest = TableDataDate[CountOfMessagesInRequest - 1].AddTicks(100);
                         CountOfMessagesInRequest++;
                     }
-
 
                     TableData tbl = new TableData();
                     ParseTableDataFromLogFile(tbl, request, i);
@@ -389,25 +350,12 @@ namespace LogParser.ViewModel
             return MessageSendingDateList;
         }
 
-        #region ConvertClass
         public DateTime UnixTimeStampToDateTime(int unixTimeStamp)
         {
-            // Unix timestamp is seconds past epoch
             DateTime dtDateTime = new DateTime(1980, 1, 1, 0, 0, 0);
             dtDateTime = dtDateTime.AddSeconds(unixTimeStamp);
             return dtDateTime;
         }
-
-        public int ConvertBytesArrayToIntValue(byte[] byteArray)
-        {
-            return BitConverter.ToInt32(byteArray, 0);
-        }
-
-        public int ConvertBytesArrayToInt16Value(byte[] byteArray)
-        {
-            return BitConverter.ToInt16(byteArray, 0);
-        }
-        #endregion
 
         public void ParseTableDataFromLogFile(TableData e, byte[] request, int i)
         {
@@ -424,41 +372,26 @@ namespace LogParser.ViewModel
 
             byte Poil = request[i + 18];
             byte Temperature = request[i + 19];
-
-            int currentVoltageA = ConvertBytesArrayToInt16Value(VoltageA);
-            int currentVoltageB = ConvertBytesArrayToInt16Value(VoltageB);
-            int currentVoltageC = ConvertBytesArrayToInt16Value(VoltageC);
-
-            int currentAmperageA = ConvertBytesArrayToInt16Value(AmperageA);
-            int currentAmperageB = ConvertBytesArrayToInt16Value(AmperageB);
-            int currentAmperageC = ConvertBytesArrayToInt16Value(AmperageC);
-
-            int currentLoil = ConvertBytesArrayToInt16Value(Loil);
-            int currentToil = ConvertBytesArrayToInt16Value(Toil);
-
-            int currentPoil = Convert.ToInt32(Poil);
-            int currentTemperature = Convert.ToInt32(Temperature);
-
-            tableDataCounter++;
            
             e.ID = tableDataCounter;
 
             e.Date = DateOfMessageInRequest;
 
-            e.VoltageA = currentVoltageA;
-            e.VoltageB = currentVoltageB;
-            e.VoltageC = currentVoltageC;
+            e.VoltageA = BitConverter.ToInt16(VoltageA, 0);
+            e.VoltageB = BitConverter.ToInt16(VoltageB, 0);
+            e.VoltageC = BitConverter.ToInt16(VoltageC, 0);
 
-            e.AmperageA = currentAmperageA;
-            e.AmperageB = currentAmperageB;
-            e.AmperageC = currentAmperageC;
+            e.AmperageA = BitConverter.ToInt16(AmperageA, 0); 
+            e.AmperageB = BitConverter.ToInt16(AmperageB, 0); 
+            e.AmperageC = BitConverter.ToInt16(AmperageC, 0); 
 
-            e.Loil = currentLoil;
-            e.Toil = currentToil;
+            e.Loil = BitConverter.ToInt16(Loil, 0); 
+            e.Toil = BitConverter.ToInt16(Toil, 0);
 
-            e.Poil = currentPoil;
-            e.ThyristorTemperature = currentTemperature;
+            e.Poil = Convert.ToInt32(Poil); 
+            e.ThyristorTemperature = Convert.ToInt32(Temperature);
 
+            tableDataCounter++;
         }
 
         public void ParseEventDataFromLogFile(EventData e, string eventData)
@@ -511,9 +444,7 @@ namespace LogParser.ViewModel
         }
 
         #region INotifyPropertyChanged Members
-
         public event PropertyChangedEventHandler PropertyChanged;
-
         public void NotifyPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
@@ -521,8 +452,6 @@ namespace LogParser.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
         #endregion
-    }
-    
+    }   
 }

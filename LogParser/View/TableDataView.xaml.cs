@@ -1,15 +1,9 @@
 ﻿using LogParser.Model;
-using LogParser.ViewModel;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
-using Microsoft.Office.Interop;
-using Excel = Microsoft.Office.Interop.Excel;
-using System.Runtime.InteropServices;
 using System.IO;
 using System.Diagnostics;
 using Microsoft.Win32;
@@ -52,20 +46,27 @@ namespace LogParser.View
 
         private void SearchValueInJoinedData(DataGrid tableDataView, int dateColumn)
         {
-            var item = tableDataView.SelectedValue;
-            var content = (tableDataView.SelectedCells[dateColumn].Column.GetCellContent(item) as TextBox).Text;
-
-            dateOfEvent = Convert.ToDateTime(content);
-
-            result = JoinedEventData.Items.Cast<EventJoinedWithTableData>().FirstOrDefault(w => w.Date == dateOfEvent);
-
-            if (result == null)
+            try
             {
-                SearchValueInJoinedDataWithInterval(0, 120);
+                var item = tableDataView.SelectedValue;
+                var content = (tableDataView.SelectedCells[dateColumn].Column.GetCellContent(item) as TextBox).Text;
+
+                dateOfEvent = Convert.ToDateTime(content);
+
+                result = JoinedEventData.Items.Cast<EventJoinedWithTableData>().FirstOrDefault(w => w.Date == dateOfEvent);
+
+                if (result == null)
+                {
+                    SearchValueInJoinedDataWithInterval(0, 120);
+                }
+                else
+                {
+                    FocusOnSearchResult();
+                }
             }
-            else
+            catch(Exception ex)
             {
-                FocusOnSearchResult();
+                MessageBox.Show(ex.Message, "Ошибка!");
             }
         }
 

@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:LogParser"
         mc:Ignorable="d"
         Background="LightGray" WindowStartupLocation="CenterScreen"
-        Title="LogParser" Height="206.459" Width="678">
+        Title="LogParser" Height="232.459" Width="678">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
     <Grid>
         <StackPanel>
             <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
@@ -18,7 +21,7 @@
                     <MenuItem Header = "Данные" Command="{Binding OpenTableViewCommand}" IsEnabled="{Binding IsFileOpened}"/>
                 </MenuItem>
             </Menu>
-            
+
             <Grid >
                 <GroupBox Header="Содержание Лог файла"  Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5">
                     <StackPanel Margin="5">
@@ -31,6 +34,7 @@
                 </GroupBox>
 
             </Grid>
-           </StackPanel>
+            <ProgressBar Margin="5,2,5,0" Visibility="{Binding IsProgressBarVisible, Converter={StaticResource BooleanToVisibility}}" Value="{Binding TestDataGenerationPercent}" Height="20"/>
+        </StackPanel>
     </Grid>
 </Window>

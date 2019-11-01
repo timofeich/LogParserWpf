@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.IO;
 using System.Diagnostics;
 using Microsoft.Win32;
+using System.Text;
 
 namespace LogParser.View
 {
@@ -25,15 +26,17 @@ namespace LogParser.View
         {
             double newSize;
 
-            if (double.TryParse(txtFontSize.Text, out newSize))
+            if (double.TryParse(TableDataTextBox.Text, out newSize))
             {
                 FontSize = newSize;
+                EventDataTextBox.Text = TableDataTextBox.Text;
+                JoinedTableTextBox.Text = TableDataTextBox.Text;  
             }
         }
 
         private void SelectJoinedEventDateByTableDate(object sender, MouseButtonEventArgs e)
         {
-            SearchValueInJoinedData(DataGridWithTableData, 1);            
+            SearchValueInJoinedData(DataGridWithTableData, 1);
         }
 
         private void SelectJoinedEventDateByEventDate(object sender, MouseButtonEventArgs e)
@@ -61,15 +64,15 @@ namespace LogParser.View
                     FocusOnSearchResult();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка!");
             }
         }
 
-        private void SearchValueInJoinedDataWithInterval(int leftInterval, int rightInterval)
+        private void SearchValueInJoinedDataWithInterval(int fromNumber, int toNumber)
         {
-            for (int i = leftInterval; i < rightInterval; i++)
+            for (int i = fromNumber; i < toNumber; i++)
             {
                 result = JoinedEventData.Items.Cast<EventJoinedWithTableData>().FirstOrDefault(w => w.Date == dateOfEvent.AddSeconds(i));
                 if (result != null)
@@ -101,6 +104,11 @@ namespace LogParser.View
 
         private void ExportToExcel(DataGrid datagrid)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Файл Excel (*.csv)|*.csv|Excel 2007-2019(*.xlsx)|*.xlsx|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 3;
+            saveFileDialog.ShowDialog();
+
             datagrid.SelectAllCells();
             datagrid.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
             ApplicationCommands.Copy.Execute(null, datagrid);
@@ -108,22 +116,11 @@ namespace LogParser.View
 
             string Clipboardresult = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Файл Excel (*.csv)|*.csv|Excel 2007-2019(*.xlsx)|*.xlsx|All files (*.*)|*.*";
-            saveFileDialog.FilterIndex = 3;
-
-            if(saveFileDialog.ShowDialog() == true)
-            {
-                StreamWriter swObj = new StreamWriter(saveFileDialog.FileName);
-                swObj.WriteLine(Clipboardresult);
-                swObj.Close();
-
-                Process.Start(saveFileDialog.FileName);
-            }
-            else
-            {
-                MessageBox.Show("Ошибка в открытии диалога");
-            }
+            StreamWriter swObj = new StreamWriter(saveFileDialog.FileName);
+            swObj.WriteLine(Clipboardresult);
+            swObj.Close();
+            
+            MessageBox.Show("Файл успешно сохранен.", "Сообщение", MessageBoxButton.OK);
         }
     }
 }

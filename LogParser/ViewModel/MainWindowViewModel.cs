@@ -155,6 +155,34 @@ namespace LogParser.ViewModel
                 }
             }
         }
+      
+        private bool progressBarVisibility;
+        public bool IsProgressBarVisible
+        {
+            get
+            {
+                return progressBarVisibility;
+            }
+            set
+            {
+                progressBarVisibility = value;
+                NotifyPropertyChanged("IsProgressBarVisible");
+            }
+        }
+
+        private double testDataGenerationPercent;
+        public double TestDataGenerationPercent
+        {
+            get
+            {
+                return testDataGenerationPercent;
+            }
+            set
+            {
+                testDataGenerationPercent = value;
+                NotifyPropertyChanged("TestDataGenerationPercent");
+            }
+        }
         #endregion
 
         private void BindingCommandsToClickMethods()
@@ -168,16 +196,16 @@ namespace LogParser.ViewModel
         private void OpenClick()
         {
             OpenFile();
-            SetInfoAboutLogFile();
-           JoinEventAndTable();
         }
 
-        private void JoinEventAndTable()
+        private void JoinEventAndTableData()
         {         
             ObservableCollection<TableData> test = new ObservableCollection<TableData>();
+            int i = 0;
 
             foreach (EventData eventDataItem in eventDataList)
             {
+                i++;
                 EventJoinedWithTableData eventJoined = new EventJoinedWithTableData
                 {
                     ID = eventDataItem.ID,
@@ -198,9 +226,10 @@ namespace LogParser.ViewModel
 
                 eventJoined.TableDatas = test;
                 listJoin.Add(eventJoined);
-                test.Clear();
+                test = new ObservableCollection<TableData>();
+                TestDataGenerationPercent = ((double)i / EventDataList.Count) * 100;
             }
-
+          
             EventJoinedWithTableDataList = new ObservableCollection<EventJoinedWithTableData>(listJoin);
        }
 
@@ -230,10 +259,31 @@ namespace LogParser.ViewModel
             openFileDialog.ShowDialog();
 
             FileName = openFileDialog.SafeFileName;
-            ParseLogFileByBytesNew(openFileDialog.FileName);
+
+            ParseLogFile(openFileDialog.FileName);       
         }
 
-        public void ParseLogFileByBytesNew(string fileName)
+        private void ParseLogFile(string fileName)
+        {
+            BackgroundWorker worker = new BackgroundWorker();
+
+            IsProgressBarVisible = true;
+
+            worker.DoWork += delegate (object sender, DoWorkEventArgs e)
+            {
+                ReadFileByRequests(fileName);
+            };
+
+            worker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs e)
+            {
+                SetInfoAboutLogFile();
+                IsProgressBarVisible = false;
+            };
+
+            worker.RunWorkerAsync();
+        }
+
+        public void ReadFileByRequests(string fileName)
         {
             List<byte[]> listOfRequests = new List<byte[]>();
 
@@ -256,6 +306,8 @@ namespace LogParser.ViewModel
 
             EventDataList = new ObservableCollection<EventData>(listEvent);
             TableDataList = new ObservableCollection<TableData>(listTable);
+
+            JoinEventAndTableData();
         }
 
         private void ParseRequest(byte[] request)
@@ -383,6 +435,7 @@ namespace LogParser.ViewModel
                 e.ID = eventCounter;
                 e.Message = Convert.ToString(messageDataMatch);
                 e.Date = DateTime.Parse(dateTime);
+
                 if (Convert.ToString(statusDataMatch) == "")
                 {
                     e.Status = "C";

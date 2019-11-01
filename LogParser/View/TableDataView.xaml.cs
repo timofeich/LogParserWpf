@@ -10,9 +10,6 @@ using Microsoft.Win32;
 
 namespace LogParser.View
 {
-    /// <summary>
-    /// Логика взаимодействия для TableDataView.xaml
-    /// </summary>
     public partial class TableDataView : Window
     {
         private EventJoinedWithTableData result { get; set; }

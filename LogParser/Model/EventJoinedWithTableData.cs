@@ -9,6 +9,8 @@ namespace LogParser.Model
         public string Message { get; set; }
         public DateTime Date { get; set; }
         public string Status { get; set; }
+
+        //public ObservableCollection<EventData> EventDatas { get; set; }
         public ObservableCollection<TableData> TableDatas { get; set; }
     }
 }

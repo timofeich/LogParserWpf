@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -30,13 +31,15 @@ namespace LogParser.ViewModel
 
         public MainWindowViewModel()
         {
+            InitializeListForData();
+            BindingCommandsToClickMethods();
+        }
+
+        private void InitializeListForData()
+        {
             tableDataList = new ObservableCollection<TableData>();
             eventDataList = new ObservableCollection<EventData>();
             eventJoinedWithTableDataList = new ObservableCollection<EventJoinedWithTableData>();
-
-            IsFileOpened = false;
-
-            BindingCommandsToClickMethods();
         }
 
         #region Properties
@@ -152,20 +155,6 @@ namespace LogParser.ViewModel
                 }
             }
         }
-
-        private bool isFileOpened;
-        public bool IsFileOpened
-        {
-            get { return isFileOpened; }
-            set
-            {
-                if (isFileOpened != value)
-                {
-                    isFileOpened = value;
-                    NotifyPropertyChanged("IsFileOpened");
-                }
-            }
-        }
         #endregion
 
         private void BindingCommandsToClickMethods()
@@ -179,13 +168,8 @@ namespace LogParser.ViewModel
         private void OpenClick()
         {
             OpenFile();
-
-            if (IsFileOpened)
-            {
-                SetInfoAboutLogFile();
-                JoinEventAndTable();
-                IsFileOpened = true;
-            }
+            SetInfoAboutLogFile();
+           JoinEventAndTable();
         }
 
         private void JoinEventAndTable()
@@ -202,29 +186,23 @@ namespace LogParser.ViewModel
                     Status = eventDataItem.Status
                 };
 
-                int i = 0;
-
                 foreach (TableData tableDataItem in tableDataList)
                 {
-                    if(tableDataItem.Date >= eventJoined.Date.AddSeconds(-5))
-                    {  
+                    if (tableDataItem.Date >= eventJoined.Date.AddSeconds(-5))
+                    {
                         test.Add(tableDataItem);
 
-                        i++;
-
-                        if(i == 10) break;
+                        if (test.Count == 10) break;
                     }
                 }
 
                 eventJoined.TableDatas = test;
                 listJoin.Add(eventJoined);
-
-                test = new ObservableCollection<TableData>();
+                test.Clear();
             }
 
             EventJoinedWithTableDataList = new ObservableCollection<EventJoinedWithTableData>(listJoin);
-            //eventJoinedWithTableData.TableDatas = TableDataList;
-        }
+       }
 
         private void SetInfoAboutLogFile()
         {
@@ -249,17 +227,10 @@ namespace LogParser.ViewModel
             openFileDialog.Filter = "Бинарные файлы (*.bin)|*.bin|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 2;
 
-            if (openFileDialog.ShowDialog() == true)
-            {
-                FileName = openFileDialog.SafeFileName;
-                ParseLogFileByBytesNew(openFileDialog.FileName);
+            openFileDialog.ShowDialog();
 
-                IsFileOpened = true;
-            }
-            else
-            {
-                IsFileOpened = false;
-            }
+            FileName = openFileDialog.SafeFileName;
+            ParseLogFileByBytesNew(openFileDialog.FileName);
         }
 
         public void ParseLogFileByBytesNew(string fileName)
@@ -440,7 +411,7 @@ namespace LogParser.ViewModel
 
         private void CloseClick()
         {        
-           IsFileOpened = false;
+          // InitializeListForData();
         }
 
         #region INotifyPropertyChanged Members

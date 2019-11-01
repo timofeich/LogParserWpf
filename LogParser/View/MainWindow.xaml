@@ -14,11 +14,11 @@
         <StackPanel>
             <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
                 <MenuItem Header="Файл">
-                    <MenuItem Header="Открыть" Command = "{Binding OpenCommand}"/>
-                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding IsFileOpened}" />
+                    <MenuItem Header="Открыть" Command = "{Binding OpenCommand}" IsEnabled="{Binding IsFileClosed}"/>
+                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding IsFileOpened}"/>
                 </MenuItem>
                 <MenuItem Header="Просмотр">
-                    <MenuItem Header = "Данные" Command="{Binding OpenTableViewCommand}" IsEnabled="{Binding IsFileOpened}"/>
+                    <MenuItem Header = "Данные" Command="{Binding OpenTableViewCommand}"/>
                 </MenuItem>
             </Menu>
 

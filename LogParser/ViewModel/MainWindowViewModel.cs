@@ -33,6 +33,7 @@ namespace LogParser.ViewModel
         {
             InitializeListForData();
             BindingCommandsToClickMethods();
+            IsFileClosed = true;
         }
 
         private void InitializeListForData()
@@ -183,6 +184,34 @@ namespace LogParser.ViewModel
                 NotifyPropertyChanged("TestDataGenerationPercent");
             }
         }
+
+        private bool isFileOpened;
+        public bool IsFileOpened
+        {
+            get { return isFileOpened; }
+            set
+            {
+                if (isFileOpened != value)
+                {
+                    isFileOpened = value;
+                    NotifyPropertyChanged("IsFileOpened");
+                }
+            }
+        }
+
+        private bool isFileClosed;
+        public bool IsFileClosed
+        {
+            get { return isFileClosed; }
+            set
+            {
+                if (isFileClosed != value)
+                {
+                    isFileClosed = value;
+                    NotifyPropertyChanged("IsFileClosed");
+                }
+            }
+        }
         #endregion
 
         private void BindingCommandsToClickMethods()
@@ -260,6 +289,9 @@ namespace LogParser.ViewModel
 
             FileName = openFileDialog.SafeFileName;
 
+            IsFileOpened = true;
+
+
             ParseLogFile(openFileDialog.FileName);       
         }
 
@@ -277,6 +309,9 @@ namespace LogParser.ViewModel
             worker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs e)
             {
                 SetInfoAboutLogFile();
+
+                IsFileOpened = true;
+                IsFileClosed = false;
                 IsProgressBarVisible = false;
             };
 
@@ -463,8 +498,28 @@ namespace LogParser.ViewModel
         }
 
         private void CloseClick()
-        {        
-          // InitializeListForData();
+        {
+            TableDataList.Clear();
+            EventDataList.Clear();
+            EventJoinedWithTableDataList.Clear();
+
+            TableDataDate.Clear();
+
+            listEvent.Clear();
+            listTable.Clear();
+            listJoin.Clear();
+
+            FileName = null;
+            DatePeriod = null;
+            NotesFromCarriageWithSoftStartup = null;
+            NumericDataCount = null;
+            EventsDataCount = null;
+
+            eventCounter = 0;
+            tableDataCounter = 0;
+
+            IsFileClosed= true;
+            IsFileOpened = false;
         }
 
         #region INotifyPropertyChanged Members

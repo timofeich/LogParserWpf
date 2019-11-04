@@ -1,5 +1,4 @@
 ﻿using LogParser.ViewModel;
-using System;
 using System.Windows;
 
 namespace LogParser
@@ -10,11 +9,6 @@ namespace LogParser
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
-        }
-
-        private void MenuItem_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
         }
     }
 }

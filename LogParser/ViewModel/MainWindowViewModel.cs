@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -230,11 +229,13 @@ namespace LogParser.ViewModel
         private void JoinEventAndTableData()
         {         
             ObservableCollection<TableData> test = new ObservableCollection<TableData>();
-            int i = 0;
+            int eventDataItemsCounter = 0;
+
+            int tableDataListItemsCounter = 0;
 
             foreach (EventData eventDataItem in eventDataList)
             {
-                i++;
+                eventDataItemsCounter++;
                 EventJoinedWithTableData eventJoined = new EventJoinedWithTableData
                 {
                     ID = eventDataItem.ID,
@@ -243,20 +244,28 @@ namespace LogParser.ViewModel
                     Status = eventDataItem.Status
                 };
 
-                foreach (TableData tableDataItem in tableDataList)
+                for(;  tableDataListItemsCounter < tableDataList.Count; tableDataListItemsCounter++)
                 {
-                    if (tableDataItem.Date >= eventJoined.Date.AddSeconds(-5))
+                    if (tableDataList[tableDataListItemsCounter].Date >= eventJoined.Date.AddSeconds(-5))
                     {
-                        test.Add(tableDataItem);
+                        test.Add(tableDataList[tableDataListItemsCounter]);
 
-                        if (test.Count == 10) break;
+                        if (test.Count == 10)
+                        {
+                            if (tableDataListItemsCounter > 10)
+                            {
+                                tableDataListItemsCounter = tableDataListItemsCounter - 10;
+                            }
+
+                            break; 
+                        }
                     }
                 }
 
                 eventJoined.TableDatas = test;
                 listJoin.Add(eventJoined);
                 test = new ObservableCollection<TableData>();
-                TestDataGenerationPercent = ((double)i / EventDataList.Count) * 100;
+                TestDataGenerationPercent = ((double)eventDataItemsCounter / EventDataList.Count) * 100;
             }
           
             EventJoinedWithTableDataList = new ObservableCollection<EventJoinedWithTableData>(listJoin);

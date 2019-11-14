@@ -340,9 +340,8 @@
                         </DataGrid.Columns>
                         
                     </DataGrid>
-                    
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
 
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
                         <Label Margin="0,1,0,0">Всего отображено строк:</Label>
                         <Label Margin="0,1,0,0" Content="{Binding ElementName=JoinedEventData, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
 

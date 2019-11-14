@@ -277,7 +277,14 @@ namespace LogParser.ViewModel
             NumericDataCount = Convert.ToString(tableDataCounter);
             EventsDataCount = Convert.ToString(eventCounter);
 
-            SetDatePeriod(tableDataList[0], tableDataList[tableDataList.Count - 1], eventDataList[0], eventDataList[eventDataList.Count - 1]);
+            if (tableDataList.Count != 0 && eventDataList.Count != 0)
+            {
+                SetDatePeriod(tableDataList[0], tableDataList[tableDataList.Count - 1], eventDataList[0], eventDataList[eventDataList.Count - 1]);
+            }
+            else
+            {
+                DatePeriod = null;
+            }
         }
 
         private void SetDatePeriod(TableData startDate, TableData finishDate, EventData startEventData, EventData finishEventData)
@@ -285,7 +292,7 @@ namespace LogParser.ViewModel
             DateTime absoluteStartDate = startDate.Date > startEventData.Date ? startEventData.Date : startDate.Date;
             DateTime absoluteFinishDate = finishDate.Date < finishEventData.Date ? finishEventData.Date : finishDate.Date;
 
-            DatePeriod = "Период:  с " + absoluteStartDate   + " по " + absoluteFinishDate;
+            DatePeriod = "Период:  с " + absoluteStartDate + " по " + absoluteFinishDate;
         }
 
         public void OpenFile()
@@ -294,14 +301,14 @@ namespace LogParser.ViewModel
             openFileDialog.Filter = "Бинарные файлы (*.bin)|*.bin|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 2;
 
-            openFileDialog.ShowDialog();
+            if(openFileDialog.ShowDialog() == true)
+            {
+                FileName = openFileDialog.SafeFileName;
 
-            FileName = openFileDialog.SafeFileName;
+                IsFileOpened = true;
 
-            IsFileOpened = true;
-
-
-            ParseLogFile(openFileDialog.FileName);       
+                ParseLogFile(openFileDialog.FileName);
+            }
         }
 
         private void ParseLogFile(string fileName)
@@ -384,7 +391,7 @@ namespace LogParser.ViewModel
                     }
 
                     TableData tbl = new TableData();
-                    ParseTableDataFromLogFile(tbl, request, i);
+                    GetTableDataFromLogFile(tbl, request, i);
                     listTable.Add(tbl);
                     i += 23;
                 }
@@ -393,7 +400,7 @@ namespace LogParser.ViewModel
                     string infoAboutEvent = Encoding.Default.GetString(request, i, 64);
 
                     EventData emp = new EventData();
-                    ParseEventDataFromLogFile(emp, infoAboutEvent);
+                    GetEventDataFromLogFile(emp, infoAboutEvent);
                     listEvent.Add(emp);
                     i += 67;
                 }
@@ -424,7 +431,7 @@ namespace LogParser.ViewModel
             return dtDateTime;
         }
 
-        public void ParseTableDataFromLogFile(TableData e, byte[] request, int i)
+        public void GetTableDataFromLogFile(TableData e, byte[] request, int i)
         {
             byte[] VoltageA = { request[i + 2], request[i + 3] };
             byte[] VoltageB = { request[i + 4], request[i + 5] };
@@ -461,7 +468,7 @@ namespace LogParser.ViewModel
             tableDataCounter++;
         }
 
-        public void ParseEventDataFromLogFile(EventData e, string eventData)
+        public void GetEventDataFromLogFile(EventData e, string eventData)
         {
             Regex dateInEventData = new Regex(@"\d\d:\d\d:\d\d (\d\d)/(\d\d)/(\d\d)");
             Regex messageInEventData = new Regex(@".{40}");
@@ -488,10 +495,6 @@ namespace LogParser.ViewModel
                 {
                     e.Status = Convert.ToString(statusDataMatch);
                 }
-            }
-            else
-            {
-                //Console.WriteLine("Don't find any values");
             }
         }
 

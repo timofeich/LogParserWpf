@@ -105,20 +105,23 @@ namespace LogParser.View
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Файл Excel (*.csv)|*.csv|Excel 2007-2019(*.xlsx)|*.xlsx|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 3;
-            saveFileDialog.ShowDialog();
 
-            datagrid.SelectAllCells();
-            datagrid.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-            ApplicationCommands.Copy.Execute(null, datagrid);
-            datagrid.UnselectAllCells();
 
-            string Clipboardresult = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                datagrid.SelectAllCells();
+                datagrid.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+                ApplicationCommands.Copy.Execute(null, datagrid);
+                datagrid.UnselectAllCells();
 
-            StreamWriter swObj = new StreamWriter(saveFileDialog.FileName);
-            swObj.WriteLine(Clipboardresult);
-            swObj.Close();
-            
-            MessageBox.Show("Файл успешно сохранен.", "Сообщение", MessageBoxButton.OK);
+                string Clipboardresult = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+
+                StreamWriter swObj = new StreamWriter(saveFileDialog.FileName);
+                swObj.WriteLine(Clipboardresult);
+                swObj.Close();
+
+                MessageBox.Show("Файл успешно сохранен.", "Сообщение", MessageBoxButton.OK);
+            }
         }
     }
 }

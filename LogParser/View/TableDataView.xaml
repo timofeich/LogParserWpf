@@ -33,7 +33,7 @@
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.8*">
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Header="DateTime" Binding="{Binding Date}" Width="2*">
+                            <DataGridTextColumn Header="DateTime" Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss.fff}'}" Width="2*">
                                 <DataGridTextColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Setter Property="ToolTip" Value="Время и дата записи с данными" />
@@ -240,7 +240,7 @@
                                                             <Setter Property="ToolTip" Value="Напряжение фазы А. Значение в Вольтах." />
                                                         </Style>
                                                     </DataGridTextColumn.CellStyle>
-                                                    
+
                                                 </DataGridTextColumn>
 
                                                 <DataGridTextColumn filter:DataGridColumnExtensions.IsBetweenFilterControl="True" 
@@ -338,7 +338,7 @@
                             </DataGridTemplateColumn>
 
                         </DataGrid.Columns>
-                        
+
                     </DataGrid>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1">

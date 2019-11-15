@@ -30,6 +30,15 @@
                         <TextBlock Text = "{Binding NotesFromCarriageWithSoftStartup}"/>
                         <TextBlock Text = "{Binding NumericDataCount}"/>
                         <TextBlock Text = "{Binding EventsDataCount}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <CheckBox Content="Вагон с устройством плавного пуска" IsChecked="{Binding IsLogFileFromStand}" Grid.Column="0"/>
+                            <CheckBox Content="Лог файл со стенда" IsChecked="{Binding !IsLogFileFromStand}" Grid.Column="1"/>
+                        </Grid>
                     </StackPanel>
                 </GroupBox>
 

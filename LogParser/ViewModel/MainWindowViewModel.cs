@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -211,6 +212,20 @@ namespace LogParser.ViewModel
                 }
             }
         }
+
+        private bool isLogFileFromStand;
+        public bool IsLogFileFromStand
+        {
+            get
+            {
+                return isLogFileFromStand;
+            }
+            set
+            {
+                isLogFileFromStand = value;
+                NotifyPropertyChanged("IsLogFileFromStand");
+            }
+        }
         #endregion
 
         private void BindingCommandsToClickMethods()
@@ -254,7 +269,7 @@ namespace LogParser.ViewModel
                         {
                             if (tableDataListItemsCounter > 10)
                             {
-                                tableDataListItemsCounter = tableDataListItemsCounter - 10;
+                                tableDataListItemsCounter -= 10;
                             }
 
                             break; 
@@ -319,7 +334,14 @@ namespace LogParser.ViewModel
 
             worker.DoWork += delegate (object sender, DoWorkEventArgs e)
             {
-                ReadFileByRequests(fileName);
+                if (IsLogFileFromStand)
+                {
+                    ReadFileByRequests(fileName);
+                }
+                else
+                {
+                    ReadFileByLines(fileName);
+                }
             };
 
             worker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs e)
@@ -333,6 +355,7 @@ namespace LogParser.ViewModel
 
             worker.RunWorkerAsync();
         }
+
 
         public void ReadFileByRequests(string fileName)
         {
@@ -359,6 +382,52 @@ namespace LogParser.ViewModel
             TableDataList = new ObservableCollection<TableData>(listTable);
 
             JoinEventAndTableData();
+        }
+
+        private void ReadFileByLines(string fileName)
+        {
+            string[] AllLinesFromFile = File.ReadAllLines(fileName);
+            Regex dateInEventData = new Regex(@"(\d+-\d+-\d+) (\d+:\d+:\d+,\d+)");
+
+            foreach (string lineFromFile in AllLinesFromFile)
+            {
+                Match dataDateMatch = dateInEventData.Match(lineFromFile);
+
+                string dataDateString = Convert.ToString(dataDateMatch);
+
+                string dataWithoutDate = lineFromFile.Remove(0, 36);
+                string[] DataFromStandLogFile = dataWithoutDate.Replace('}', ',').Replace(',', '/').Split('/');
+
+                TableData tbl = new TableData();
+
+                OutputLineToDataTable(tbl, DataFromStandLogFile, dataDateString);
+                listTable.Add(tbl);
+            }
+
+            TableDataList = new ObservableCollection<TableData>(listTable);
+        }
+
+        private void OutputLineToDataTable(TableData e, string[] dataFromLogFile, string dataDateString)
+        {
+            e.ID = tableDataCounter;
+
+            e.Date = DateTime.Parse(dataDateString.Replace(',', '.'));//"dd.MM.yyyy HH:mm:ss.fff",
+
+            e.VoltageA = Convert.ToInt32(dataFromLogFile[0]);
+            e.VoltageB = Convert.ToInt32(dataFromLogFile[1]);
+            e.VoltageC = Convert.ToInt32(dataFromLogFile[2]);
+
+            e.AmperageA = Convert.ToInt32(dataFromLogFile[3]);
+            e.AmperageB = Convert.ToInt32(dataFromLogFile[4]);
+            e.AmperageC = Convert.ToInt32(dataFromLogFile[5]);
+
+            e.Loil = Convert.ToInt32(dataFromLogFile[6]);
+            e.Toil = Convert.ToInt32(dataFromLogFile[7]);
+
+            e.Poil = Convert.ToInt32(dataFromLogFile[8]);
+            e.ThyristorTemperature = Convert.ToInt32(dataFromLogFile[9]);
+
+            tableDataCounter++;
         }
 
         private void ParseRequest(byte[] request)
@@ -515,7 +584,10 @@ namespace LogParser.ViewModel
             EventDataList.Clear();
             EventJoinedWithTableDataList.Clear();
 
-            TableDataDate.Clear();
+            if (IsLogFileFromStand)
+            {
+                TableDataDate.Clear();
+            }
 
             listEvent.Clear();
             listTable.Clear();

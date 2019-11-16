@@ -6,31 +6,22 @@
         xmlns:local="clr-namespace:LogParser"
         mc:Ignorable="d"
         Background="LightGray" WindowStartupLocation="CenterScreen"
-        Title="LogParser" Height="215.459" Width="552">
-    <Grid>
+        Title="LogParser" Width="678" SizeToContent="Height">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+    <Grid Height="auto">
         <StackPanel>
             <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
                 <MenuItem Header="Файл">
-<<<<<<< HEAD
-                    <MenuItem Header="Открыть" Command = "{Binding OpenCommand}"/>
-                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
-                    <MenuItem Header="Сохранить" Command = "{Binding SaveCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
-=======
                     <MenuItem Header="Открыть" Command = "{Binding OpenCommand}" IsEnabled="{Binding IsFileClosed}"/>
                     <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding IsFileOpened}"/>
->>>>>>> 2c57b75... reliese version 1.0.0
                 </MenuItem>
                 <MenuItem Header="Просмотр">
-                    <MenuItem Header = "Таблица" Command="{Binding OpenTableViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
-                    <MenuItem Header = "События" Command="{Binding OpenEventViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
-                    <MenuItem Header = "Таблица + События" Command="{Binding OpenTableAndEventViewCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}" />
+                    <MenuItem Header = "Данные" Command="{Binding OpenTableViewCommand}"/>
                 </MenuItem>
             </Menu>
-            <Grid >
 
-<<<<<<< HEAD
-                <GroupBox Header="Содержание Лог файла"  Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5">
-=======
             <Grid Visibility="{Binding IsFileClosed, Converter={StaticResource BooleanToVisibility}}">
                 <GroupBox Header="Тип Лог файла" Background="White" TextBlock.FontSize="15" Margin="5 0 5 10">
                     <StackPanel>
@@ -50,16 +41,17 @@
             <Grid>
                 <GroupBox Header="Содержание Лог файла"  Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5 0 5 10" x:Name="LogFileInfo" 
                           Visibility="{Binding IsFileOpened, Converter={StaticResource BooleanToVisibility}, FallbackValue=Collapsed }">
->>>>>>> 2c57b75... reliese version 1.0.0
                     <StackPanel Margin="5">
-                        <TextBlock Text = "{Binding LogFileInformation.FileName}"/>
-                        <TextBlock Text = "{Binding LogFileInformation.DatePeriod}"/>
-                        <TextBlock Text = "{Binding LogFileInformation.NotesFromCarriageWithSoftStartup}"/>
-                        <TextBlock Text = "{Binding LogFileInformation.NumericData}"/>
-                        <TextBlock Text = "{Binding LogFileInformation.EventsData}"/>
+                        <TextBlock Text = "{Binding FileName}"/>
+                        <TextBlock Text = "{Binding DatePeriod}"/>
+                        <TextBlock Text = "{Binding NotesFromCarriageWithSoftStartup}"/>
+                        <TextBlock Text = "{Binding NotesFromStand}"/>
+                        <TextBlock Text = "{Binding NumericDataCount}"/>
+                        <TextBlock Text = "{Binding EventsDataCount}"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>
+            <ProgressBar Margin="5 0 10 0" Visibility="{Binding IsProgressBarVisible, Converter={StaticResource BooleanToVisibility}, FallbackValue=Collapsed}" Value="{Binding TestDataGenerationPercent}" Height="20"/>
         </StackPanel>
     </Grid>
 </Window>

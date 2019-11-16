@@ -5,19 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Input;
 
 namespace LogParser.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public static int eventCounter = 0;
-        public static int tableDataCounter = 0;
+        public static int eventNotesCounter = 0;
+        public static int tableNotesCounter = 0;
+        public static int standNotesCounter = 0;
 
         List<EventData> listEvent = new List<EventData>();
         List<TableData> listTable = new List<TableData>();
@@ -127,6 +126,20 @@ namespace LogParser.ViewModel
                     notesFromCarriageWithSoftStartup = "Записей от вагона с устройством плавного " +
                         "пуска (УПП):  " + value;
                     NotifyPropertyChanged("NotesFromCarriageWithSoftStartup");
+                }
+            }
+        }
+
+        private string notesFromStand;
+        public string NotesFromStand
+        {
+            get { return notesFromStand; }
+            set
+            {
+                if (notesFromStand != value)
+                {
+                    notesFromStand = "Записей со стенда:  " + value;
+                    NotifyPropertyChanged("NotesFromStand");
                 }
             }
         }
@@ -290,9 +303,10 @@ namespace LogParser.ViewModel
 
         private void SetInfoAboutLogFile()
         {
-            NotesFromCarriageWithSoftStartup = Convert.ToString(tableDataCounter + eventCounter);
-            NumericDataCount = Convert.ToString(tableDataCounter);
-            EventsDataCount = Convert.ToString(eventCounter);
+            NotesFromCarriageWithSoftStartup = Convert.ToString(tableNotesCounter + eventNotesCounter);
+            NotesFromStand = Convert.ToString(standNotesCounter);
+            NumericDataCount = Convert.ToString(tableNotesCounter);
+            EventsDataCount = Convert.ToString(eventNotesCounter);
 
             if (tableDataList.Count != 0 && eventDataList.Count != 0)
             {
@@ -394,16 +408,18 @@ namespace LogParser.ViewModel
             foreach (string lineFromFile in AllLinesFromFile)
             {
                 Match dataDateMatch = dateInEventData.Match(lineFromFile);
+                if(dataDateMatch.Success)
+                {
+                    string dataDateString = Convert.ToString(dataDateMatch);
 
-                string dataDateString = Convert.ToString(dataDateMatch);
+                    string dataWithoutDate = lineFromFile.Remove(0, 36);
+                    string[] DataFromStandLogFile = dataWithoutDate.Replace('}', ',').Replace(',', '/').Split('/');
 
-                string dataWithoutDate = lineFromFile.Remove(0, 36);
-                string[] DataFromStandLogFile = dataWithoutDate.Replace('}', ',').Replace(',', '/').Split('/');
+                    TableData tbl = new TableData();
 
-                TableData tbl = new TableData();
-
-                OutputLineToDataTable(tbl, DataFromStandLogFile, dataDateString);
-                listTable.Add(tbl);
+                    OutputLineToDataTable(tbl, DataFromStandLogFile, dataDateString);
+                    listTable.Add(tbl);
+                }
             }
 
             TableDataList = new ObservableCollection<TableData>(listTable);
@@ -411,7 +427,7 @@ namespace LogParser.ViewModel
 
         private void OutputLineToDataTable(TableData e, string[] dataFromLogFile, string dataDateString)
         {
-            e.ID = tableDataCounter;
+            e.ID = standNotesCounter;
 
             e.Date = DateTime.Parse(dataDateString.Replace(',', '.'));//"dd.MM.yyyy HH:mm:ss.fff",
 
@@ -429,7 +445,7 @@ namespace LogParser.ViewModel
             e.Poil = Convert.ToInt32(dataFromLogFile[8]);
             e.ThyristorTemperature = Convert.ToInt32(dataFromLogFile[9]);
 
-            tableDataCounter++;
+            standNotesCounter++;
         }
 
         private void ParseRequest(byte[] request)
@@ -518,7 +534,7 @@ namespace LogParser.ViewModel
             byte Poil = request[i + 18];
             byte Temperature = request[i + 19];
            
-            e.ID = tableDataCounter;
+            e.ID = tableNotesCounter;
 
             e.Date = DateOfMessageInRequest;
 
@@ -536,7 +552,7 @@ namespace LogParser.ViewModel
             e.Poil = Convert.ToInt32(Poil); 
             e.ThyristorTemperature = Convert.ToInt32(Temperature);
 
-            tableDataCounter++;
+            tableNotesCounter++;
         }
 
         public void GetEventDataFromLogFile(EventData e, string eventData)
@@ -552,9 +568,9 @@ namespace LogParser.ViewModel
             if (eventDateMatch.Success)
             {
                 string dateTime = Convert.ToString(eventDateMatch);
-                eventCounter++;
+                eventNotesCounter++;
 
-                e.ID = eventCounter;
+                e.ID = eventNotesCounter;
                 e.Message = Convert.ToString(messageDataMatch);
                 e.Date = DateTime.Parse(dateTime);
 
@@ -601,8 +617,8 @@ namespace LogParser.ViewModel
             NumericDataCount = null;
             EventsDataCount = null;
 
-            eventCounter = 0;
-            tableDataCounter = 0;
+            eventNotesCounter = 0;
+            tableNotesCounter = 0;
 
             IsFileClosed= true;
             IsFileOpened = false;

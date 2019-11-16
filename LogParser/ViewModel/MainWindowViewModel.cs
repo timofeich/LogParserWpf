@@ -9,6 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Input;
 
 namespace LogParser.ViewModel
@@ -33,6 +34,7 @@ namespace LogParser.ViewModel
         {
             InitializeListForData();
             BindingCommandsToClickMethods();
+            IsLogFileFromCarriage = true;
             IsFileClosed = true;
         }
 
@@ -157,16 +159,16 @@ namespace LogParser.ViewModel
             }
         }
       
-        private bool progressBarVisibility;
+        private bool isProgressBarVisible;
         public bool IsProgressBarVisible
         {
             get
             {
-                return progressBarVisibility;
+                return isProgressBarVisible;
             }
             set
             {
-                progressBarVisibility = value;
+                isProgressBarVisible = value;
                 NotifyPropertyChanged("IsProgressBarVisible");
             }
         }
@@ -213,17 +215,17 @@ namespace LogParser.ViewModel
             }
         }
 
-        private bool isLogFileFromStand;
-        public bool IsLogFileFromStand
+        private bool isLogFileFromCarriage;
+        public bool IsLogFileFromCarriage
         {
             get
             {
-                return isLogFileFromStand;
+                return isLogFileFromCarriage;
             }
             set
             {
-                isLogFileFromStand = value;
-                NotifyPropertyChanged("IsLogFileFromStand");
+                isLogFileFromCarriage = value;
+                NotifyPropertyChanged("IsLogFileFromCarriage");
             }
         }
         #endregion
@@ -334,7 +336,7 @@ namespace LogParser.ViewModel
 
             worker.DoWork += delegate (object sender, DoWorkEventArgs e)
             {
-                if (IsLogFileFromStand)
+                if (IsLogFileFromCarriage)
                 {
                     ReadFileByRequests(fileName);
                 }
@@ -569,7 +571,7 @@ namespace LogParser.ViewModel
 
         private void OpenTableViewClick()
         {
-            var vm = new TableDataViewModel(EventDataList, TableDataList, EventJoinedWithTableDataList);
+            var vm = new TableDataViewModel(EventDataList, TableDataList, EventJoinedWithTableDataList, IsLogFileFromCarriage);
             var connectSettingView = new TableDataView
             {
                 DataContext = vm
@@ -584,7 +586,7 @@ namespace LogParser.ViewModel
             EventDataList.Clear();
             EventJoinedWithTableDataList.Clear();
 
-            if (IsLogFileFromStand)
+            if (IsLogFileFromCarriage)
             {
                 TableDataDate.Clear();
             }

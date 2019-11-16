@@ -9,6 +9,10 @@
         mc:Ignorable="d" Background="LightGray"
         Title="Просмотр таблицы" Height="450" Width="938.333">
 
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+    
     <DockPanel>
         <TabControl Margin="5">
             <TabItem Header="Таблица данных">
@@ -152,8 +156,8 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            
-            <TabItem Header="Таблица событий">
+
+            <TabItem Header="Таблица событий" Visibility="{Binding IsLogFileFromCarriage, Converter={StaticResource BooleanToVisibility}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -196,7 +200,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Таблица данных и событий" x:Name="TabItem3">
+            <TabItem Header="Таблица данных и событий" x:Name="TabItem3" Visibility="{Binding IsLogFileFromCarriage, Converter={StaticResource BooleanToVisibility}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>

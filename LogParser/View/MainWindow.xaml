@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LogParser"
         mc:Ignorable="d"
         Background="LightGray" WindowStartupLocation="CenterScreen"
-        Title="LogParser" Height="232.459" Width="678">
+        Title="LogParser" Height="292.792" Width="678">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
     </Window.Resources>
@@ -14,36 +14,42 @@
         <StackPanel>
             <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
                 <MenuItem Header="Файл">
-                    <MenuItem Header="Открыть" Command = "{Binding OpenCommand}" IsEnabled="{Binding IsFileClosed}"/>
-                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding IsFileOpened}"/>
+                    <MenuItem Header="Открыть" Command = "{Binding OpenCommand}" IsEnabled="{Binding IsFileClosed}" x:Name="OpenFileMenuItem"/>
+                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding IsFileOpened}" x:Name="CloseFileMenuItem"/>
                 </MenuItem>
                 <MenuItem Header="Просмотр">
                     <MenuItem Header = "Данные" Command="{Binding OpenTableViewCommand}"/>
                 </MenuItem>
             </Menu>
 
-            <Grid >
-                <GroupBox Header="Содержание Лог файла"  Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5">
+            <Grid Visibility="{Binding IsFileClosed, Converter={StaticResource BooleanToVisibility}}">
+                <GroupBox Header="Тип Лог файла" Background="White" TextBlock.FontSize="15" Margin="5">
+                    <StackPanel>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <RadioButton Content="Вагон с устройством плавного пуска" IsChecked="{Binding IsLogFileFromCarriage}"  GroupName="LogFileType" Grid.Column="0"/>
+                            <RadioButton Content="Лог файл со стенда" IsChecked="{Binding !IsLogFileFromCarriage}" GroupName="LogFileType" Grid.Column="1"/>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+            
+            <Grid>
+                <GroupBox Header="Содержание Лог файла"  Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5" x:Name="LogFileInfo" 
+                          Visibility="{Binding IsFileOpened, Converter={StaticResource BooleanToVisibility}}">
                     <StackPanel Margin="5">
                         <TextBlock Text = "{Binding FileName}"/>
                         <TextBlock Text = "{Binding DatePeriod}"/>
                         <TextBlock Text = "{Binding NotesFromCarriageWithSoftStartup}"/>
                         <TextBlock Text = "{Binding NumericDataCount}"/>
                         <TextBlock Text = "{Binding EventsDataCount}"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <CheckBox Content="Вагон с устройством плавного пуска" IsChecked="{Binding IsLogFileFromStand}" Grid.Column="0"/>
-                            <CheckBox Content="Лог файл со стенда" IsChecked="{Binding !IsLogFileFromStand}" Grid.Column="1"/>
-                        </Grid>
                     </StackPanel>
                 </GroupBox>
-
             </Grid>
-            <ProgressBar Margin="5,2,5,0" Visibility="{Binding IsProgressBarVisible, Converter={StaticResource BooleanToVisibility}}" Value="{Binding TestDataGenerationPercent}" Height="20"/>
+            <ProgressBar Margin="5 0 5 0" Visibility="{Binding IsProgressBarVisible, Converter={StaticResource BooleanToVisibility}}" Value="{Binding TestDataGenerationPercent}" Height="20"/>
         </StackPanel>
     </Grid>
 </Window>

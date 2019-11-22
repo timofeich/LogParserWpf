@@ -85,7 +85,9 @@ namespace LogParser.View
         {
             TabItem3.IsSelected = true;
 
+            JoinedEventData.UpdateLayout();
             JoinedEventData.ScrollIntoView(JoinedEventData.Items[result.ID - 1]);
+            JoinedEventData.Focus();
 
             JoinedEventData.SelectedItem = JoinedEventData.Items[result.ID - 1];
         }

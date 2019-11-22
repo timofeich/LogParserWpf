@@ -502,10 +502,18 @@ namespace LogParser.ViewModel
         {
             List<DateTime> MessageSendingDateList = new List<DateTime>();
 
+            int frameDateCount = 0;
+            int maxFramesDateInRequest = 23;
+
             while (dateOfFirstMessage <= dateOfLastMessage)
             {
+                frameDateCount++;
+
                 MessageSendingDateList.Add(dateOfFirstMessage);
                 dateOfFirstMessage = dateOfFirstMessage.AddSeconds(1);
+
+                if (frameDateCount > maxFramesDateInRequest) 
+                    break;
             }
 
             return MessageSendingDateList;

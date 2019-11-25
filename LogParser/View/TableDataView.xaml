@@ -12,7 +12,7 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
     </Window.Resources>
-    
+
     <DockPanel>
         <TabControl Margin="5">
             <TabItem Header="Таблица данных" x:Name="TabItem1">

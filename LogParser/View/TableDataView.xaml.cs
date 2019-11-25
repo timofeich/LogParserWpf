@@ -11,8 +11,8 @@ namespace LogParser.View
 {
     public partial class TableDataView : Window
     {
-        private EventJoinedWithTableData result { get; set; }
-        private DateTime dateOfEvent { get; set; }
+        private EventJoinedWithTableData ResultOfSearshingInJoinedTable { get; set; }
+        private DateTime DateOfEvent { get; set; }
 
         public TableDataView()
         {
@@ -28,33 +28,6 @@ namespace LogParser.View
                 FontSize = newSize; 
             }
         }
-
-        //private void SetFontSizeClick1(object sender, RoutedEventArgs e)
-        //{
-        //    double newSize;
-
-
-        //    if (double.TryParse(EventDataTextBox.Text, out newSize))
-        //    {
-        //        FontSize = newSize;
-
-        //        TableDataTextBox.Text = EventDataTextBox.Text;
-        //        JoinedTableTextBox.Text = EventDataTextBox.Text;
-        //    }
-        //}
-
-        //private void SetFontSizeClick2(object sender, RoutedEventArgs e)
-        //{
-        //    double newSize;
-
-        //    if (double.TryParse(JoinedTableTextBox.Text, out newSize))
-        //    {
-        //        FontSize = newSize;
-
-        //        EventDataTextBox.Text = JoinedTableTextBox.Text;
-        //        TableDataTextBox.Text = JoinedTableTextBox.Text;
-        //    }
-        //}
 
         private void SelectJoinedEventDateByTableDate(object sender, MouseButtonEventArgs e)
         {
@@ -73,11 +46,11 @@ namespace LogParser.View
                 var item = tableDataView.SelectedValue;
                 var content = (tableDataView.SelectedCells[dateColumn].Column.GetCellContent(item) as TextBox).Text;
 
-                dateOfEvent = Convert.ToDateTime(content);
+                DateOfEvent = Convert.ToDateTime(content);
 
-                result = JoinedEventData.Items.Cast<EventJoinedWithTableData>().FirstOrDefault(w => w.Date == dateOfEvent);
+                ResultOfSearshingInJoinedTable = JoinedEventData.Items.Cast<EventJoinedWithTableData>().FirstOrDefault(w => w.Date == DateOfEvent);
 
-                if (result == null)
+                if (ResultOfSearshingInJoinedTable == null)
                 {
                     SearchValueInJoinedDataWithInterval(0, 120);
                 }
@@ -96,8 +69,8 @@ namespace LogParser.View
         {
             for (int i = fromNumber; i < toNumber; i++)
             {
-                result = JoinedEventData.Items.Cast<EventJoinedWithTableData>().FirstOrDefault(w => w.Date == dateOfEvent.AddSeconds(i));
-                if (result != null)
+                ResultOfSearshingInJoinedTable = JoinedEventData.Items.Cast<EventJoinedWithTableData>().FirstOrDefault(w => w.Date == DateOfEvent.AddSeconds(i));
+                if (ResultOfSearshingInJoinedTable != null)
                 {
                     FocusOnSearchResult();
                     break;
@@ -110,10 +83,10 @@ namespace LogParser.View
             TabItem3.IsSelected = true;
 
             JoinedEventData.UpdateLayout();
-            JoinedEventData.ScrollIntoView(JoinedEventData.Items[result.ID - 1]);
+            JoinedEventData.ScrollIntoView(JoinedEventData.Items[ResultOfSearshingInJoinedTable.ID - 1]);
             JoinedEventData.Focus();
 
-            JoinedEventData.SelectedItem = JoinedEventData.Items[result.ID - 1];
+            JoinedEventData.SelectedItem = JoinedEventData.Items[ResultOfSearshingInJoinedTable.ID - 1];
         }
 
         private void EventButton_Click(object sender, RoutedEventArgs e)

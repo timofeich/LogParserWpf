@@ -12,7 +12,6 @@ namespace LogParser.View
     public partial class TableDataView : Window
     {
         private EventJoinedWithTableData result { get; set; }
-
         private DateTime dateOfEvent { get; set; }
 
         public TableDataView()
@@ -20,23 +19,48 @@ namespace LogParser.View
             InitializeComponent();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void SetFontSizeClick(object sender, RoutedEventArgs e)
         {
             double newSize;
 
             if (double.TryParse(TableDataTextBox.Text, out newSize))
             {
-                FontSize = newSize;
-                EventDataTextBox.Text = TableDataTextBox.Text;
-                JoinedTableTextBox.Text = TableDataTextBox.Text;  
+                FontSize = newSize; 
             }
         }
+
+        //private void SetFontSizeClick1(object sender, RoutedEventArgs e)
+        //{
+        //    double newSize;
+
+
+        //    if (double.TryParse(EventDataTextBox.Text, out newSize))
+        //    {
+        //        FontSize = newSize;
+
+        //        TableDataTextBox.Text = EventDataTextBox.Text;
+        //        JoinedTableTextBox.Text = EventDataTextBox.Text;
+        //    }
+        //}
+
+        //private void SetFontSizeClick2(object sender, RoutedEventArgs e)
+        //{
+        //    double newSize;
+
+        //    if (double.TryParse(JoinedTableTextBox.Text, out newSize))
+        //    {
+        //        FontSize = newSize;
+
+        //        EventDataTextBox.Text = JoinedTableTextBox.Text;
+        //        TableDataTextBox.Text = JoinedTableTextBox.Text;
+        //    }
+        //}
 
         private void SelectJoinedEventDateByTableDate(object sender, MouseButtonEventArgs e)
         {
             SearchValueInJoinedData(DataGridWithTableData, 1);
         }
-
+      
         private void SelectJoinedEventDateByEventDate(object sender, MouseButtonEventArgs e)
         {
             SearchValueInJoinedData(DataGridWithEventData, 2);

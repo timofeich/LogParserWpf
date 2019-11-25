@@ -21,7 +21,6 @@ namespace LogParser.ViewModel
         List<EventData> listEvent = new List<EventData>();
         List<TableData> listTable = new List<TableData>();
         List<EventJoinedWithTableData> listJoin = new List<EventJoinedWithTableData>();
-
         public static List<DateTime> TableDataDate { get; set; }
         public static DateTime DateOfMessageInRequest { get; set; }
 
@@ -33,6 +32,7 @@ namespace LogParser.ViewModel
         {
             InitializeListForData();
             BindingCommandsToClickMethods();
+
             IsLogFileFromCarriage = true;
             IsFileClosed = true;
         }

@@ -1,174 +1,60 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using LogParser.ViewModel;
+using System;
+using System.Windows.Media;
 
 namespace LogParser.Model
 {
-    public class TableData : INotifyPropertyChanged
+    public class TableData
     {
-        private string timeOfRequest;
-        public string TimeOfRequest
+        public int ID { get; set; }
+        public DateTime Date { get; set; }
+        public int VoltageA { get; set; }
+        public int VoltageB { get; set; }
+        public int VoltageC { get; set; }
+        public int AmperageA { get; set; }
+        public int AmperageB { get; set; }
+        public int AmperageC { get; set; }
+        public int Loil { get; set; }
+        public int Toil { get; set; }
+        public int Poil { get; set; }
+        public int ThyristorTemperature { get; set; }
+        public bool IsDataFromStandVisible { get; set; }
+        public Brush AmperageBrush
         {
-            get { return timeOfRequest; }
-            set
+            get
             {
-                if (timeOfRequest != value)
+                if (AmperageA >= 270 || AmperageB >= 270 || AmperageC >= 270)
                 {
-                    timeOfRequest = value;
-                    OnPropertyChanged("TimeOfRequest");
+                    return Brushes.Orange;
+                }
+                else if ((AmperageA != 0 || AmperageB != 0 || AmperageC != 0) 
+                    && Phase.IsImbalance(AmperageA, AmperageB, AmperageC))
+                {
+                    return Brushes.PeachPuff;
+                }
+                else
+                {
+                    return null;
                 }
             }
         }
 
-        private int voltageA;
-        public int VoltageA
+        public Brush VoltageBrush
         {
-            get { return voltageA; }
-            set
+            get
             {
-                if (voltageA != value)
+                if ((VoltageA != 0 || VoltageB != 0 || VoltageC != 0)
+                    && Phase.IsImbalance(VoltageA, VoltageB, VoltageC))
                 {
-                    voltageA = value;
-                    OnPropertyChanged("VoltageA");
+                    return Brushes.PeachPuff;
+                }
+                else
+                {
+                    return null;
                 }
             }
         }
 
-        private int voltageB;
-        public int VoltageB
-        {
-            get { return voltageB; }
-            set
-            {
-                if (voltageB != value)
-                {
-                    voltageB = value;
-                    OnPropertyChanged("VoltageB");
-                }
-            }
-        }
-
-        private int voltageC;
-        public int VoltageC
-        {
-            get { return voltageC; }
-            set
-            {
-                if (voltageC != value)
-                {
-                    voltageC = value;
-                    OnPropertyChanged("VoltageC");
-                }
-            }
-        }
-
-        private int amperageA;
-        public int AmperageA
-        {
-            get { return amperageA; }
-            set
-            {
-                if (amperageA != value)
-                {
-                    amperageA = value;
-                    OnPropertyChanged("AmperageA");
-                }
-            }
-        }
-
-        private int amperageB;
-        public int AmperageB
-        {
-            get { return amperageB; }
-            set
-            {
-                if (amperageB != value)
-                {
-                    amperageB = value;
-                    OnPropertyChanged("AmperageB");
-                }
-            }
-        }
-
-        private int amperageC;
-        public int AmperageC
-        {
-            get { return amperageC; }
-            set
-            {
-                if (amperageC != value)
-                {
-                    amperageC = value;
-                    OnPropertyChanged("AmperageC");
-                }
-            }
-        }
-
-        private int loil;
-        public int Loil
-        {
-            get { return loil; }
-            set
-            {
-                if (loil != value)
-                {
-                    loil = value;
-                    OnPropertyChanged("Loil");
-                }
-            }
-        }
-
-        private int toil;
-        public int Toil
-        {
-            get { return toil; }
-            set
-            {
-                if (toil != value)
-                {
-                    toil = value;
-                    OnPropertyChanged("Toil");
-                }
-            }
-        }
-
-        private int poil;
-        public int Poil
-        {
-            get { return poil; }
-            set
-            {
-                if (poil != value)
-                {
-                    poil = value;
-                    OnPropertyChanged("Poil");
-                }
-            }
-        }
-
-        private int thyristorTemperature;
-        public int ThyristorTemperature
-        {
-            get { return thyristorTemperature; }
-            set
-            {
-                if (thyristorTemperature != value)
-                {
-                    thyristorTemperature = value;
-                    OnPropertyChanged("ThyristorTemperature");
-                }
-            }
-        }
-
-        #region Implement INotifyPropertyChanged members
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        #endregion
+        
     }
 }

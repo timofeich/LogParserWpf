@@ -39,6 +39,22 @@ namespace LogParser.Model
             }
         }
 
+        public Brush VoltageBrush
+        {
+            get
+            {
+                if ((VoltageA != 0 || VoltageB != 0 || VoltageC != 0)
+                    && Phase.IsImbalance(VoltageA, VoltageB, VoltageC))
+                {
+                    return Brushes.PeachPuff;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         
     }
 }

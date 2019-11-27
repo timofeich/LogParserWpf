@@ -53,6 +53,11 @@
                                         <Setter Property="ToolTip" Value="Напряжение фазы А. Значение в Вольтах." />
                                     </Style>
                                 </DataGridTextColumn.CellStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
                             <DataGridTextColumn Header="Ub, (V)" Binding="{Binding VoltageB}" Width="*">
@@ -62,6 +67,11 @@
                                         <Setter Property="ToolTip" Value="Напряжение фазы B. Значение в Вольтах." />
                                     </Style>
                                 </DataGridTextColumn.CellStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
                             <DataGridTextColumn Header="Uc, (V)" Binding="{Binding VoltageC}" Width="*">
@@ -70,6 +80,11 @@
                                         <Setter Property="ToolTip" Value="Напряжение фазы C. Значение в Вольтах." />
                                     </Style>
                                 </DataGridTextColumn.CellStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
                             <DataGridTextColumn Header="Ia, (A)" Binding="{Binding AmperageA}" Width="*">
@@ -253,7 +268,11 @@
                                                             <Setter Property="ToolTip" Value="Напряжение фазы А. Значение в Вольтах." />
                                                         </Style>
                                                     </DataGridTextColumn.CellStyle>
-
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
 
                                                 <DataGridTextColumn filter:DataGridColumnExtensions.IsBetweenFilterControl="True" 
@@ -264,6 +283,11 @@
                                                             <Setter Property="ToolTip" Value="Напряжение фазы B. Значение в Вольтах." />
                                                         </Style>
                                                     </DataGridTextColumn.CellStyle>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
 
                                                 <DataGridTextColumn Header="Uc, (V)" Binding="{Binding VoltageC}" Width="*">
@@ -272,6 +296,11 @@
                                                             <Setter Property="ToolTip" Value="Напряжение фазы C. Значение в Вольтах." />
                                                         </Style>
                                                     </DataGridTextColumn.CellStyle>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
 
                                                 <DataGridTextColumn Header="Ia, (A)" Binding="{Binding AmperageA}" Width="*">

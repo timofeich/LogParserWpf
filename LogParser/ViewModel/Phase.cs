@@ -8,14 +8,14 @@ namespace LogParser.ViewModel
 {
     public static class Phase
     {
-        public static bool IsImbalance(int AmperageA, int AmperageB, int AmperageC)
+        public static bool IsImbalance(int firstValue, int secondValue, int thirdValue)
         {
-            if (AmperageA > AmperageB && AmperageA > AmperageC)
-                return IsCheckingForImbalance(AmperageA, AmperageB, AmperageC);
-            else if (AmperageB > AmperageC)
-                return IsCheckingForImbalance(AmperageB, AmperageA, AmperageC);
+            if (firstValue > secondValue && firstValue > thirdValue)
+                return IsCheckingForImbalance(firstValue, secondValue, thirdValue);
+            else if (secondValue > thirdValue)
+                return IsCheckingForImbalance(secondValue, firstValue, thirdValue);
             else
-                return IsCheckingForImbalance(AmperageC, AmperageA, AmperageB);
+                return IsCheckingForImbalance(thirdValue, firstValue, secondValue);
         }
 
         private static bool IsCheckingForImbalance(int maxAmperage, int secondAmperage, int thirdAmperage)

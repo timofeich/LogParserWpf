@@ -105,7 +105,6 @@ namespace LogParser.View
             saveFileDialog.Filter = "Файл Excel (*.csv)|*.csv|Excel 2007-2019(*.xlsx)|*.xlsx|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 3;
 
-
             if (saveFileDialog.ShowDialog() == true)
             {
                 datagrid.SelectAllCells();

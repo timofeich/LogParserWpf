@@ -238,7 +238,7 @@
                                                         </Style>
                                                     </DataGridTextColumn.CellStyle>
                                                 </DataGridTextColumn>
-                                                
+
                                                 <DataGridTextColumn Header="DateTime" Binding="{Binding Date}" Width="2*">
                                                     <DataGridTextColumn.CellStyle>
                                                         <Style TargetType="DataGridCell">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogParser.ViewModel;
+using System;
 using System.Windows.Media;
 
 namespace LogParser.Model
@@ -26,9 +27,18 @@ namespace LogParser.Model
                 {
                     return Brushes.Orange;
                 }
-
-                return null;
+                else if ((AmperageA != 0 || AmperageB != 0 || AmperageC != 0) 
+                    && Phase.IsImbalance(AmperageA, AmperageB, AmperageC))
+                {
+                    return Brushes.PeachPuff;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
+
+        
     }
 }

@@ -259,8 +259,8 @@ namespace LogParser.ViewModel
         private void JoinEventAndTableData()
         {         
             ObservableCollection<TableData> test = new ObservableCollection<TableData>();
+            
             int eventDataItemsCounter = 0;
-
             int tableDataListItemsCounter = 0;
 
             foreach (EventData eventDataItem in eventDataList)
@@ -429,7 +429,7 @@ namespace LogParser.ViewModel
         {
             e.ID = standNotesCounter;
 
-            e.Date = DateTime.Parse(dataDateString.Replace(',', '.'));//"dd.MM.yyyy HH:mm:ss.fff",
+            e.Date = DateTime.Parse(dataDateString.Replace(',', '.'));
 
             e.VoltageA = Convert.ToInt32(dataFromLogFile[0]);
             e.VoltageB = Convert.ToInt32(dataFromLogFile[1]);
@@ -622,13 +622,15 @@ namespace LogParser.ViewModel
             FileName = null;
             DatePeriod = null;
             NotesFromCarriageWithSoftStartup = null;
+            NotesFromStand = null;
             NumericDataCount = null;
             EventsDataCount = null;
 
             eventNotesCounter = 0;
             tableNotesCounter = 0;
+            standNotesCounter = 0;
 
-            IsFileClosed= true;
+            IsFileClosed = true;
             IsFileOpened = false;
         }
 

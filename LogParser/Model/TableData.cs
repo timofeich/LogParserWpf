@@ -19,6 +19,7 @@ namespace LogParser.Model
         public int Poil { get; set; }
         public int ThyristorTemperature { get; set; }
         public bool IsDataFromStandVisible { get; set; }
+
         public Brush AmperageBrush
         {
             get

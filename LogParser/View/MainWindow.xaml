@@ -14,31 +14,14 @@
         <StackPanel>
             <Menu Background="White"  BorderBrush="LightGray" BorderThickness="1">
                 <MenuItem Header="Файл">
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    <MenuItem Header="Открыть" Command = "{Binding OpenCommand}"/>
-                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
-                    <MenuItem Header="Сохранить" Command = "{Binding SaveCommand}" IsEnabled="{Binding LogFileInformation.IsFileOpened}"/>
-=======
                     <MenuItem Header="Открыть" Command = "{Binding OpenCommand}" IsEnabled="{Binding IsFileClosed}"/>
                     <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding IsFileOpened}"/>
->>>>>>> 2c57b75... reliese version 1.0.0
-=======
-                    <MenuItem Header="Открыть" Command = "{Binding OpenCommand}" IsEnabled="{Binding IsFileClosed}"/>
-                    <MenuItem Header="Закрыть" Command = "{Binding CloseCommand}" IsEnabled="{Binding IsFileOpened}"/>
->>>>>>> DataViaClasses
                 </MenuItem>
                 <MenuItem Header="Просмотр">
                     <MenuItem Header = "Данные" Command="{Binding OpenTableViewCommand}"/>
                 </MenuItem>
             </Menu>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <GroupBox Header="Содержание Лог файла"  Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5">
-=======
-=======
->>>>>>> DataViaClasses
             <Grid Visibility="{Binding IsFileClosed, Converter={StaticResource BooleanToVisibility}}">
                 <GroupBox Header="Тип Лог файла" Background="White" TextBlock.FontSize="15" Margin="5 0 5 10">
                     <StackPanel>
@@ -58,10 +41,6 @@
             <Grid>
                 <GroupBox Header="Содержание Лог файла"  Grid.Column="1" Background="White" TextBlock.FontSize="15" Margin="5 0 5 10" x:Name="LogFileInfo" 
                           Visibility="{Binding IsFileOpened, Converter={StaticResource BooleanToVisibility}, FallbackValue=Collapsed }">
-<<<<<<< HEAD
->>>>>>> 2c57b75... reliese version 1.0.0
-=======
->>>>>>> DataViaClasses
                     <StackPanel Margin="5">
                         <TextBlock Text = "{Binding FileName}"/>
                         <TextBlock Text = "{Binding DatePeriod}"/>

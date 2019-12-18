@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <StackPanel>
+            <RadioButton Content="Вагон с устройством плавного пуска" IsChecked="{Binding IsLogFileFromCarriage}"  GroupName="LogFileType" />
+            <RadioButton Content="Лог файл со стенда" IsChecked="{Binding !IsLogFileFromCarriage}" GroupName="LogFileType"/>
+        </StackPanel>
     </Grid>
 </UserControl>

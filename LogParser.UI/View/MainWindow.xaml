@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogParser.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="LogParser" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -18,5 +18,11 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <TextBlock Margin="10" FontSize="40" Grid.ColumnSpan="3">
+                <Bold >Log</Bold>Parser
+        </TextBlock>
+        
+        <TextBlock Text="Created by Gomer Pyle, 2019" Margin="10" Grid.Row="3" Grid.ColumnSpan="3" Foreground="Gray" />
+
     </Grid>
 </Window>

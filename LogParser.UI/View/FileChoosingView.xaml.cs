@@ -18,9 +18,9 @@ namespace LogParser.UI.View
     /// <summary>
     /// Логика взаимодействия для FileChoosingDataView.xaml
     /// </summary>
-    public partial class FileChoosingDataView : UserControl
+    public partial class FileChoosingView : UserControl
     {
-        public FileChoosingDataView()
+        public FileChoosingView()
         {
             InitializeComponent();
         }

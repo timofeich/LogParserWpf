@@ -5,11 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LogParser.UI.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="106.997" d:DesignWidth="291.265">
     <Grid>
-        <StackPanel>
-            <RadioButton Content="Вагон с устройством плавного пуска" IsChecked="{Binding IsLogFileFromCarriage}"  GroupName="LogFileType" />
-            <RadioButton Content="Лог файл со стенда" IsChecked="{Binding !IsLogFileFromCarriage}" GroupName="LogFileType"/>
+        <StackPanel Margin="5">
+            <TextBlock Text = "FileName"/>
+            <TextBlock Text = "DatePeriod"/>
+            <TextBlock Text = "NotesFromCarriageWithSoftStartup"/>
+            <TextBlock Text = "NotesFromStand"/>
+            <TextBlock Text = "NumericDataCount"/>
+            <TextBlock Text = "EventsDataCount"/>
         </StackPanel>
     </Grid>
 </UserControl>

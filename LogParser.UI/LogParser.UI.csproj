@@ -58,7 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\FileChoosingDataView.xaml">
+    <Page Include="View\FileChoosingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -79,8 +79,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Command\DelegateCommand.cs" />
-    <Compile Include="View\FileChoosingDataView.xaml.cs">
-      <DependentUpon>FileChoosingDataView.xaml</DependentUpon>
+    <Compile Include="View\FileChoosingView.xaml.cs">
+      <DependentUpon>FileChoosingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\FileDataView.xaml.cs">
       <DependentUpon>FileDataView.xaml</DependentUpon>

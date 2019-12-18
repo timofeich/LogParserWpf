@@ -1,0 +1,399 @@
+﻿<UserControl x:Class="LogParser.UI.View.FileDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LogParser.UI.View"
+             xmlns:filter="clr-namespace:DataGridFilterLibrary;assembly=DataGridFilterLibrary"
+        
+             mc:Ignorable="d" 
+             d:DesignHeight="450" Width="876.259">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <DockPanel>
+            <TabControl Margin="5">
+                <TabItem Header="Таблица данных" x:Name="TabItem1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <DataGrid   filter:DataGridExtensions.UseBackgroundWorkerForFiltering="True"
+                                filter:DataGridExtensions.IsClearButtonVisible="False"
+                        
+                                ColumnHeaderStyle="{StaticResource {ComponentResourceKey 
+		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
+		                                ResourceId=DataGridHeaderFilterControlStyle}}"
+                        
+                                AutoGenerateColumns="False" IsReadOnly="False"
+                                ItemsSource="{Binding Path=TableDataList}" x:Name="DataGridWithTableData" 
+                                Grid.Row="0" >
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.8*">
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="DateTime" 
+                                                Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss.fff}'}" Width="2*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Время и дата записи с данными" />
+                                            <EventSetter Event="MouseDoubleClick" Handler="SelectJoinedEventDateByTableDate" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Ua, (V)" Binding="{Binding VoltageA}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Напряжение фазы А. Значение в Вольтах." />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Ub, (V)" Binding="{Binding VoltageB}" Width="*">
+
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Напряжение фазы B. Значение в Вольтах." />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Uc, (V)" Binding="{Binding VoltageC}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Напряжение фазы C. Значение в Вольтах." />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Ia, (A)" Binding="{Binding AmperageA}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Ток фазы A. Значение в Амперах." />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding AmperageBrush}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Ib, (A)" Binding="{Binding AmperageB}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Ток фазы B. Значение в Амперах." />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding AmperageBrush}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Ic, (A)" Binding="{Binding AmperageC}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Ток фазы C. Значение в Амперах." />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding AmperageBrush}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Loil, (mm)" Binding="{Binding Loil}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Уровень масла в баке. Значение в миллиметрах от днища." />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Toil, (*C)" Binding="{Binding Toil}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Температура масла в баке. Значение в градусах Цельсия." />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Poil, (MPa)" Binding="{Binding Poil}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Давление масла в гидросистеме при торможении. Значение в МегаПаскалях." />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Tthyr, (*C)" Binding="{Binding ThyristorTemperature}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="Температура тиристоров. Значение в градусах Цельсия." />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+
+                            <Label Margin="0,1,0,0">Всего отображено строк:</Label>
+                            <Label Margin="0,1,0,0" Content="{Binding ElementName=DataGridWithTableData, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
+
+                            <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
+                            <TextBox x:Name="TableDataTextBox" Text="{Binding FontSize, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>
+                            <Button Margin="2,2,0,0" Click="SetFontSizeClick" Height="26" VerticalAlignment="Top">Задать новый размер шрифта</Button>
+                            <Button Margin="10,2,0,0" Height="26" VerticalAlignment="Top" Click="TableButton_Click">Сохранить в Excel</Button>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="Таблица событий" Visibility="{Binding IsLogFileFromCarriage, Converter={StaticResource BooleanToVisibility}}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <DataGrid   filter:DataGridExtensions.UseBackgroundWorkerForFiltering="True"
+                                filter:DataGridExtensions.IsClearButtonVisible="False"
+
+                        
+                                ColumnHeaderStyle="{StaticResource {ComponentResourceKey 
+		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
+		                                ResourceId=DataGridHeaderFilterControlStyle}}"
+                        
+                                AutoGenerateColumns="False" IsReadOnly="False"
+                                ItemsSource="{Binding Path = EventDataList}" x:Name="DataGridWithEventData" Grid.Row="0">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding Path = ID}" Width="0.4*"/>
+                                <DataGridTextColumn Header="Текст сообщения" Binding="{Binding Path = Message}" Width="3*"/>
+                                <DataGridTextColumn Header="Время и дата сообщения" Binding="{Binding Path = Date}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <EventSetter Event="MouseDoubleClick" Handler="SelectJoinedEventDateByEventDate" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Status" Binding="{Binding Path = Status}" Width="0.3*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+
+                            <Label Margin="0,1,0,0">Всего отображено строк:</Label>
+                            <Label Margin="0,1,0,0" Content="{Binding ElementName=DataGridWithEventData, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
+
+                            <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
+                            <TextBox x:Name="EventDataTextBox" Text="{Binding FontSize, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>
+                            <Button Margin="2,2,0,0" Height="26" Click="SetFontSizeClick" VerticalAlignment="Top">Задать новый размер шрифта</Button>
+                            <Button Margin="10,2,0,0" Height="26" VerticalAlignment="Top" Click="EventButton_Click">Сохранить в Excel</Button>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="Таблица данных и событий" x:Name="TabItem3" Visibility="{Binding IsLogFileFromCarriage, Converter={StaticResource BooleanToVisibility}}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <DataGrid   filter:DataGridExtensions.UseBackgroundWorkerForFiltering="True"
+                                filter:DataGridExtensions.IsClearButtonVisible="False"
+                                
+                                ColumnHeaderStyle="{StaticResource {ComponentResourceKey 
+		                                TypeInTargetAssembly={x:Type filter:DataGridHeaderFilterControl}, 
+		                                ResourceId=DataGridHeaderFilterControlStyle}}"
+                                
+                                ItemsSource="{Binding Path=JoinEventAndTableList}"
+                                AutoGenerateColumns="False" IsReadOnly="True"
+                                 x:Name="JoinedEventData" Grid.Row="0" Margin="-4,0,4,0">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Width="0.4*" Binding="{Binding ID}"/>
+                                <DataGridTextColumn Header="Дата события" Width="1.5*" Binding="{Binding Date}"/>
+                                <DataGridTextColumn Header="Сообщение" Width="2*" Binding="{Binding Message}"/>
+                                <DataGridTextColumn Header="Status" Width="0.5*" Binding="{Binding Status}"/>
+
+                                <DataGridTemplateColumn Header="Данные" Width="5*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DataGrid ItemsSource="{Binding TableDatas}"  AutoGenerateColumns="False"  CanUserAddRows="False">
+                                                <DataGrid.Columns>
+
+                                                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="ID" />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="DateTime" Binding="{Binding Date}" Width="2*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Время и дата записи с данными" />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="Ua, (V)" Binding="{Binding VoltageA}" Width="*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Напряжение фазы А. Значение в Вольтах." />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn filter:DataGridColumnExtensions.IsBetweenFilterControl="True" 
+                                                Header="Ub, (V)" Binding="{Binding VoltageB}" Width="*">
+
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Напряжение фазы B. Значение в Вольтах." />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="Uc, (V)" Binding="{Binding VoltageC}" Width="*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Напряжение фазы C. Значение в Вольтах." />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Background" Value="{Binding VoltageBrush}"/>
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="Ia, (A)" Binding="{Binding AmperageA}" Width="*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Ток фазы A. Значение в Амперах." />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Background" Value="{Binding AmperageBrush}"/>
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="Ib, (A)" Binding="{Binding AmperageB}" Width="*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Ток фазы B. Значение в Амперах." />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Background" Value="{Binding AmperageBrush}"/>
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="Ic, (A)" Binding="{Binding AmperageC}" Width="*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Ток фазы C. Значение в Амперах." />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Background" Value="{Binding AmperageBrush}"/>
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="Loil, (mm)" Binding="{Binding Loil}" Width="*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Уровень масла в баке. Значение в миллиметрах от днища." />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="Toil, (*C)" Binding="{Binding Toil}" Width="*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Температура масла в баке. Значение в градусах Цельсия." />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="Poil, (MPa)" Binding="{Binding Poil}" Width="*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Давление масла в гидросистеме при торможении. Значение в МегаПаскалях." />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="Tthyr, (*C)" Binding="{Binding ThyristorTemperature}" Width="*">
+                                                        <DataGridTextColumn.CellStyle>
+                                                            <Style TargetType="DataGridCell">
+                                                                <Setter Property="ToolTip" Value="Температура тиристоров. Значение в градусах Цельсия." />
+                                                            </Style>
+                                                        </DataGridTextColumn.CellStyle>
+                                                    </DataGridTextColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <Label Margin="0,1,0,0">Всего отображено строк:</Label>
+                            <Label Margin="0,1,0,0" Content="{Binding ElementName=JoinedEventData, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
+
+                            <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
+                            <TextBox x:Name="JoinedTableTextBox" Text="{Binding FontSize, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>
+                            <Button Margin="2,2,0,0" Height="26" VerticalAlignment="Top" Click="SetFontSizeClick">Задать новый размер шрифта</Button>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</UserControl>

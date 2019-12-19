@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LogParser.UI.ViewModel
+﻿namespace LogParser.UI.ViewModel
 {
     public class FileChoosingViewModel : ViewModelBase
     {

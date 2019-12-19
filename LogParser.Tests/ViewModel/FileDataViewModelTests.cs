@@ -1,11 +1,8 @@
 ﻿using LogParser.Model;
 using LogParser.UI.DataProvider;
 using LogParser.UI.ViewModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace LogParser.Tests.ViewModel

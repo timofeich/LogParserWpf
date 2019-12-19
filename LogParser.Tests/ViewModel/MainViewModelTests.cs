@@ -1,9 +1,4 @@
 ﻿using LogParser.UI.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace LogParser.Tests.ViewModel
@@ -19,7 +14,6 @@ namespace LogParser.Tests.ViewModel
             viewModel.Load();
 
             Assert.True(fileDataViewModelMock.LoadHasBeenCalled);
-
         }
     }
 

@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DataGridFilterLibrary">
       <HintPath>..\..\idealDataGridFilter\DataGridFilterLibrary\bin\Debug\DataGridFilterLibrary.dll</HintPath>
@@ -127,9 +130,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\logo.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Styles\" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +141,9 @@
       <Project>{C82E0619-D21A-4F99-A0F9-7480FF5C325E}</Project>
       <Name>LogParser.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

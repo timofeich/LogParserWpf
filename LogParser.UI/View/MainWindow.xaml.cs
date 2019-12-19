@@ -1,5 +1,4 @@
 ﻿using LogParser.UI.ViewModel;
-using System;
 using System.Windows;
 
 namespace LogParser.UI

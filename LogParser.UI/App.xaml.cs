@@ -1,4 +1,6 @@
-﻿using LogParser.UI.ViewModel;
+﻿using LogParser.DataAccess;
+using LogParser.UI.DataProvider;
+using LogParser.UI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,7 +20,11 @@ namespace LogParser.UI
         {
             base.OnStartup(e);
 
-            var mainWindow = new MainWindow(new MainViewModel());
+            var mainWindow = new MainWindow(
+                new MainViewModel(                
+                    new FileDataViewModel(
+                        new FileDataProvider(
+                            ()=> new FileDataService()))));
             mainWindow.Show();
         }
     }

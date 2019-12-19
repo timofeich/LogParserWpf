@@ -79,6 +79,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Command\DelegateCommand.cs" />
+    <Compile Include="DataProvider\FileDataProvider.cs" />
     <Compile Include="DataProvider\IFileDataProvider.cs" />
     <Compile Include="ViewModel\FileChoosingViewModel.cs" />
     <Compile Include="ViewModel\FileDataViewModel.cs" />

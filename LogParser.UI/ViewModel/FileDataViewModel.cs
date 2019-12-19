@@ -10,7 +10,12 @@ using System.Threading.Tasks;
 
 namespace LogParser.UI.ViewModel
 {
-    public class FileDataViewModel : ViewModelBase
+    public interface IFileDataViewModel
+    {
+        void Load();
+    }
+
+    public class FileDataViewModel : ViewModelBase, IFileDataViewModel
     {
         private IFileDataProvider _dataProvider;
         public FileDataViewModel(IFileDataProvider dataProvider)

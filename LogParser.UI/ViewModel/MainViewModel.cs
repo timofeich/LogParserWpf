@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LogParser.DataAccess;
+using LogParser.UI.DataProvider;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace LogParser.UI.ViewModel
 {
+
     public class MainViewModel : ViewModelBase
     {
-        public MainViewModel()
+        public MainViewModel(IFileDataViewModel fileDataViewModel)
         {
-            //FileDataViewModel = new FileDataViewModel();
+            FileDataViewModel = fileDataViewModel;
         }
 
-        public FileDataViewModel FileDataViewModel { get; private set; }
+        public IFileDataViewModel FileDataViewModel { get; private set; }
 
         public void Load()
         {

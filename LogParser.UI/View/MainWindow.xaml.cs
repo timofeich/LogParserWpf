@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using LogParser.UI.ViewModel;
+using System;
+using System.Windows;
 
 namespace LogParser.UI
 {
@@ -7,9 +9,20 @@ namespace LogParser.UI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private MainViewModel _viewModel;
+
+        public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
+            this.Loaded += MainWindow_Loaded;
+
+            _viewModel = viewModel;
+            DataContext = _viewModel;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Load();
         }
     }
 }

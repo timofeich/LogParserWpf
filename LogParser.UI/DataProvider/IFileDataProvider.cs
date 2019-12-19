@@ -1,0 +1,14 @@
+﻿using LogParser.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LogParser.UI.DataProvider
+{
+    public interface IFileDataProvider
+    {
+        IEnumerable<TableData> GetAllTableData();
+    }
+}

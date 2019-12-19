@@ -6,11 +6,12 @@
         xmlns:local="clr-namespace:LogParser.UI"
         mc:Ignorable="d"
         xmlns:view="clr-namespace:LogParser.UI.View"
-        Title="LogParser" Height="450" Width="800">
+        Title="LogParser" Height="450" Width="1335.135">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
-
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -22,6 +23,8 @@
                 <Bold >Log</Bold>Parser
         </TextBlock>
         <TextBlock Text="Created by Gomer Pyle, 2019" Margin="10" Grid.Row="3" Grid.ColumnSpan="3" Foreground="Gray" />
-        <view:FileChoosingView Grid.Column="1" Grid.Row="2"/>
+        <view:FileChoosingView Grid.Column="0" Grid.Row="2"/>
+        <view:FileInfoView DataContext="{Binding FileInfoViewModel}" Grid.Column="1" Grid.Row="2"/>
+        <view:FileDataView DataContext="{Binding FileDataViewModel}" Grid.Column="2" Grid.Row="2"/>
     </Grid>
 </Window>

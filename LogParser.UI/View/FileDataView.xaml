@@ -30,11 +30,11 @@
 		                                ResourceId=DataGridHeaderFilterControlStyle}}"
                         
                                 AutoGenerateColumns="False" IsReadOnly="False"
-                                ItemsSource="{Binding Path=TableDataList}" x:Name="DataGridWithTableData" 
+                                ItemsSource="{Binding TableDatas}" x:Name="DataGridWithTableData" 
                                 Grid.Row="0" >
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.8*">
+                                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="0.8*">
                                 </DataGridTextColumn>
 
                                 <DataGridTextColumn Header="DateTime" 

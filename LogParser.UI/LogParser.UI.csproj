@@ -79,6 +79,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Command\DelegateCommand.cs" />
+    <Compile Include="DataProvider\IFileDataProvider.cs" />
+    <Compile Include="ViewModel\FileChoosingViewModel.cs" />
+    <Compile Include="ViewModel\FileDataViewModel.cs" />
+    <Compile Include="ViewModel\FileInfoViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\FileChoosingView.xaml.cs">
       <DependentUpon>FileChoosingView.xaml</DependentUpon>
     </Compile>
@@ -124,7 +130,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Styles\" />
-    <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LogParser.DataAccess\LogParser.DataAccess.csproj">
+      <Project>{B88C6F02-4525-4ACF-B021-7ACF3D558E21}</Project>
+      <Name>LogParser.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogParser.Model\LogParser.Model.csproj">
+      <Project>{C82E0619-D21A-4F99-A0F9-7480FF5C325E}</Project>
+      <Name>LogParser.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

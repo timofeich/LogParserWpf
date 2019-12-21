@@ -49,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LogParser.DataParse\LogParser.DataParsing.csproj">
+      <Project>{CA8FCF9B-2110-4291-83E0-2CB3B69287A4}</Project>
+      <Name>LogParser.DataParsing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LogParser.Model\LogParser.Model.csproj">
       <Project>{C82E0619-D21A-4F99-A0F9-7480FF5C325E}</Project>
       <Name>LogParser.Model</Name>

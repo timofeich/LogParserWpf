@@ -1,5 +1,5 @@
-﻿using LogParser.Model;
-using Newtonsoft.Json;
+﻿using LogParser.DataParse;
+using LogParser.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +9,9 @@ namespace LogParser.DataAccess
 {
     public class FileDataService : IDataService
     {
-        private const string StorageFile = "LOG011.json";
+        private const string StorageFile = "D:\\LOG011";
+
+        public object FileDataParsing { get; private set; }
 
         public TableData GetTableDataById(int tableDataId)
         {
@@ -69,37 +71,21 @@ namespace LogParser.DataAccess
 
         private void SaveToFile(List<TableData> friendList)
         {
-            string json = JsonConvert.SerializeObject(friendList, Formatting.Indented);
-            File.WriteAllText(StorageFile, json);
+            //string json = JsonConvert.SerializeObject(friendList, Formatting.Indented);
+            //File.WriteAllText(StorageFile, json);
         }
 
         private List<TableData> ReadFromFile()
         {
-
-            if (!File.Exists(StorageFile))
+            if (File.Exists(StorageFile))
             {
-                return new List<TableData>
-                {
-                    new TableData {Id = 0, Date = new DateTime(2019, 08, 26, 1, 51, 54), VoltageA = 709, VoltageB = 715,
-                        VoltageC = 709, AmperageA = 13, AmperageB = 14, AmperageC = 14, Loil = 380, Poil = 124, Toil = 0,
-                        ThyristorTemperature = 255 },
-                    new TableData {Id = 1, Date = new DateTime(2019, 08, 26, 1, 51, 55), VoltageA = 710, VoltageB = 713,
-                        VoltageC = 708, AmperageA = 13, AmperageB = 14, AmperageC = 14, Loil = 380, Poil = 124, Toil = 0,
-                        ThyristorTemperature = 255 },
-                    new TableData {Id = 2, Date = new DateTime(2019, 08, 26, 1, 51, 56), VoltageA = 723, VoltageB = 729,
-                        VoltageC = 723, AmperageA = 15, AmperageB = 16, AmperageC = 15, Loil = 380, Poil = 124, Toil = 0,
-                        ThyristorTemperature = 255 },
-                    new TableData {Id = 3, Date = new DateTime(2019, 08, 26, 1, 51, 57), VoltageA = 716, VoltageB = 722,
-                        VoltageC = 718, AmperageA = 12, AmperageB = 13, AmperageC = 12, Loil = 380, Poil = 124, Toil = 0,
-                        ThyristorTemperature = 255 },
-                    new TableData {Id = 4, Date = new DateTime(2019, 08, 26, 1, 51, 58), VoltageA = 692, VoltageB = 696,
-                        VoltageC = 691, AmperageA = 40, AmperageB = 41, AmperageC = 40, Loil = 380, Poil = 124, Toil = 0,
-                        ThyristorTemperature = 255 },
-                };
+                FileDataParsing logFile = new FileDataParsing(StorageFile);
+                return logFile.listTable;
             }
-
-            string json = File.ReadAllText(StorageFile);
-            return JsonConvert.DeserializeObject<List<TableData>>(json);
+            else 
+            { 
+                return null; 
+            }
         }
     }
 }

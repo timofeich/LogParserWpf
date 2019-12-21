@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogParser.UITests", "LogPar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogParser.DataAccess", "LogParser.DataAccess\LogParser.DataAccess.csproj", "{B88C6F02-4525-4ACF-B021-7ACF3D558E21}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogParser.DataParsing", "LogParser.DataParse\LogParser.DataParsing.csproj", "{CA8FCF9B-2110-4291-83E0-2CB3B69287A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B88C6F02-4525-4ACF-B021-7ACF3D558E21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B88C6F02-4525-4ACF-B021-7ACF3D558E21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B88C6F02-4525-4ACF-B021-7ACF3D558E21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA8FCF9B-2110-4291-83E0-2CB3B69287A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA8FCF9B-2110-4291-83E0-2CB3B69287A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA8FCF9B-2110-4291-83E0-2CB3B69287A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA8FCF9B-2110-4291-83E0-2CB3B69287A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

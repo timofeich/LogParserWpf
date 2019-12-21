@@ -21,5 +21,13 @@ namespace LogParser.UI.DataProvider
                 return dataService.GetAllTableData();
             }
         }
+
+        public IEnumerable<EventData> GetAllEventData()
+        {
+            using (var dataService = _dataServiceCreator())
+            {
+                return dataService.GetAllEventData();
+            }
+        }
     }
 }

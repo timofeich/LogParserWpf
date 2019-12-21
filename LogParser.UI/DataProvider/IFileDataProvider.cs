@@ -6,5 +6,7 @@ namespace LogParser.UI.DataProvider
     public interface IFileDataProvider
     {
         IEnumerable<TableData> GetAllTableData();
+
+        IEnumerable<EventData> GetAllEventData();
     }
 }

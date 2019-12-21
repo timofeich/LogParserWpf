@@ -28,6 +28,24 @@ namespace LogParser.Tests.ViewModel
         }
 
         [Fact]
+        public void ShouldLoadEventData()
+        {
+            var viewModel = new FileDataViewModel(new FileDataProviderMock());
+
+            viewModel.Load();
+
+            Assert.Equal(2, viewModel.EventDatas.Count);
+
+            var tableData = viewModel.EventDatas.SingleOrDefault(t => t.Id == 0);
+            Assert.NotNull(tableData);
+            Assert.Equal("Cкорость 1 хода включена.", tableData.Message);
+
+            tableData = viewModel.EventDatas.SingleOrDefault(t => t.Id == 1);
+            Assert.NotNull(tableData);
+            Assert.Equal("Cкорость 2 хода включена.", tableData.Message);
+        }
+
+        [Fact]
         public void ShouldLoadTableDataOnlyOnce()
         {
             var viewModel = new FileDataViewModel(new FileDataProviderMock());
@@ -45,6 +63,12 @@ namespace LogParser.Tests.ViewModel
         {
             yield return new TableData { Id = 0, AmperageA = 0 };
             yield return new TableData { Id = 1, AmperageA = 1 };
+        }
+
+        public IEnumerable<EventData> GetAllEventData()
+        {
+            yield return new EventData { Id = 0, Message = "Cкорость 1 хода включена." };
+            yield return new EventData { Id = 1, Message = "Cкорость 2 хода включена." };
         }
     }
 }

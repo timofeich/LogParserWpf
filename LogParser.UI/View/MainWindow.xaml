@@ -6,12 +6,11 @@
         xmlns:local="clr-namespace:LogParser.UI"
         mc:Ignorable="d"
         xmlns:view="clr-namespace:LogParser.UI.View"
-        Title="LogParser" Height="450" Width="1335.135">
-    <Grid>
+        Title="LogParser" Height="403" Width="1136.635">
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,12 +18,33 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Margin="10" FontSize="40" Grid.ColumnSpan="3">
+        <TextBlock Margin="10" FontSize="40" Grid.Column="0">
                 <Bold >Log</Bold>Parser
         </TextBlock>
         <TextBlock Text="Created by Gomer Pyle, 2019" Margin="10" Grid.Row="3" Grid.ColumnSpan="3" Foreground="Gray" />
         <view:FileChoosingView Grid.Column="0" Grid.Row="2"/>
-        <view:FileInfoView DataContext="{Binding FileInfoViewModel}" Grid.Column="1" Grid.Row="2"/>
-        <view:FileDataView DataContext="{Binding FileDataViewModel}" Grid.Column="2" Grid.Row="2"/>
-    </Grid>
+        <view:FileInfoView DataContext="{Binding FileInfoViewModel}" Grid.Column="1" Grid.Row="0" Margin="7,10,313,2"/>
+        <view:FileDataView DataContext="{Binding FileDataViewModel}" Grid.Row="2" Grid.Column="1" Grid.RowSpan="1"/>
+    </Grid>-->
+    <DockPanel Margin="10">
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" MinWidth="218"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Margin="5,5,10,5" FontSize="40" Grid.Column="0">
+                <Bold >Log</Bold>Parser
+            </TextBlock>
+            <view:FileInfoView DataContext="{Binding FileInfoViewModel}" Grid.Column="1" Margin="5,5,0,5" HorizontalAlignment="Left" />
+        </Grid>
+
+        <TextBlock DockPanel.Dock="Bottom"  Text="Created by Gomer Pyle, 2019" Foreground="Gray" Margin="10" />
+
+        <view:FileChoosingView DockPanel.Dock="Left" />
+        <view:FileDataView DockPanel.Dock="Right" DataContext="{Binding FileDataViewModel}" Margin="5 5 10 0"/>
+
+
+
+    </DockPanel>
 </Window>

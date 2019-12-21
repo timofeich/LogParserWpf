@@ -63,6 +63,24 @@ namespace LogParser.DataAccess
             return ReadFromFile();
         }
 
+        public IEnumerable<EventData> GetAllEventData()
+        {
+            return ReadEventFromFile();
+        }
+
+        private IEnumerable<EventData> ReadEventFromFile()
+        {
+            if (File.Exists(StorageFile))
+            {
+                FileDataParsing logFile = new FileDataParsing(StorageFile);
+                return logFile.listEvent;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public void Dispose()
         {
             // Usually Service-Proxies are disposable. This method is added as demo-purpose

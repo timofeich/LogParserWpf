@@ -13,5 +13,7 @@ namespace LogParser.DataAccess
         void DeleteTableData(int tableDataId);
 
         IEnumerable<TableData> GetAllTableData();
+
+        IEnumerable<EventData> GetAllEventData();
     }
 }

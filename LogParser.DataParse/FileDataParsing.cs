@@ -13,13 +13,25 @@ namespace LogParser.DataParse
     public class FileDataParsing
     {
         public string FileName { get; }
+
         public List<TableData> listTable = new List<TableData>();
-        public static int tableNotesCounter = 0;
-        public static DateTime DateOfMessageInRequest { get; set; }
+        public List<EventData> listEvent = new List<EventData>();
+
+        private int tableNotesCounter = 0;
+        public int eventNotesCounter = 0;
+        private DateTime DateOfMessageInRequest { get; set; }
+
+        private EventParsing eventParsing;
+        private DataParsing dataParsing;
+
 
         public FileDataParsing(string FileName)
         {
             this.FileName = FileName;
+
+            eventParsing = new EventParsing();
+            dataParsing = new DataParsing();
+
             ParseLogFile();
         }
 
@@ -27,7 +39,6 @@ namespace LogParser.DataParse
         {
             ReadFileByRequests(FileName);
         }
-
 
         public void ReadFileByRequests(string fileName)
         {
@@ -56,6 +67,8 @@ namespace LogParser.DataParse
             byte[] dateOfFirstMessage = { request[8], request[9], request[10], request[11] };
             byte[] dateOfLastMessage = { request[12], request[13], request[14], request[15] };
 
+            byte eventIdentifier = 65;
+
             int date2 = BitConverter.ToInt32(dateOfFirstMessage, 0);
             int date3 = BitConverter.ToInt32(dateOfLastMessage, 0);
 
@@ -78,10 +91,20 @@ namespace LogParser.DataParse
                         CountOfMessagesInRequest++;
                     }
 
+                    dataParsing.GetData();
                     TableData tbl = new TableData();
                     GetTableDataFromLogFile(tbl, request, i);
                     listTable.Add(tbl);
                     i += 23;
+                }
+                else if (request[i - 2] == eventIdentifier)
+                {
+                    string infoAboutEvent = Encoding.Default.GetString(request, i, 64);
+
+                    EventData emp = new EventData();
+                    GetEventDataFromLogFile(emp, infoAboutEvent);
+                    listEvent.Add(emp);
+                    i += 67;
                 }
                 else
                 {
@@ -153,6 +176,35 @@ namespace LogParser.DataParse
             e.ThyristorTemperature = Convert.ToInt32(Temperature);
 
             tableNotesCounter++;
+        }
+        public void GetEventDataFromLogFile(EventData e, string eventData)
+        {
+            Regex dateInEventData = new Regex(@"\d\d:\d\d:\d\d (\d\d)/(\d\d)/(\d\d)");
+            Regex messageInEventData = new Regex(@".{40}");
+            Regex statusInEventData = new Regex(@"A|P");
+
+            Match eventDateMatch = dateInEventData.Match(eventData);
+            Match statusDataMatch = statusInEventData.Match(eventData);
+            Match messageDataMatch = messageInEventData.Match(eventData);
+
+            if (eventDateMatch.Success)
+            {
+                string dateTime = Convert.ToString(eventDateMatch);
+                eventNotesCounter++;
+
+                e.Id = eventNotesCounter;
+                e.Message = Convert.ToString(messageDataMatch);
+                e.Date = DateTime.Parse(dateTime);
+
+                if (Convert.ToString(statusDataMatch) == "")
+                {
+                    e.Status = "C";
+                }
+                else
+                {
+                    e.Status = Convert.ToString(statusDataMatch);
+                }
+            }
         }
     }
 }

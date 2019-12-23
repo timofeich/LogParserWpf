@@ -38,6 +38,9 @@
     <ApplicationIcon>Images\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="DataGridFilterLibrary">
       <HintPath>..\..\idealDataGridFilter\DataGridFilterLibrary\bin\Debug\DataGridFilterLibrary.dll</HintPath>
     </Reference>
@@ -88,6 +91,7 @@
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="DataProvider\FileDataProvider.cs" />
     <Compile Include="DataProvider\IFileDataProvider.cs" />
+    <Compile Include="Startup\BootStrapper.cs" />
     <Compile Include="ViewModel\FileChoosingViewModel.cs" />
     <Compile Include="ViewModel\FileDataViewModel.cs" />
     <Compile Include="ViewModel\FileInfoViewModel.cs" />
@@ -125,6 +129,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

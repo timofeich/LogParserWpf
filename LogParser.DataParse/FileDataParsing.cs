@@ -16,9 +16,13 @@ namespace LogParser.DataParse
 
         public List<TableData> listTable = new List<TableData>();
         public List<EventData> listEvent = new List<EventData>();
+        public List<EventJoinedWithTableData> listJoin = new List<EventJoinedWithTableData>();
 
         private int tableNotesCounter = 0;
         public int eventNotesCounter = 0;
+
+        int eventDataItemsCounter = 0;
+        int tableDataListItemsCounter = 0;
         private DateTime DateOfMessageInRequest { get; set; }
 
         private EventParsing eventParsing;
@@ -60,19 +64,18 @@ namespace LogParser.DataParse
                     ParseRequest(request);
                 }
             }
+            JoinEventAndTableData();
         }
 
         private void ParseRequest(byte[] request)
         {
-            byte[] dateOfFirstMessage = { request[8], request[9], request[10], request[11] };
-            byte[] dateOfLastMessage = { request[12], request[13], request[14], request[15] };
+            int dateOfFirstMessage = BitConverter.ToInt32(request.Skip(8).Take(4).ToArray(), 0);
+            int dateOfLastMessage = BitConverter.ToInt32(request.Skip(12).Take(4).ToArray(), 0);
 
             byte eventIdentifier = 65;
 
-            int date2 = BitConverter.ToInt32(dateOfFirstMessage, 0);
-            int date3 = BitConverter.ToInt32(dateOfLastMessage, 0);
-
-            List<DateTime> TableDataDate = SetDateOfMessageSending(UnixTimeStampToDateTime(date2), UnixTimeStampToDateTime(date3));
+            List<DateTime> TableDataDate = SetDateOfMessageSending(
+                    UnixTimeStampToDateTime(dateOfFirstMessage), UnixTimeStampToDateTime(dateOfLastMessage));
 
             int CountOfMessagesInRequest = 0;
 
@@ -205,6 +208,50 @@ namespace LogParser.DataParse
                     e.Status = Convert.ToString(statusDataMatch);
                 }
             }
+        }
+
+        private void JoinEventAndTableData()
+        {
+
+            foreach (EventData eventDataItem in listEvent)
+            {
+                eventDataItemsCounter++;
+                EventJoinedWithTableData eventJoined = new EventJoinedWithTableData
+                {
+                    Id = eventDataItem.Id,
+                    Date = eventDataItem.Date,
+                    Message = eventDataItem.Message,
+                    Status = eventDataItem.Status,
+                    TableDatas = GetDateSegment(eventDataItem),
+                };
+                listJoin.Add(eventJoined);
+            }
+        }
+
+        private List<TableData> GetDateSegment(EventData eventData)
+        {
+
+            List<TableData> test = new List<TableData>();
+
+            for (; tableDataListItemsCounter < listTable.Count; tableDataListItemsCounter++)
+            {
+                if (listTable[tableDataListItemsCounter].Date >= eventData.Date.AddSeconds(-5))
+                {
+                    test.Add(listTable[tableDataListItemsCounter]);
+
+                    if (test.Count == 10)
+                    {
+                        if (tableDataListItemsCounter > 10)
+                        {
+                            tableDataListItemsCounter -= 10;
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            return test;
         }
     }
 }

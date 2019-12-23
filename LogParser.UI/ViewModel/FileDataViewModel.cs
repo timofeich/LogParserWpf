@@ -16,6 +16,8 @@ namespace LogParser.UI.ViewModel
         {
             TableDatas = new ObservableCollection<TableData>();
             EventDatas = new ObservableCollection<EventData>();
+            EventJoinedWithTableDatas = new ObservableCollection<EventJoinedWithTableData>();
+
             _dataProvider = dataProvider;
         }
         public void Load()
@@ -32,9 +34,15 @@ namespace LogParser.UI.ViewModel
                 EventDatas.Add(eventData);
             }
 
+            EventJoinedWithTableDatas.Clear();
+            foreach (var eventJoinedWithTableData in _dataProvider.GetAllEventJoinedWithTableData())
+            {
+                EventJoinedWithTableDatas.Add(eventJoinedWithTableData);
+            }
         }
 
         public ObservableCollection<TableData> TableDatas { get; private set; }
         public ObservableCollection<EventData> EventDatas { get; private set; }
+        public ObservableCollection<EventJoinedWithTableData> EventJoinedWithTableDatas { get; private set; }
     }
 }

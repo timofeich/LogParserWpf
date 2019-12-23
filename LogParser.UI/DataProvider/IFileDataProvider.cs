@@ -8,5 +8,7 @@ namespace LogParser.UI.DataProvider
         IEnumerable<TableData> GetAllTableData();
 
         IEnumerable<EventData> GetAllEventData();
+
+        IEnumerable<EventJoinedWithTableData> GetAllEventJoinedWithTableData();
     }
 }

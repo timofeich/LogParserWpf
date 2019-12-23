@@ -15,5 +15,7 @@ namespace LogParser.DataAccess
         IEnumerable<TableData> GetAllTableData();
 
         IEnumerable<EventData> GetAllEventData();
+
+        IEnumerable<EventJoinedWithTableData> GetAllEventJoinedWithTableData();
     }
 }

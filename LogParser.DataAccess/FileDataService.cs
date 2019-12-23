@@ -68,6 +68,24 @@ namespace LogParser.DataAccess
             return ReadEventFromFile();
         }
 
+        public IEnumerable<EventJoinedWithTableData> GetAllEventJoinedWithTableData()
+        {
+            return ReadEventJoinedWithTableDataFromFile();
+        }
+
+        private IEnumerable<EventJoinedWithTableData> ReadEventJoinedWithTableDataFromFile()
+        {
+            if (File.Exists(StorageFile))
+            {
+                FileDataParsing logFile = new FileDataParsing(StorageFile);
+                return logFile.listJoin;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private IEnumerable<EventData> ReadEventFromFile()
         {
             if (File.Exists(StorageFile))

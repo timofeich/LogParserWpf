@@ -44,17 +44,12 @@
   <ItemGroup>
     <Compile Include="EventData.cs" />
     <Compile Include="EventJoinedWithTableData.cs" />
+    <Compile Include="Phase.cs" />
     <Compile Include="TableData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="xunit.runner.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LogParser\LogParser.csproj">
-      <Project>{D9E23BE9-7729-43D1-8A10-9167A1EE3260}</Project>
-      <Name>LogParser</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

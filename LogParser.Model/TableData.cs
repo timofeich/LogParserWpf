@@ -1,5 +1,4 @@
-﻿using LogParser.ViewModel;
-using System;
+﻿using System;
 using System.Windows.Media;
 
 namespace LogParser.Model

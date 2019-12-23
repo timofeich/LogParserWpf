@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogParser.UI.ViewModel
+namespace LogParser.Model
 {
     public class Phase
     {

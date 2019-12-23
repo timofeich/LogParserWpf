@@ -92,7 +92,6 @@
     <Compile Include="ViewModel\FileDataViewModel.cs" />
     <Compile Include="ViewModel\FileInfoViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\Phase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\FileChoosingView.xaml.cs">
       <DependentUpon>FileChoosingView.xaml</DependentUpon>

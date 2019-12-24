@@ -1,6 +1,7 @@
 ﻿using LogParser.Model;
 using LogParser.UI.DataProvider;
 using LogParser.UI.ViewModel;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,20 +11,33 @@ namespace LogParser.Tests.ViewModel
 {
     public class FileDataViewModelTests
     {
+        private FileDataViewModel _viewModel;
+
+        public FileDataViewModelTests()
+        {
+            var fileDataProviderMock = new Mock<IFileDataProvider>();
+            fileDataProviderMock.Setup(dp => dp.GetAllTableData())
+                .Returns(new List<TableData>
+                {
+                    new TableData { Id = 0, AmperageA = 0 },
+                    new TableData { Id = 1, AmperageA = 1 },
+                });
+
+             _viewModel = new FileDataViewModel(fileDataProviderMock.Object);
+        }
+
         [Fact]
         public void ShouldLoadTableData()
         {
-            var viewModel = new FileDataViewModel(new FileDataProviderMock());
+            _viewModel.Load();
 
-            viewModel.Load();
+            Assert.Equal(2, _viewModel.TableDatas.Count);
 
-            Assert.Equal(2, viewModel.TableDatas.Count);
-
-            var tableData = viewModel.TableDatas.SingleOrDefault(t => t.Id == 0);
+            var tableData = _viewModel.TableDatas.SingleOrDefault(t => t.Id == 0);
             Assert.NotNull(tableData);
             Assert.Equal(0, tableData.AmperageA);
 
-            tableData = viewModel.TableDatas.SingleOrDefault(t => t.Id == 1);
+            tableData = _viewModel.TableDatas.SingleOrDefault(t => t.Id == 1);
             Assert.NotNull(tableData);
             Assert.Equal(1, tableData.AmperageA);
         }
@@ -75,12 +89,10 @@ namespace LogParser.Tests.ViewModel
         [Fact]
         public void ShouldLoadTableDataOnlyOnce()
         {
-            var viewModel = new FileDataViewModel(new FileDataProviderMock());
+            _viewModel.Load();
+            _viewModel.Load();
 
-            viewModel.Load();
-            viewModel.Load();
-
-            Assert.Equal(2, viewModel.TableDatas.Count);
+            Assert.Equal(2, _viewModel.TableDatas.Count);
         }
 
         [Fact]

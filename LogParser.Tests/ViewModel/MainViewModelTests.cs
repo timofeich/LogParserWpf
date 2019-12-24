@@ -1,28 +1,26 @@
 ﻿using LogParser.UI.ViewModel;
+using Moq;
 using Xunit;
 
 namespace LogParser.Tests.ViewModel
 {
     public class MainViewModelTests
     {
+        private Mock<IFileDataViewModel> _fileDataViewModelMock;
+        private MainViewModel _viewModel;
+
+        public MainViewModelTests()
+        {
+            _fileDataViewModelMock = new Mock<IFileDataViewModel>();
+            _viewModel = new MainViewModel(_fileDataViewModelMock.Object);
+        }
+
         [Fact]
         public void ShouldCallTheLoadMethodOfTheFileDataViewModel()
         {
-            var fileDataViewModelMock = new FileDataViewModelMock();
-            var viewModel = new MainViewModel(fileDataViewModelMock);
+            _viewModel.Load();
 
-            viewModel.Load();
-
-            Assert.True(fileDataViewModelMock.LoadHasBeenCalled);
-        }
-    }
-
-    public class FileDataViewModelMock: IFileDataViewModel
-    {
-        public bool LoadHasBeenCalled { get; set; }
-        public void Load()
-        {
-            LoadHasBeenCalled = true;
+            _fileDataViewModelMock.Verify(vm => vm.Load(), Times.Once);
         }
     }
 }

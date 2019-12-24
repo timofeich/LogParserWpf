@@ -163,8 +163,8 @@
 
                             <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
                             <TextBox x:Name="TableDataTextBox" Text="{Binding FontSize, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>
-                            <Button Margin="2,2,0,0" Click="SetFontSizeClick" Height="26" VerticalAlignment="Top">Задать новый размер шрифта</Button>
-                            <Button Margin="10,2,0,0" Height="26" VerticalAlignment="Top" Click="TableButton_Click">Сохранить в Excel</Button>
+                            <Button Margin="10,2,0,0" Click="SetFontSizeClick">Задать новый размер шрифта</Button>
+                            <Button Margin="10,2,0,0" Click="TableButton_Click">Сохранить в Excel</Button>
                         </StackPanel>
                     </Grid>
                 </TabItem>
@@ -206,8 +206,8 @@
 
                             <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
                             <TextBox x:Name="EventDataTextBox" Text="{Binding FontSize, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>
-                            <Button Margin="2,2,0,0" Height="26" Click="SetFontSizeClick" VerticalAlignment="Top">Задать новый размер шрифта</Button>
-                            <Button Margin="10,2,0,0" Height="26" VerticalAlignment="Top" Click="EventButton_Click">Сохранить в Excel</Button>
+                            <Button Margin="10,2,0,0" Click="SetFontSizeClick">Задать новый размер шрифта</Button>
+                            <Button Margin="10,2,0,0" Click="EventButton_Click" >Сохранить в Excel</Button>
                         </StackPanel>
                     </Grid>
                 </TabItem>
@@ -379,13 +379,13 @@
 
                         </DataGrid>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" >
                             <Label Margin="0,1,0,0">Всего отображено строк:</Label>
                             <Label Margin="0,1,0,0" Content="{Binding ElementName=JoinedEventData, Path=Items.Count, UpdateSourceTrigger=PropertyChanged}"></Label>
 
                             <Label Margin="5,2,0,0">Текущий размер шрифта:</Label>
                             <TextBox x:Name="JoinedTableTextBox" Text="{Binding FontSize, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" FontSize="14"  Width="30" Margin="2,5,0,2"/>
-                            <Button Margin="2,2,0,0" Height="26" VerticalAlignment="Top" Click="SetFontSizeClick">Задать новый размер шрифта</Button>
+                            <Button Margin="10,2,0,0" Click="SetFontSizeClick">Задать новый размер шрифта</Button>
                         </StackPanel>
                     </Grid>
                 </TabItem>

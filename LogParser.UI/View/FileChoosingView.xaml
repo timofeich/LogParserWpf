@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LogParser.UI.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="61.5" d:DesignWidth="239">
+             mc:Ignorable="d" d:DesignWidth="239" Height="246.5">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -13,8 +12,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.ColumnSpan="2">
-            <Button Content="Вагон с устройством плавного пуска" Margin="5"/>
-            <Button Content="Лог файл со стенда"  Margin="5"/>
+            <Button Content="Вагон с УПП" Style="{StaticResource NavigationButtonStyle}"/>
+            <Button Content="Лог файл со стенда" Style="{StaticResource NavigationButtonStyle}"/>
+            <Button Content="Вывод графиков" Style="{StaticResource NavigationButtonStyle}"/>
         </StackPanel>
     </Grid>
 </UserControl>

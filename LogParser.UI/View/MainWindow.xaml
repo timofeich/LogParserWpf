@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:view="clr-namespace:LogParser.UI.View"
         Title="LogParser" Height="403" Width="1136.635">
-    
+
     <DockPanel Margin="10">
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
@@ -23,7 +23,7 @@
 
         <TextBlock DockPanel.Dock="Bottom"  Text="Created by Gomer Pyle, 2019" Foreground="Gray" Margin="10" />
 
-        <view:FileChoosingView DockPanel.Dock="Left" />
+        <view:FileChoosingView DockPanel.Dock="Left" VerticalAlignment="Top" Margin="0 5"/>
         <view:FileDataView DockPanel.Dock="Right" DataContext="{Binding FileDataViewModel}" Margin="5 5 10 0"/>
 
     </DockPanel>

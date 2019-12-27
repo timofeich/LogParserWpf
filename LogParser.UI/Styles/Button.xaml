@@ -1,13 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:LogParser.UI.Styles">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
     <Style TargetType="Button">
         <Setter Property="BorderBrush" Value="#666666"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource DefaultForegroundBrush}"/>
         <Setter Property="Padding" Value="2"/>
-        <Setter Property="Width" Value="75"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -42,7 +42,6 @@
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="20"/>
         <Setter Property="Margin" Value="5"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="ToolTip" Value="Add"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -76,14 +75,18 @@
     </Style>
 
     <Style x:Key="NavigationButtonStyle" TargetType="Button">
+
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Padding" Value="3"/>
-        <Setter Property="Margin" Value="2 2 2 0"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Margin" Value="2 2 10 0"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid x:Name="grid" Background="#444444">
-                        <ContentPresenter Margin="{TemplateBinding Padding}"/>
+                        <ContentPresenter HorizontalAlignment="Center" Margin="{TemplateBinding Padding}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

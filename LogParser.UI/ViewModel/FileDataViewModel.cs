@@ -1,5 +1,6 @@
 ﻿using LogParser.Model;
 using LogParser.UI.DataProvider;
+using Prism.Events;
 using System.Collections.ObjectModel;
 
 namespace LogParser.UI.ViewModel
@@ -12,12 +13,13 @@ namespace LogParser.UI.ViewModel
     public class FileDataViewModel : ViewModelBase, IFileDataViewModel
     {
         private IFileDataProvider _dataProvider;
-        public FileDataViewModel(IFileDataProvider dataProvider)
+        public FileDataViewModel(IFileDataProvider dataProvider, IEventAggregator eventAggregator)
         {
             TableDatas = new ObservableCollection<TableData>();
-            EventDatas = new ObservableCollection<EventData>();
+            EventDatas = new ObservableCollection<FileDataItemViewModel>();
             EventJoinedWithTableDatas = new ObservableCollection<EventJoinedWithTableData>();
 
+            _eventAggregator = eventAggregator;
             _dataProvider = dataProvider;
         }
         public void Load()
@@ -31,7 +33,8 @@ namespace LogParser.UI.ViewModel
             EventDatas.Clear();
             foreach (var eventData in _dataProvider.GetAllEventData())
             {
-                EventDatas.Add(eventData);
+                EventDatas.Add(new FileDataItemViewModel(eventData.Id, eventData.Message, 
+                    eventData.Date, eventData.Status, _eventAggregator));
             }
 
             EventJoinedWithTableDatas.Clear();
@@ -42,7 +45,9 @@ namespace LogParser.UI.ViewModel
         }
 
         public ObservableCollection<TableData> TableDatas { get; private set; }
-        public ObservableCollection<EventData> EventDatas { get; private set; }
+        public ObservableCollection<FileDataItemViewModel> EventDatas { get; private set; }
         public ObservableCollection<EventJoinedWithTableData> EventJoinedWithTableDatas { get; private set; }
+
+        private IEventAggregator _eventAggregator;
     }
 }

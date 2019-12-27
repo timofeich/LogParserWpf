@@ -119,7 +119,8 @@
     <Compile Include="DataProvider\IFileDataProvider.cs" />
     <Compile Include="Events\OpenTableDataEditViewEvent.cs" />
     <Compile Include="Startup\BootStrapper.cs" />
-    <Compile Include="ViewModel\FileChoosingViewModel.cs" />
+    <Compile Include="ViewModel\FileEditViewModel.cs" />
+    <Compile Include="ViewModel\FileDataItemViewModel.cs" />
     <Compile Include="ViewModel\FileDataViewModel.cs" />
     <Compile Include="ViewModel\FileInfoViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

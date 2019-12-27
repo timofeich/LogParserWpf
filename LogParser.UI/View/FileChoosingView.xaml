@@ -12,7 +12,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.ColumnSpan="2">
-            <Button Content="Вагон с УПП" Style="{StaticResource NavigationButtonStyle}"/>
+            <Button Content="Вагон с УПП" Command="{Binding OpenFileDataEditViewCommand}" Style="{StaticResource NavigationButtonStyle}"/>
             <Button Content="Лог файл со стенда" Style="{StaticResource NavigationButtonStyle}"/>
             <Button Content="Вывод графиков" Style="{StaticResource NavigationButtonStyle}"/>
         </StackPanel>

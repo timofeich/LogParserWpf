@@ -2,6 +2,7 @@
 using LogParser.UI.DataProvider;
 using LogParser.UI.ViewModel;
 using Moq;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,12 @@ namespace LogParser.Tests.ViewModel
 
         public FileDataViewModelTests()
         {
+            
+        }
+
+        private void SetupFileDataTableDataMockModule()
+        {
+            var eventAggregatorMock = new Mock<IEventAggregator>();
             var fileDataProviderMock = new Mock<IFileDataProvider>();
             fileDataProviderMock.Setup(dp => dp.GetAllTableData())
                 .Returns(new List<TableData>
@@ -23,12 +30,50 @@ namespace LogParser.Tests.ViewModel
                     new TableData { Id = 1, AmperageA = 1 },
                 });
 
-             _viewModel = new FileDataViewModel(fileDataProviderMock.Object);
+            _viewModel = new FileDataViewModel(fileDataProviderMock.Object, eventAggregatorMock.Object);
+        }
+
+        private void SetupFileDataEventDataMockModule()
+        {
+            var eventAggregatorMock = new Mock<IEventAggregator>();
+            var fileDataProviderMock = new Mock<IFileDataProvider>();
+            fileDataProviderMock.Setup(dp => dp.GetAllEventData())
+                .Returns(new List<EventData>
+                {
+                    new EventData { Id = 0, Message = "Cкорость 1 хода включена." },
+                    new EventData { Id = 1, Message = "Перегрузка ЭД хода(2 скорость)." },
+                });
+
+            _viewModel = new FileDataViewModel(fileDataProviderMock.Object, eventAggregatorMock.Object);
+        }
+
+        private void SetupFileDataJoinedEventDataWithTableMockModule()
+        {
+            var eventAggregatorMock = new Mock<IEventAggregator>();
+            var fileDataProviderMock = new Mock<IFileDataProvider>();
+            fileDataProviderMock.Setup(dp => dp.GetAllEventJoinedWithTableData())
+                .Returns(new List<EventJoinedWithTableData>
+                {   
+                    new EventJoinedWithTableData{
+                        Id = 0,
+                        Message = "Cкорость 1 хода включена.",
+                        TableDatas = new List<TableData> {
+                                new TableData { Id = 0, AmperageA = 0 } } },
+
+                    new EventJoinedWithTableData{
+                        Id = 1,
+                        Message = "Cкорость 2 хода включена.",
+                        TableDatas = new List<TableData> {
+                                new TableData { Id = 1, AmperageA = 1 } }},
+                });
+
+            _viewModel = new FileDataViewModel(fileDataProviderMock.Object, eventAggregatorMock.Object);
         }
 
         [Fact]
         public void ShouldLoadTableData()
         {
+            SetupFileDataTableDataMockModule();
             _viewModel.Load();
 
             Assert.Equal(2, _viewModel.TableDatas.Count);
@@ -45,17 +90,17 @@ namespace LogParser.Tests.ViewModel
         [Fact]
         public void ShouldLoadEventData()
         {
-            var viewModel = new FileDataViewModel(new FileDataProviderMock());
+            SetupFileDataEventDataMockModule();
 
-            viewModel.Load();
+            _viewModel.Load();
 
-            Assert.Equal(2, viewModel.EventDatas.Count);
+            Assert.Equal(2, _viewModel.EventDatas.Count);
 
-            var eventData = viewModel.EventDatas.SingleOrDefault(t => t.Id == 0);
+            var eventData = _viewModel.EventDatas.SingleOrDefault(t => t.Id == 0);
             Assert.NotNull(eventData);
             Assert.Equal("Cкорость 1 хода включена.", eventData.Message);
 
-            eventData = viewModel.EventDatas.SingleOrDefault(t => t.Id == 1);
+            eventData = _viewModel.EventDatas.SingleOrDefault(t => t.Id == 1);
             Assert.NotNull(eventData);
             Assert.Equal("Перегрузка ЭД хода(2 скорость).", eventData.Message);
         }
@@ -63,16 +108,16 @@ namespace LogParser.Tests.ViewModel
         [Fact]
         public void ShouldLoadJoinedEventAndTableData()
         {
-            var viewModel = new FileDataViewModel(new FileDataProviderMock());
+            SetupFileDataJoinedEventDataWithTableMockModule();
 
-            viewModel.Load();
+            _viewModel.Load();
 
-            Assert.Equal(2, viewModel.EventJoinedWithTableDatas.Count);
+            Assert.Equal(2, _viewModel.EventJoinedWithTableDatas.Count);
 
             var tableDatasTestExample = new List<TableData> {
                                 new TableData { Id = 0, AmperageA = 0 } };
 
-            var joinedData = viewModel.EventJoinedWithTableDatas.SingleOrDefault(t => t.Id == 0);
+            var joinedData = _viewModel.EventJoinedWithTableDatas.SingleOrDefault(t => t.Id == 0);
             Assert.NotNull(joinedData);
             Assert.Equal("Cкорость 1 хода включена.", joinedData.Message);
             Assert.Equal(tableDatasTestExample[0].AmperageA, joinedData.TableDatas[0].AmperageA);
@@ -80,7 +125,7 @@ namespace LogParser.Tests.ViewModel
             tableDatasTestExample = new List<TableData> {
                                 new TableData { Id = 1, AmperageA = 1 } };
 
-            joinedData = viewModel.EventJoinedWithTableDatas.SingleOrDefault(t => t.Id == 1);
+            joinedData = _viewModel.EventJoinedWithTableDatas.SingleOrDefault(t => t.Id == 1);
             Assert.NotNull(joinedData);
             Assert.Equal("Cкорость 2 хода включена.", joinedData.Message);
             Assert.Equal(tableDatasTestExample[0].AmperageA, joinedData.TableDatas[0].AmperageA);
@@ -89,6 +134,8 @@ namespace LogParser.Tests.ViewModel
         [Fact]
         public void ShouldLoadTableDataOnlyOnce()
         {
+            SetupFileDataTableDataMockModule();
+
             _viewModel.Load();
             _viewModel.Load();
 
@@ -98,23 +145,23 @@ namespace LogParser.Tests.ViewModel
         [Fact]
         public void ShouldLoadEventDataOnlyOnce()
         {
-            var viewModel = new FileDataViewModel(new FileDataProviderMock());
+            SetupFileDataEventDataMockModule();
 
-            viewModel.Load();
-            viewModel.Load();
+            _viewModel.Load();
+            _viewModel.Load();
 
-            Assert.Equal(2, viewModel.EventDatas.Count);
+            Assert.Equal(2, _viewModel.EventDatas.Count);
         }
 
         [Fact]
         public void ShouldLoadEventJoinedWithTableDataOnlyOnce()
         {
-            var viewModel = new FileDataViewModel(new FileDataProviderMock());
+            SetupFileDataJoinedEventDataWithTableMockModule();
 
-            viewModel.Load();
-            viewModel.Load();
+            _viewModel.Load();
+            _viewModel.Load();
 
-            Assert.Equal(2, viewModel.EventJoinedWithTableDatas.Count);
+            Assert.Equal(2, _viewModel.EventJoinedWithTableDatas.Count);
         }
     }
 

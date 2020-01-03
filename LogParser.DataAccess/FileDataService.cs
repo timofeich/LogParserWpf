@@ -4,12 +4,27 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Documents;
 
 namespace LogParser.DataAccess
 {
     public class FileDataService : IDataService
     {
         private const string StorageFile = "D:\\LOG011";
+
+        private FileDataParsing logFile;
+        public FileDataService()
+        {
+            if (File.Exists(StorageFile))
+            {
+                logFile = new FileDataParsing(StorageFile);
+                logFile.ParseLogFile();
+            }
+            else
+            {
+
+            }
+        }
 
         public object FileDataParsing { get; private set; }
 
@@ -73,30 +88,24 @@ namespace LogParser.DataAccess
             return ReadEventJoinedWithTableDataFromFile();
         }
 
-        private IEnumerable<EventJoinedWithTableData> ReadEventJoinedWithTableDataFromFile()
+        public FileInformation GetAllInformationAboutFile()
         {
-            if (File.Exists(StorageFile))
-            {
-                FileDataParsing logFile = new FileDataParsing(StorageFile);
-                return logFile.listJoin;
-            }
-            else
-            {
-                return null;
-            }
+            return logFile.fileInformation;
         }
 
-        private IEnumerable<EventData> ReadEventFromFile()
+        private List<TableData> ReadFromFile()
         {
-            if (File.Exists(StorageFile))
-            {
-                FileDataParsing logFile = new FileDataParsing(StorageFile);
-                return logFile.listEvent;
-            }
-            else
-            {
-                return null;
-            }
+            return logFile.listTable;
+        }
+
+        private List<EventJoinedWithTableData> ReadEventJoinedWithTableDataFromFile()
+        {
+            return logFile.listJoin;
+        }
+
+        private List<EventData> ReadEventFromFile()
+        {
+            return logFile.listEvent;
         }
 
         public void Dispose()
@@ -111,17 +120,6 @@ namespace LogParser.DataAccess
             //File.WriteAllText(StorageFile, json);
         }
 
-        private List<TableData> ReadFromFile()
-        {
-            if (File.Exists(StorageFile))
-            {
-                FileDataParsing logFile = new FileDataParsing(StorageFile);
-                return logFile.listTable;
-            }
-            else 
-            { 
-                return null; 
-            }
-        }
+
     }
 }

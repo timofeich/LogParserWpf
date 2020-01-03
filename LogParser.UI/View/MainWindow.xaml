@@ -18,7 +18,7 @@
             <TextBlock Margin="5,5,10,5" FontSize="40" Grid.Column="0">
                 <Bold >Log</Bold>Parser
             </TextBlock>
-            <view:FileInfoView Grid.Column="1" Margin="5,5,0,5" HorizontalAlignment="Left" />
+            <view:FileInfoView Grid.Column="1" DataContext ="{Binding FileDataViewModel}"  Margin="5,5,0,5" HorizontalAlignment="Left" Width="595" />
         </Grid>
 
         <TextBlock DockPanel.Dock="Bottom"  Text="Created by Gomer Pyle, 2019" Foreground="Gray" Margin="10" />

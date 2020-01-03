@@ -12,11 +12,11 @@ namespace LogParser.DataParse
 {
     public class FileDataParsing
     {
-        public string FileName { get; }
+        public List<TableData> listTable;
+        public List<EventData> listEvent;
+        public List<EventJoinedWithTableData> listJoin;
 
-        public List<TableData> listTable = new List<TableData>();
-        public List<EventData> listEvent = new List<EventData>();
-        public List<EventJoinedWithTableData> listJoin = new List<EventJoinedWithTableData>();
+        public FileInformation fileInformation;
 
         private int tableNotesCounter = 0;
         public int eventNotesCounter = 0;
@@ -25,30 +25,27 @@ namespace LogParser.DataParse
         int tableDataListItemsCounter = 0;
         private DateTime DateOfMessageInRequest { get; set; }
 
-        private EventParsing eventParsing;
-        private DataParsing dataParsing;
-
-
         public FileDataParsing(string FileName)
         {
-            this.FileName = FileName;
+            fileInformation = new FileInformation();
 
-            eventParsing = new EventParsing();
-            dataParsing = new DataParsing();
+            fileInformation.FileName = FileName;
 
-            ParseLogFile();
+            listTable = new List<TableData>();
+            listEvent = new List<EventData>();
+            listJoin = new List<EventJoinedWithTableData>();
         }
 
-        private void ParseLogFile()
+        public void ParseLogFile()
         {
-            ReadFileByRequests(FileName);
+            ReadFileByRequests();
         }
 
-        public void ReadFileByRequests(string fileName)
+        public void ReadFileByRequests()
         {
             List<byte[]> listOfRequests = new List<byte[]>();
 
-            using (BinaryReader b = new BinaryReader(File.Open(fileName, FileMode.Open)))
+            using (BinaryReader b = new BinaryReader(File.Open(fileInformation.FileName, FileMode.Open)))
             {
                 for (int i = 0; i < b.BaseStream.Length; i += 512)
                 {
@@ -65,6 +62,29 @@ namespace LogParser.DataParse
                 }
             }
             JoinEventAndTableData();
+            SetFileInfo();
+        }
+
+        private void SetFileInfo()
+        {
+            fileInformation.NumericMessagesCount = listTable.Count;
+            fileInformation.EventMessagesCount = listEvent.Count;
+            fileInformation.MessagesCount = fileInformation.NumericMessagesCount + fileInformation.EventMessagesCount;
+            if (listTable.Count != 0 && listEvent.Count != 0)
+            {
+                GetDatePeriodOfFileContent();
+            }
+        }
+
+        private void GetDatePeriodOfFileContent()
+        {
+            DateTime firstMessageWithNumericData = listTable[0].Date;
+            DateTime lastMessageWithNumericData = listTable[listTable.Count - 1].Date;
+            DateTime firstMessageWithEventData = listEvent[0].Date;
+            DateTime lastMessageWithEventData = listEvent[listEvent.Count - 1].Date;
+
+            fileInformation.FirstMessageDate = firstMessageWithNumericData > firstMessageWithEventData ? firstMessageWithEventData : firstMessageWithNumericData;
+            fileInformation.LastMessageDate = lastMessageWithNumericData < lastMessageWithEventData ? lastMessageWithEventData : lastMessageWithNumericData;
         }
 
         private void ParseRequest(byte[] request)
@@ -94,7 +114,6 @@ namespace LogParser.DataParse
                         CountOfMessagesInRequest++;
                     }
 
-                    dataParsing.GetData();
                     TableData tbl = new TableData();
                     GetTableDataFromLogFile(tbl, request, i);
                     listTable.Add(tbl);
@@ -180,6 +199,7 @@ namespace LogParser.DataParse
 
             tableNotesCounter++;
         }
+
         public void GetEventDataFromLogFile(EventData e, string eventData)
         {
             Regex dateInEventData = new Regex(@"\d\d:\d\d:\d\d (\d\d)/(\d\d)/(\d\d)");

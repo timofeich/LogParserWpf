@@ -37,5 +37,13 @@ namespace LogParser.UI.DataProvider
                 return dataService.GetAllEventJoinedWithTableData();
             }
         }
+
+        public FileInformation GetAllInformationAboutFile()
+        {
+            using (var dataService = _dataServiceCreator())
+            {
+                return dataService.GetAllInformationAboutFile();
+            }
+        }
     }
 }

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="EventData.cs" />
     <Compile Include="EventJoinedWithTableData.cs" />
+    <Compile Include="FileInformation.cs" />
     <Compile Include="Phase.cs" />
     <Compile Include="TableData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

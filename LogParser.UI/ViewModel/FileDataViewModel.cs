@@ -1,5 +1,7 @@
 ﻿using LogParser.Model;
 using LogParser.UI.DataProvider;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace LogParser.UI.ViewModel
@@ -12,11 +14,15 @@ namespace LogParser.UI.ViewModel
     public class FileDataViewModel : ViewModelBase, IFileDataViewModel
     {
         private IFileDataProvider _dataProvider;
+        private FileInformation _fileInformation;
+
         public FileDataViewModel(IFileDataProvider dataProvider)
         {
             TableDatas = new ObservableCollection<TableData>();
             EventDatas = new ObservableCollection<EventData>();
             EventJoinedWithTableDatas = new ObservableCollection<EventJoinedWithTableData>();
+
+            FileInformation = new FileInformation();
 
             _dataProvider = dataProvider;
         }
@@ -39,10 +45,15 @@ namespace LogParser.UI.ViewModel
             {
                 EventJoinedWithTableDatas.Add(eventJoinedWithTableData);
             }
+
+            _fileInformation = _dataProvider.GetAllInformationAboutFile();
+            FileInformation = _fileInformation;
         }
 
         public ObservableCollection<TableData> TableDatas { get; private set; }
         public ObservableCollection<EventData> EventDatas { get; private set; }
         public ObservableCollection<EventJoinedWithTableData> EventJoinedWithTableDatas { get; private set; }
+
+        public FileInformation FileInformation { get; private set; }
     }
 }

@@ -15,12 +15,11 @@
             <TextBlock Text = "{Binding StringFormat = Имя файла: {0}, Path = FileInformation.FileName}"/>
             <TextBlock Text = "{Binding StringFormat = Период: с {0:dd.MM.yyyy HH:mm:ss} по массив, Path = FileInformation.FirstMessageDate}"/>
             <TextBlock Text = "{Binding StringFormat = Записей от вагона с устройством плавного пуска (УПП): {0}, Path = FileInformation.MessagesCount}"/>
-        </StackPanel> 
+        </StackPanel>
         <StackPanel Grid.Column="1" Margin="5">
-
-            <TextBlock Text = "{Binding StringFormat = Записей со стенда: {0}, Path = FileInformation.StandMessagesCount}"/>
             <TextBlock Text = "{Binding StringFormat = Из них с числовыми данными: {0}, Path = FileInformation.NumericMessagesCount}"/>
             <TextBlock Text = "{Binding StringFormat = Из них с событиями: {0}, Path = FileInformation.EventMessagesCount}"/>
+            <TextBlock Visibility="Hidden" Text = "{Binding StringFormat = Записей со стенда: {0}, Path = FileInformation.StandMessagesCount}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -251,7 +251,6 @@ namespace LogParser.DataParse
 
         private void JoinEventAndTableData()
         {
-
             foreach (EventData eventDataItem in listEvent)
             {
                 eventDataItemsCounter++;

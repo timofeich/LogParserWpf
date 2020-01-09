@@ -5,7 +5,6 @@ using System.Windows.Input;
 
 namespace LogParser.UI.ViewModel
 {
-
     public class MainViewModel : ViewModelBase
     {
         public MainViewModel(IFileDataViewModel fileDataViewModel)
@@ -16,19 +15,24 @@ namespace LogParser.UI.ViewModel
 
         private void OpenLogFile()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Бинарные файлы (*.bin)|*.bin|All files (*.*)|*.*";
-            openFileDialog.FilterIndex = 2;
+            //OpenFileDialog openFileDialog = new OpenFileDialog();
+            //openFileDialog.Filter = "Бинарные файлы (*.bin)|*.bin|All files (*.*)|*.*";
+            //openFileDialog.FilterIndex = 2;
 
-            if (openFileDialog.ShowDialog() == true)
-            {
-                FileDataService fileDataService = new FileDataService();
-                fileDataService.StorageFile = openFileDialog.SafeFileName;
-                Load();
-                //FileName = openFileDialog.SafeFileName;
+            Load();
 
-                //ParseLogFile(openFileDialog.FileName);
-            }
+            //if (openFileDialog.ShowDialog() == true)
+            //{
+            //    FileDataService fileDataService = new FileDataService();
+
+            //    fileDataService.StorageFile = openFileDialog.FileName;
+            //    fileDataService.FileName = openFileDialog.SafeFileName;
+
+            //    Load();
+            //    //FileName = openFileDialog.SafeFileName;
+
+            //    //ParseLogFile(openFileDialog.FileName);
+            //}
         }
 
         public IFileDataViewModel FileDataViewModel { get; private set; }

@@ -8,10 +8,6 @@ namespace LogParser.DataAccess
     {
         TableData GetTableDataById(int tableDataId);
 
-        void SaveTableData(TableData tableData);
-
-        void DeleteTableData(int tableDataId);
-
         IEnumerable<TableData> GetAllTableData();
 
         IEnumerable<EventData> GetAllEventData();

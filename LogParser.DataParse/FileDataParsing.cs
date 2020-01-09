@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace LogParser.DataParse
 {
@@ -24,16 +25,32 @@ namespace LogParser.DataParse
         int eventDataItemsCounter = 0;
         int tableDataListItemsCounter = 0;
         private DateTime DateOfMessageInRequest { get; set; }
-
-        public FileDataParsing(string FileName)
+        public string StorageFile { get; set; }
+        public string FileName { get; set; }
+        public FileDataParsing()
         {
             fileInformation = new FileInformation();
-
-            fileInformation.FileName = FileName;
 
             listTable = new List<TableData>();
             listEvent = new List<EventData>();
             listJoin = new List<EventJoinedWithTableData>();
+
+            OpenLogFile();
+        }
+
+        private void OpenLogFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Бинарные файлы (*.bin)|*.bin|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                StorageFile = openFileDialog.FileName;
+                FileName = openFileDialog.SafeFileName;
+
+                ParseLogFile();
+            }
         }
 
         public void ParseLogFile()
@@ -45,7 +62,7 @@ namespace LogParser.DataParse
         {
             List<byte[]> listOfRequests = new List<byte[]>();
 
-            using (BinaryReader b = new BinaryReader(File.Open(fileInformation.FileName, FileMode.Open)))
+            using (BinaryReader b = new BinaryReader(File.Open(StorageFile, FileMode.Open)))
             {
                 for (int i = 0; i < b.BaseStream.Length; i += 512)
                 {
@@ -67,6 +84,7 @@ namespace LogParser.DataParse
 
         private void SetFileInfo()
         {
+            fileInformation.FileName = FileName;
             fileInformation.NumericMessagesCount = listTable.Count;
             fileInformation.EventMessagesCount = listEvent.Count;
             fileInformation.MessagesCount = fileInformation.NumericMessagesCount + fileInformation.EventMessagesCount;
@@ -251,7 +269,6 @@ namespace LogParser.DataParse
 
         private List<TableData> GetDateSegment(EventData eventData)
         {
-
             List<TableData> test = new List<TableData>();
 
             for (; tableDataListItemsCounter < listTable.Count; tableDataListItemsCounter++)

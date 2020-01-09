@@ -14,7 +14,6 @@ namespace LogParser.UI.ViewModel
     public class FileDataViewModel : ViewModelBase, IFileDataViewModel
     {
         private IFileDataProvider _dataProvider;
-        private FileInformation _fileInformation;
 
         public FileDataViewModel(IFileDataProvider dataProvider)
         {
@@ -22,8 +21,8 @@ namespace LogParser.UI.ViewModel
             TableDatas = new ObservableCollection<TableData>();
             EventDatas = new ObservableCollection<EventData>();
             EventJoinedWithTableDatas = new ObservableCollection<EventJoinedWithTableData>();
-
             FileInformation = new FileInformation();
+            
             _dataProvider = dataProvider;
         }
 
@@ -47,7 +46,7 @@ namespace LogParser.UI.ViewModel
                 EventJoinedWithTableDatas.Add(eventJoinedWithTableData);
             }
 
-            _fileInformation = _dataProvider.GetAllInformationAboutFile();
+            var _fileInformation = _dataProvider.GetAllInformationAboutFile();
             FileInformation = _fileInformation;
         }
 

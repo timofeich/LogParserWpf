@@ -24,7 +24,7 @@ namespace LogParser.UI.ViewModel
             {
                 FileDataService fileDataService = new FileDataService();
                 fileDataService.StorageFile = openFileDialog.SafeFileName;
-
+                Load();
                 //FileName = openFileDialog.SafeFileName;
 
                 //ParseLogFile(openFileDialog.FileName);

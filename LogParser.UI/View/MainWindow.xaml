@@ -23,12 +23,12 @@
 
         <TextBlock DockPanel.Dock="Bottom"  Text="Created by Gomer Pyle, 2019" Foreground="Gray" Margin="10" />
 
-        <!--<view:FileChoosingView DockPanel.Dock="Left" VerticalAlignment="Top" Margin="0 5"/>-->
-        <StackPanel Grid.ColumnSpan="2">
-            <Button Content="Вагон с УПП" Command="{Binding ChooseLogFile}" Style="{StaticResource NavigationButtonStyle}" Click="Button_Click"/>
+        <view:FileChoosingView DockPanel.Dock="Left" VerticalAlignment="Top" Margin="0 5"/>
+        <!--<StackPanel Grid.ColumnSpan="2">
+            <Button Content="Вагон с УПП" Command="{Binding ChooseLogFile}" Style="{StaticResource NavigationButtonStyle}"/>
             <Button Content="Лог файл со стенда" Style="{StaticResource NavigationButtonStyle}"/>
             <Button Content="Вывод графиков" Style="{StaticResource NavigationButtonStyle}"/>
-        </StackPanel>
+        </StackPanel>-->
         <view:FileDataView Visibility="Visible" DockPanel.Dock="Right" DataContext="{Binding FileDataViewModel}" Margin="5 5 10 0"/>
 
     </DockPanel>

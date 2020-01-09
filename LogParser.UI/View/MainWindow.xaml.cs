@@ -13,20 +13,9 @@ namespace LogParser.UI
         public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
-            this.Loaded += MainWindow_Loaded;
 
             _viewModel = viewModel;
             DataContext = _viewModel;
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Load();
         }
     }
 }

@@ -80,6 +80,7 @@ namespace LogParser.DataParse
         {
             DateTime firstMessageWithNumericData = listTable[0].Date;
             DateTime lastMessageWithNumericData = listTable[listTable.Count - 1].Date;
+
             DateTime firstMessageWithEventData = listEvent[0].Date;
             DateTime lastMessageWithEventData = listEvent[listEvent.Count - 1].Date;
 

@@ -10,7 +10,7 @@ namespace LogParser.DataAccess
 {
     public class FileDataService : IDataService
     {
-        private const string StorageFile = "D:\\LOG011";
+        public string StorageFile = "D:\\LOG011";
 
         private FileDataParsing logFile;
         public FileDataService()

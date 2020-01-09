@@ -17,13 +17,14 @@ namespace LogParser.UI.Startup
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainWindow>().AsSelf();
-            builder.RegisterType<MainViewModel>().AsSelf();
 
             builder.RegisterType<FileDataViewModel>().As<IFileDataViewModel>();
 
             builder.RegisterType<FileDataProvider>().As<IFileDataProvider>();
 
             builder.RegisterType<FileDataService>().As<IDataService>();
+
+            builder.RegisterType<MainViewModel>().AsSelf();
 
             return builder.Build();
         }

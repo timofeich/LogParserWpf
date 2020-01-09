@@ -18,13 +18,18 @@
             <TextBlock Margin="5,5,10,5" FontSize="40" Grid.Column="0">
                 <Bold >Log</Bold>Parser
             </TextBlock>
-            <view:FileInfoView Grid.Column="1" DataContext ="{Binding FileDataViewModel}"  Margin="5,5,0,5" HorizontalAlignment="Left" Width="595" />
+            <view:FileInfoView Visibility="Visible" Grid.Column="1" DataContext ="{Binding FileDataViewModel}"  Margin="5,5,0,5" HorizontalAlignment="Left" Width="595" />
         </Grid>
 
         <TextBlock DockPanel.Dock="Bottom"  Text="Created by Gomer Pyle, 2019" Foreground="Gray" Margin="10" />
 
-        <view:FileChoosingView DockPanel.Dock="Left" VerticalAlignment="Top" Margin="0 5"/>
-        <view:FileDataView DockPanel.Dock="Right" DataContext="{Binding FileDataViewModel}" Margin="5 5 10 0"/>
+        <!--<view:FileChoosingView DockPanel.Dock="Left" VerticalAlignment="Top" Margin="0 5"/>-->
+        <StackPanel Grid.ColumnSpan="2">
+            <Button Content="Вагон с УПП" Command="{Binding ChooseLogFile}" Style="{StaticResource NavigationButtonStyle}" Click="Button_Click"/>
+            <Button Content="Лог файл со стенда" Style="{StaticResource NavigationButtonStyle}"/>
+            <Button Content="Вывод графиков" Style="{StaticResource NavigationButtonStyle}"/>
+        </StackPanel>
+        <view:FileDataView Visibility="Visible" DockPanel.Dock="Right" DataContext="{Binding FileDataViewModel}" Margin="5 5 10 0"/>
 
     </DockPanel>
 </Window>

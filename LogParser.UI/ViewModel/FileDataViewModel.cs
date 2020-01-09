@@ -18,18 +18,19 @@ namespace LogParser.UI.ViewModel
 
         public FileDataViewModel(IFileDataProvider dataProvider)
         {
+
             TableDatas = new ObservableCollection<TableData>();
             EventDatas = new ObservableCollection<EventData>();
             EventJoinedWithTableDatas = new ObservableCollection<EventJoinedWithTableData>();
 
             FileInformation = new FileInformation();
-
             _dataProvider = dataProvider;
         }
+
         public void Load()
         {
             TableDatas.Clear();
-            foreach(var tableData in _dataProvider.GetAllTableData())
+            foreach (var tableData in _dataProvider.GetAllTableData())
             {
                 TableDatas.Add(tableData);
             }
@@ -53,7 +54,6 @@ namespace LogParser.UI.ViewModel
         public ObservableCollection<TableData> TableDatas { get; private set; }
         public ObservableCollection<EventData> EventDatas { get; private set; }
         public ObservableCollection<EventJoinedWithTableData> EventJoinedWithTableDatas { get; private set; }
-
         public FileInformation FileInformation { get; private set; }
     }
 }
